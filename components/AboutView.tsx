@@ -16,10 +16,24 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-24 px-4 sm:px-0">
       <div className="text-center space-y-4 pt-4 md:pt-8">
-        <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center text-white mx-auto shadow-lg mb-6">
-          <Clock size={32} />
+        <div className="flex flex-col items-center mb-8">
+          <div className="relative mb-6">
+            <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-20 animate-pulse"></div>
+            <img
+              src="/pwa-192x192.png"
+              alt="TdyTime Logo"
+              className="w-16 h-16 md:w-20 md:h-20 rounded-[1.5rem] shadow-2xl relative z-10 border-4 border-white dark:border-slate-800"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-800 dark:text-slate-100 tracking-tighter">
+              TdyTime
+            </h2>
+            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-black rounded-full border border-blue-200 dark:border-blue-800">
+              v{version}
+            </span>
+          </div>
         </div>
-        <h2 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{t('about.title')} v{version}</h2>
         <p className="text-slate-500 max-w-lg mx-auto leading-relaxed text-sm">
           {t('about.description')}
         </p>

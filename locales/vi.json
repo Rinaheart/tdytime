@@ -11,7 +11,7 @@
         "dropToUpload": "Thả để tải lên"
     },
     "common": {
-        "appName": "Phân tích Lịch giảng",
+        "appName": "TdyTime",
         "version": "v{{version}}",
         "loading": "Đang tải...",
         "processing": "Đang xử lý dữ liệu...",
@@ -269,9 +269,9 @@
         }
     },
     "about": {
-        "title": "Phân tích Lịch Giảng",
+        "title": "TdyTime",
         "description": "Tiện ích trực quan hóa và quản lý lịch trình giảng dạy thông minh. Thiết kế đặc biệt cho Giảng viên Khối CĐ - Trường ĐHYD, ĐH Huế.",
-        "copyright": "© 2026 TdyPhan | Google AI Studio",
+        "copyright": "© 2026 TdyTime | Google AI Studio",
         "periodStandards": "Quy chuẩn thời gian tiết giảng",
         "changelog": "Nhật ký thay đổi (Changelog)",
         "changes": [

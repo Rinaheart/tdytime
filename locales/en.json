@@ -11,7 +11,7 @@
         "dropToUpload": "Drop to upload"
     },
     "common": {
-        "appName": "Teaching Schedule Analysis",
+        "appName": "TdyTime",
         "version": "v{{version}}",
         "loading": "Loading...",
         "processing": "Processing data...",
@@ -269,9 +269,9 @@
         }
     },
     "about": {
-        "title": "Teaching Schedule Analysis",
+        "title": "TdyTime",
         "description": "Smart teaching schedule visualization and management tool. Specially designed for Faculty at College Division - University of Medicine and Pharmacy, Hue University.",
-        "copyright": "© 2026 TdyPhan | Google AI Studio",
+        "copyright": "© 2026 TdyTime | Google AI Studio",
         "periodStandards": "Standard Period Times",
         "morning": "Morning",
         "afternoon": "Afternoon",
