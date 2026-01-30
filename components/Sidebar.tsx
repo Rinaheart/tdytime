@@ -2,6 +2,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Zap,
   LayoutDashboard,
   Calendar,
   BarChart3,
@@ -23,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, onReset, coll
   const { t } = useTranslation();
 
   const menuItems = [
-    { id: TabType.TODAY, label: t('nav.today'), icon: LayoutDashboard },
+    { id: TabType.TODAY, label: t('nav.today'), icon: Zap },
     { id: TabType.WEEK, label: t('nav.weekly'), icon: Calendar },
     { id: TabType.OVERVIEW, label: t('nav.semester'), icon: LayoutDashboard },
     { id: TabType.STATS, label: t('nav.statistics'), icon: BarChart3 },
