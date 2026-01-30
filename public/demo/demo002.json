@@ -1,0 +1,1662 @@
+{
+  "metadata": {
+    "teacher": "User DEMO A",
+    "semester": "2",
+    "academicYear": "2025-2026",
+    "extractedDate": "2026-01-29T09:36:27.869Z"
+  },
+  "weeks": [
+    {
+      "weekNumber": 1,
+      "dateRange": "Từ ngày: 12/01/2026 đến ngày 18/01/2026",
+      "days": {
+        "Monday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.005",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 5",
+              "className": "Đ8E",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.002",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 2",
+              "className": "Đ8B",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX52-LT.001",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 1",
+              "className": "Đ8A",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.005",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 5",
+              "className": "Đ8E",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Wednesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX52-LT.004",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 4",
+              "className": "Đ8D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Wednesday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.002",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 2",
+              "className": "Đ8B",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX52-LT.004",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 4",
+              "className": "Đ8D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            },
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO B",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.001",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 1",
+              "className": "Đ8A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Saturday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 2,
+      "dateRange": "Từ ngày: 19/01/2026 đến ngày 25/01/2026",
+      "days": {
+        "Monday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.005",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 5",
+              "className": "Đ8E",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.002",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 2",
+              "className": "Đ8B",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX52-LT.001",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 1",
+              "className": "Đ8A",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.005",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 5",
+              "className": "Đ8E",
+              "timeSlot": "1-3",
+              "periodCount": 3,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Wednesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX52-LT.004",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 4",
+              "className": "Đ8D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Wednesday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.002",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 2",
+              "className": "Đ8B",
+              "timeSlot": "1-3",
+              "periodCount": 3,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX52-LT.004",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 4",
+              "className": "Đ8D",
+              "timeSlot": "6-8",
+              "periodCount": 3,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            },
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO B",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [
+            {
+              "courseCode": "XX52-LT.001",
+              "courseName": "Môn học Demo A1 - Lý thuyết",
+              "group": "Nhóm 1",
+              "className": "Đ8A",
+              "timeSlot": "1-3",
+              "periodCount": 3,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Saturday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 3,
+      "dateRange": "Từ ngày: 26/01/2026 đến ngày 01/02/2026",
+      "days": {
+        "Monday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO B",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Saturday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 4,
+      "dateRange": "Từ ngày: 02/02/2026 đến ngày 08/02/2026",
+      "days": {
+        "Monday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-8",
+              "periodCount": 3,
+              "room": ".B.105",
+              "teacher": "User DEMO B",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Saturday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 5,
+      "dateRange": "Từ ngày: 02/03/2026 đến ngày 08/03/2026",
+      "days": {
+        "Monday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Saturday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 6,
+      "dateRange": "Từ ngày: 09/03/2026 đến ngày 15/03/2026",
+      "days": {
+        "Monday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.102",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Saturday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 7,
+      "dateRange": "Từ ngày: 16/03/2026 đến ngày 22/03/2026",
+      "days": {
+        "Monday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": [
+            {
+              "courseCode": "XX92.001",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 1",
+              "className": "D1A",
+              "timeSlot": "11-13",
+              "periodCount": 3,
+              "room": ".B.101",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "evening"
+            }
+          ]
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 8,
+      "dateRange": "Từ ngày: 23/03/2026 đến ngày 29/03/2026",
+      "days": {
+        "Monday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 9,
+      "dateRange": "Từ ngày: 30/03/2026 đến ngày 05/04/2026",
+      "days": {
+        "Monday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.108",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.202",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    },
+    {
+      "weekNumber": 10,
+      "dateRange": "Từ ngày: 06/04/2026 đến ngày 12/04/2026",
+      "days": {
+        "Monday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-1",
+              "periodCount": 1,
+              "room": ".B.108",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Monday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Tuesday": {
+          "morning": [
+            {
+              "courseCode": "XX92.003",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 3",
+              "className": "D1C",
+              "timeSlot": "1-4",
+              "periodCount": 4,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "X292.001",
+              "courseName": "Môn học Demo A2",
+              "group": "Nhóm 1",
+              "className": "H2",
+              "timeSlot": "6-8",
+              "periodCount": 3,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Tuesday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Wednesday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Thursday": {
+          "morning": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "1-1",
+              "periodCount": 1,
+              "room": ".B.105",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "morning"
+            }
+          ],
+          "afternoon": [
+            {
+              "courseCode": "XX92.002",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 2",
+              "className": "D1B",
+              "timeSlot": "6-6",
+              "periodCount": 1,
+              "room": ".B.106",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Thursday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Friday": {
+          "morning": [],
+          "afternoon": [
+            {
+              "courseCode": "XX92.004",
+              "courseName": "Môn học Demo B1",
+              "group": "Nhóm 4",
+              "className": "D1D",
+              "timeSlot": "6-9",
+              "periodCount": 4,
+              "room": ".B.104",
+              "teacher": "User DEMO A",
+              "actualHours": 0,
+              "type": "LT",
+              "dayOfWeek": "Friday",
+              "sessionTime": "afternoon"
+            }
+          ],
+          "evening": []
+        },
+        "Saturday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        },
+        "Sunday": {
+          "morning": [],
+          "afternoon": [],
+          "evening": []
+        }
+      }
+    }
+  ],
+  "allCourses": [
+    {
+      "code": "XX52-LT.005",
+      "name": "Môn học Demo A1 - Lý thuyết",
+      "totalPeriods": 15,
+      "totalSessions": 4,
+      "groups": [
+        "Nhóm 5"
+      ],
+      "classes": [
+        "Đ8E"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX92.002",
+      "name": "Môn học Demo B1",
+      "totalPeriods": 45,
+      "totalSessions": 12,
+      "groups": [
+        "Nhóm 2"
+      ],
+      "classes": [
+        "D1B"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX52-LT.002",
+      "name": "Môn học Demo A1 - Lý thuyết",
+      "totalPeriods": 15,
+      "totalSessions": 4,
+      "groups": [
+        "Nhóm 2"
+      ],
+      "classes": [
+        "Đ8B"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX52-LT.001",
+      "name": "Môn học Demo A1 - Lý thuyết",
+      "totalPeriods": 15,
+      "totalSessions": 4,
+      "groups": [
+        "Nhóm 1"
+      ],
+      "classes": [
+        "Đ8A"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX52-LT.004",
+      "name": "Môn học Demo A1 - Lý thuyết",
+      "totalPeriods": 15,
+      "totalSessions": 4,
+      "groups": [
+        "Nhóm 4"
+      ],
+      "classes": [
+        "Đ8D"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "X292.001",
+      "name": "Môn học Demo A2",
+      "totalPeriods": 30,
+      "totalSessions": 8,
+      "groups": [
+        "Nhóm 1"
+      ],
+      "classes": [
+        "H2"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX92.001",
+      "name": "Môn học Demo B1",
+      "totalPeriods": 45,
+      "totalSessions": 13,
+      "groups": [
+        "Nhóm 1"
+      ],
+      "classes": [
+        "D1A"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX92.004",
+      "name": "Môn học Demo B1",
+      "totalPeriods": 45,
+      "totalSessions": 12,
+      "groups": [
+        "Nhóm 4"
+      ],
+      "classes": [
+        "D1D"
+      ],
+      "types": [
+        "LT"
+      ]
+    },
+    {
+      "code": "XX92.003",
+      "name": "Môn học Demo B1",
+      "totalPeriods": 45,
+      "totalSessions": 12,
+      "groups": [
+        "Nhóm 3"
+      ],
+      "classes": [
+        "D1C"
+      ],
+      "types": [
+        "LT"
+      ]
+    }
+  ],
+  "overrides": {
+    "XX52-LT.005": "LT",
+    "XX92.002": "LT",
+    "XX52-LT.002": "LT",
+    "XX52-LT.001": "LT",
+    "XX52-LT.004": "LT",
+    "X292.001": "LT",
+    "XX92.001": "LT",
+    "XX92.004": "LT",
+    "XX92.003": "LT"
+  },
+  "abbreviations": {}
+}
