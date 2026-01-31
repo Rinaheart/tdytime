@@ -232,7 +232,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-200 bg-white dark:bg-slate-950">
+    <div className="min-h-screen transition-colors duration-200 bg-white dark:bg-slate-950 overflow-x-hidden">
       {data && !isUploading && (
         <Header
           activeTab={activeTab}
@@ -261,7 +261,7 @@ const App: React.FC = () => {
         )}
 
         <main className={`flex-1 transition-all duration-300 ${data && !isUploading ? (sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64') : ''}`}>
-          <div className="h-full overflow-auto custom-scrollbar p-3 md:p-8 pt-14 md:pt-20" ref={mainContentRef}>
+          <div className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar p-3 md:p-8 pt-14 md:pt-20" ref={mainContentRef}>
             {error && !data && (
               <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-xl flex items-center gap-2 text-sm max-w-lg mx-auto">
                 <AlertTriangle size={18} className="flex-shrink-0" />

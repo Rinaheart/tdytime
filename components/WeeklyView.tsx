@@ -332,7 +332,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
       )}
 
       {viewMode === 'horizontal' ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm overflow-hidden relative group">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm overflow-hidden relative group max-w-full">
           <div className="overflow-x-auto w-full pb-2 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 touch-pan-x">
             <table className="w-full border-collapse min-w-[1000px]">
               <thead>
