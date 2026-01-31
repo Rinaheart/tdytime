@@ -307,77 +307,82 @@ const TodayView: React.FC<TodayViewProps> = ({
     const getGreeting = () => {
         const hour = now.getHours();
         const name = data.metadata.teacher.split(' ').pop() || "";
-        if (hour < 12) return t('today.greeting.morning', { name });
-        if (hour < 18) return t('today.greeting.afternoon', { name });
-        return t('today.greeting.evening', { name });
+        if (hour < 12) return t('stats.today.greeting.morning', { name });
+        if (hour < 18) return t('stats.today.greeting.afternoon', { name });
+        return t('stats.today.greeting.evening', { name });
+    };
+
+    const getStatusMessage = () => {
+        if (todaySessions.length === 0) return t('stats.today.status.free');
+        return t('stats.today.status.teaching');
     };
 
     return (
-        <div className="max-w-[1600px] mx-auto space-y-6 pb-24 animate-in fade-in slide-in-from-bottom-2 duration-700 px-4 md:px-0">
+        <div className="max-w-[1600px] mx-auto space-y-6 pb-24 animate-in fade-in slide-in-from-bottom-2 duration-700 px-3 md:px-0 overflow-x-hidden">
 
             {/* 1. HERO HEADER */}
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 p-8 md:p-12 text-white shadow-2xl shadow-indigo-500/20">
+            <div className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 p-5 md:p-12 text-white shadow-2xl shadow-indigo-500/20">
                 <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
-                    <div className="absolute top-[-20%] right-[-10%] w-[300px] h-[300px] rounded-full border-[40px] border-white/20 blur-3xl"></div>
-                    <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-white/20 blur-3xl"></div>
+                    <div className="absolute top-[-20%] right-[-10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] rounded-full border-[30px] md:border-[40px] border-white/20 blur-3xl"></div>
+                    <div className="absolute bottom-[-20%] left-[-10%] w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bg-white/20 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-                    <div>
-                        <div className="flex items-center gap-2 mb-3 opacity-90">
-                            <span className="px-2 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider border border-white/10">{t('stats.today.currentTime')}</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                        </div>
-                        <h2 className="text-3xl md:text-5xl font-black mb-2 tracking-tight leading-tight">{getGreeting()}</h2>
-                        <div className="flex items-center gap-3 text-blue-100 text-sm md:text-lg font-medium opacity-90">
-                            <CalendarDays size={20} />
-                            {i18n.language === 'vi' ? `Thứ ${dayOfWeekIdx === 6 ? 'Nhật' : dayOfWeekIdx + 2}` : DAYS_OF_WEEK[dayOfWeekIdx]}, {todayStr}
-                        </div>
+                <div className="relative z-10">
+                    {/* Time badge */}
+                    <div className="flex items-center gap-2 mb-2 opacity-90">
+                        <span className="px-2 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[9px] md:text-[10px] font-bold uppercase tracking-wider border border-white/10">{t('stats.today.currentTime')}</span>
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
 
-                    <div className="hidden md:flex gap-4">
-                        <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
-                            <span className="text-3xl font-black">{todaySessions.length}</span>
-                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.sessions')}</span>
-                        </div>
-                        <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
-                            <span className="text-3xl font-black">{todaySessions.reduce((acc, s) => acc + s.periodCount, 0)}</span>
-                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.periods')}</span>
-                        </div>
-                    </div>
+                    {/* Greeting */}
+                    <h2 className="text-2xl md:text-5xl font-black mb-1 md:mb-2 tracking-tight leading-tight">{getGreeting()}</h2>
 
-                    {/* Mobile Stats - visible only on mobile */}
-                    <div className="flex md:hidden gap-3 mt-4">
-                        <div className="flex-1 px-4 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center gap-2">
-                            <span className="text-2xl font-black">{todaySessions.length}</span>
-                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.sessions')}</span>
-                        </div>
-                        <div className="flex-1 px-4 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center gap-2">
-                            <span className="text-2xl font-black">{todaySessions.reduce((acc, s) => acc + s.periodCount, 0)}</span>
-                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.periods')}</span>
-                        </div>
+                    {/* Status message */}
+                    <p className="text-sm md:text-base font-medium text-blue-100 mb-3">
+                        {todaySessions.length > 0
+                            ? `${getStatusMessage()} (${todaySessions.length} ${t('common.sessions')}, ${todaySessions.reduce((acc, s) => acc + s.periodCount, 0)} ${t('common.periods')})`
+                            : getStatusMessage()
+                        }
+                    </p>
+
+                    {/* Date */}
+                    <div className="flex items-center gap-2 text-blue-100 text-xs md:text-lg font-medium opacity-90">
+                        <CalendarDays size={16} className="md:w-5 md:h-5" />
+                        {i18n.language === 'vi' ? `Thứ ${dayOfWeekIdx === 6 ? 'Nhật' : dayOfWeekIdx + 2}` : DAYS_OF_WEEK[dayOfWeekIdx]}, {todayStr}
+                    </div>
+                </div>
+
+                {/* Desktop Stats */}
+                <div className="hidden md:flex gap-4 absolute top-12 right-12">
+                    <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
+                        <span className="text-3xl font-black">{todaySessions.length}</span>
+                        <span className="text-[10px] font-bold uppercase opacity-80">{t('common.sessions')}</span>
+                    </div>
+                    <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
+                        <span className="text-3xl font-black">{todaySessions.reduce((acc, s) => acc + s.periodCount, 0)}</span>
+                        <span className="text-[10px] font-bold uppercase opacity-80">{t('common.periods')}</span>
                     </div>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="relative z-10 flex flex-wrap gap-2 mt-6">
+                <div className="relative z-10 flex flex-wrap gap-2 mt-4 md:mt-6">
                     <button
                         onClick={() => onSwitchTab('WEEK')}
-                        className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                        className="px-3 md:px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5"
                     >
-                        <Calendar size={14} /> {t('nav.weekly')}
+                        <Calendar size={12} className="md:w-[14px] md:h-[14px]" /> {t('nav.weekly')}
                     </button>
                     <button
                         onClick={() => onSwitchTab('STATS')}
-                        className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                        className="px-3 md:px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5"
                     >
-                        <TrendingUp size={14} /> {t('nav.statistics')}
+                        <TrendingUp size={12} className="md:w-[14px] md:h-[14px]" /> {t('nav.statistics')}
                     </button>
                 </div>
             </div>
 
             {/* 2. BENTO GRID LAYOUT */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
 
                 {/* A. LEFT COLUMN: TIMELINE (7/12) */}
                 <div className="lg:col-span-7 space-y-6">
