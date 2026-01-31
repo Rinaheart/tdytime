@@ -29,17 +29,17 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
                         <button
                             key={item.id}
                             onClick={() => onTabChange(item.id)}
-                            className={`flex flex-col items-center gap-1 min-w-[60px] p-2 rounded-xl transition-all ${isActive
-                                ? 'text-blue-600 dark:text-blue-400 font-bold scale-105'
-                                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                            className={`flex flex-col items-center justify-center min-w-[50px] p-2 rounded-2xl transition-all ${isActive
+                                ? 'text-blue-600 dark:text-blue-400 scale-110'
+                                : 'text-slate-500 dark:text-slate-400 opacity-70 hover:opacity-100'
                                 }`}
                         >
-                            <div className={`relative ${isActive ? 'bg-blue-100 dark:bg-blue-900/30 ring-4 ring-blue-50 dark:ring-blue-900/20' : ''} p-1.5 rounded-full transition-all duration-300`}>
-                                <Icon size={20} className={isActive ? 'fill-current' : ''} strokeWidth={isActive ? 2.5 : 2} />
+                            <div className={`relative ${isActive ? 'bg-blue-100 dark:bg-blue-900/30' : ''} p-2 rounded-xl transition-all duration-300`}>
+                                <Icon size={24} className={isActive ? 'fill-current' : ''} strokeWidth={isActive ? 2.5 : 2} />
+                                {isActive && (
+                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full"></div>
+                                )}
                             </div>
-                            <span className={`text-[10px] ${isActive ? 'opacity-100 translate-y-0' : 'opacity-70'} transition-all duration-300`}>
-                                {item.label}
-                            </span>
                         </button>
                     );
                 })}

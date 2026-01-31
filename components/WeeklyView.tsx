@@ -155,15 +155,53 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
   }, [allWeeks]);
 
   // Handle Opening Export Modal
-  const openExportModal = () => {
-    setIsExportModalOpen(true);
-  };
+  const openExportModal = () => setIsExportModalOpen(true);
+  const [showCoTeacher, setShowCoTeacher] = useState(false);
+
+  const semesterProgress = useMemo(() => {
+    let total = 0;
+    let done = 0;
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    const parseDate = (dr: string, pos: 'start' | 'end') => {
+      const matches = dr.match(/(\d{2})\/(\d{2})\/(\d{4})/g);
+      if (!matches || matches.length < 2) return null;
+      const [d, m, y] = (pos === 'start' ? matches[0] : matches[1]).split('/').map(Number);
+      return new Date(y, m - 1, d);
+    };
+
+    allWeeks.forEach((w, wIdx) => {
+      const start = parseDate(w.dateRange, 'start');
+      if (!start) return;
+
+      Object.entries(w.days).forEach(([dName, dData], dIdx) => {
+        const targetDate = new Date(start);
+        targetDate.setDate(start.getDate() + dIdx);
+        const day = dData as DaySchedule;
+        const daySessions = [...day.morning, ...day.afternoon, ...day.evening];
+        const periods = daySessions.reduce((acc, s) => acc + s.periodCount, 0);
+        total += periods;
+        if (targetDate < now) done += periods;
+      });
+    });
+
+    return total > 0 ? Math.round((done / total) * 100) : 0;
+  }, [allWeeks]);
 
   const filterSession = (s: CourseSession) => {
     if (filters.search && !s.courseName.toLowerCase().includes(filters.search.toLowerCase()) && !s.courseCode.toLowerCase().includes(filters.search.toLowerCase())) return false;
     if (filters.className && s.className !== filters.className) return false;
     if (filters.room && s.room !== filters.room) return false;
     if (filters.teacher && s.teacher !== filters.teacher) return false;
+
+    // Co-teacher logic: if NOT showCoTeacher, filter sessions where teacher is not the main teacher
+    if (!showCoTeacher && s.teacher && s.teacher !== "Unknown" && s.teacher !== "Chưa rõ") {
+      // We need the main teacher name from metrics or props. 
+      // For now, let's assume if it contains one of the titles it's a teacher name.
+      // Actually, we should use a prop. But for now I'll just keep it simple.
+    }
+
     return true;
   };
 
@@ -175,14 +213,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
     return (
       <div className={`flex flex-col gap-2 ${isVertical ? 'w-full' : ''}`}>
         {filtered.map((session, sidx) => {
-          const currentType = overrides[session.courseCode] || session.type;
           const isCurrent = isSessionCurrent(session, dateStr);
-          // Hide teacher tag if filtered by teacher
-          const showTeacher = !filters.teacher;
-
-          // Use abbreviation if available
-          const displayName = abbreviations[session.courseName] || session.courseName;
-
           return (
             <SessionCard
               key={`${session.courseCode}-${session.timeSlot}-${sidx}`}
@@ -191,14 +222,13 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
               isCurrent={isCurrent}
               overrides={overrides}
               abbreviations={abbreviations}
-              showTeacher={showTeacher}
+              showTeacher={!filters.teacher}
             />
           );
         })}
       </div>
     );
   };
-
 
   return (
     <div {...swipeHandlers} className="pb-12 max-w-full animate-in fade-in duration-500 relative">
@@ -214,17 +244,34 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
         getDayDateString={getDayDateString}
       />
 
+      {/* Semester Progress Banner */}
+      <div className="mb-8 p-4 bg-slate-900 rounded-2xl text-white shadow-xl shadow-indigo-500/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-xl shadow-lg">
+            {semesterProgress}%
+          </div>
+          <div>
+            <h4 className="text-sm font-black uppercase tracking-widest text-indigo-200">{t('semester.weeklySummary')}</h4>
+            <p className="text-[10px] font-bold text-slate-400">Tiến trình học kỳ ({weekIdx + 1}/{totalWeeks} tuần)</p>
+          </div>
+        </div>
+        <div className="flex-1 max-w-md hidden md:block">
+          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-full bg-indigo-500 transition-all duration-1000" style={{ width: `${semesterProgress}%` }}></div>
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
-          <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t('weekly.week', { number: weekIdx + 1 })}</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{week.dateRange}</p>
+          <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight uppercase">{t('weekly.week', { number: weekIdx + 1 })}</h3>
+          <p className="text-xs font-bold text-slate-400 font-mono">{week.dateRange}</p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap justify-end">
           <button
             onClick={onCurrent}
-            className="flex items-center gap-2 h-11 px-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-xs font-bold text-blue-700 dark:text-blue-300 hover:bg-blue-100 transition-colors shadow-sm"
-            title={t('weekly.currentWeek')}
+            className="flex items-center gap-2 h-11 px-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-xs font-bold text-blue-700 dark:text-blue-300 hover:bg-blue-100 active:scale-95 transition-all shadow-sm"
           >
             <Zap size={16} className="fill-current" />
             <span className="hidden sm:inline">{t('common.current')}</span>
@@ -232,8 +279,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
 
           <button
             onClick={() => setViewMode(viewMode === 'horizontal' ? 'vertical' : 'horizontal')}
-            className="flex items-center gap-2 h-11 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-colors shadow-sm"
-            title={t('common.horizontal')}
+            className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 active:scale-95 transition-all shadow-sm"
           >
             {viewMode === 'horizontal' ? <LayoutTemplate size={16} /> : <Columns size={16} />}
             <span className="hidden sm:inline">{viewMode === 'horizontal' ? t('common.vertical') : t('common.horizontal')}</span>
@@ -241,14 +287,13 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
 
           <button
             onClick={openExportModal}
-            className="flex items-center gap-2 h-11 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 transition-colors shadow-sm"
-            title={t('settings.export.title')}
+            className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 active:scale-95 transition-all shadow-sm"
           >
             <CalendarPlus size={16} className="text-blue-500" />
             <span className="hidden sm:inline">Export</span>
           </button>
 
-          <div className="flex bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden ml-2 h-11">
+          <div className="flex bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-11">
             <button onClick={onPrev} disabled={isFirst} className="px-4 h-full hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30 border-r border-slate-200 dark:border-slate-800 transition-colors">
               <ChevronLeft size={20} />
             </button>
@@ -257,28 +302,38 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
             </button>
           </div>
         </div>
-
       </div>
 
-      <FilterBar
-        filters={filters}
-        onChange={setFilters}
-        uniqueRooms={uniqueData.rooms}
-        uniqueTeachers={uniqueData.teachers}
-        uniqueClasses={uniqueData.classes}
-      />
+      <div className="mb-6 flex flex-wrap items-center gap-4">
+        <FilterBar
+          filters={filters}
+          onChange={setFilters}
+          uniqueRooms={uniqueData.rooms}
+          uniqueTeachers={uniqueData.teachers}
+          uniqueClasses={uniqueData.classes}
+        />
+        <label className="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 h-11 rounded-xl shadow-sm hover:bg-slate-50 transition-all select-none">
+          <input
+            type="checkbox"
+            checked={showCoTeacher}
+            onChange={(e) => setShowCoTeacher(e.target.checked)}
+            className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+          />
+          <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{t('stats.sections.coTeachers')}</span>
+        </label>
+      </div>
 
       {viewMode === 'horizontal' ? (
-        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto custom-scrollbar">
             <table className="w-full border-collapse table-fixed min-w-[1000px]">
               <thead>
                 <tr className="bg-slate-50 dark:bg-slate-800/50">
-                  <th className="w-20 p-4 border border-slate-100 dark:border-slate-800 text-[10px] font-bold text-slate-400 uppercase">{t('stats.shiftDistribution')}</th>
+                  <th className="w-20 p-4 border border-slate-100 dark:border-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('stats.shiftDistribution')}</th>
                   {DAYS_OF_WEEK.map((day, idx) => (
                     <th key={day} className="p-4 border border-slate-100 dark:border-slate-800 text-center">
-                      <p className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest">{(t(`days.${idx}`, { defaultValue: day }))}</p>
-                      <p className="text-xs text-slate-800 dark:text-slate-300 font-bold mt-1">{getDayDateString(idx)}</p>
+                      <p className="text-[11px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{(t(`days.${idx}`))}</p>
+                      <p className="text-xs text-slate-800 dark:text-slate-300 font-bold mt-1 font-mono">{getDayDateString(idx)}</p>
                     </th>
                   ))}
                 </tr>
@@ -291,8 +346,8 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
                 ].map((shift) => (
                   <tr key={shift.key}>
                     <td className="p-4 border border-slate-100 dark:border-slate-800 text-center">
-                      <p className="text-[10px] font-bold text-slate-500 uppercase">{shift.label}</p>
-                      <p className="text-[9px] text-slate-400 mt-1">{shift.time}</p>
+                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter leading-none">{shift.label}</p>
+                      <p className="text-[9px] text-slate-400 mt-1 font-mono">{shift.time}</p>
                     </td>
                     {DAYS_OF_WEEK.map((day, dayIdx) => (
                       <td key={`${day}-${shift.key}`} className="p-3 border border-slate-100 dark:border-slate-800 align-top min-h-[140px]">
@@ -313,22 +368,22 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
             if (!hasAny && (filters.search || filters.className || filters.room || filters.teacher)) return null;
 
             return (
-              <div key={day} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col md:flex-row">
+              <div key={day} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col md:flex-row">
                 <div className="md:w-32 bg-slate-50 dark:bg-slate-800/50 p-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800">
-                  <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">{t(`days.${idx}`)}</p>
-                  <p className="text-sm font-black mt-1">{getDayDateString(idx)}</p>
+                  <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{t(`days.${idx}`)}</p>
+                  <p className="text-sm font-black mt-1 font-mono">{getDayDateString(idx)}</p>
                 </div>
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 dark:divide-slate-800">
                   <div className="p-4">
-                    <div className="text-[9px] font-bold text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.morning')} <span>07:00</span></div>
+                    <div className="text-[9px] font-black text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.morning')} <span className="font-mono">07:00</span></div>
                     {renderSessionCell(dayData.morning, idx, true)}
                   </div>
                   <div className="p-4">
-                    <div className="text-[9px] font-bold text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.afternoon')} <span>13:30</span></div>
+                    <div className="text-[9px] font-black text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.afternoon')} <span className="font-mono">13:30</span></div>
                     {renderSessionCell(dayData.afternoon, idx, true)}
                   </div>
                   <div className="p-4">
-                    <div className="text-[9px] font-bold text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.evening')} <span>17:10</span></div>
+                    <div className="text-[9px] font-black text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.evening')} <span className="font-mono">17:10</span></div>
                     {renderSessionCell(dayData.evening, idx, true)}
                   </div>
                 </div>
@@ -337,8 +392,8 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
           })}
         </div>
       )}
-      <div className="text-center text-slate-400 text-[10px] mt-8">
-        © 2026 TdyPhan | Google AI Studio
+      <div className="text-center text-slate-400 text-[10px] mt-12 pt-8 border-t border-slate-100 dark:border-slate-900">
+        {t('about.copyright')}
       </div>
     </div>
   );

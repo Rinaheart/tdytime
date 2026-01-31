@@ -12,6 +12,7 @@
     },
     "common": {
         "appName": "TdyTime",
+        "copyright": "© 2026 TdyTime | Google AI Studio",
         "version": "v{{version}}",
         "loading": "Loading...",
         "processing": "Processing data...",
