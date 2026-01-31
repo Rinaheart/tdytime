@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       VitePWA({
-        registerType: 'prompt', // Prompt user to update
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+        registerType: 'autoUpdate',
+        includeAssets: ['pwa-192x192.png', 'pwa-512x512.png'],
         manifest: {
           name: 'Phân tích Lịch giảng',
           short_name: 'TimeTable',

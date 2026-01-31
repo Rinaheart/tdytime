@@ -10,11 +10,18 @@ const resources = {
     en: { translation: enTranslation }
 };
 
+let defaultLanguage = 'vi';
+try {
+    defaultLanguage = localStorage.getItem('language') || 'vi';
+} catch (e) {
+    console.warn('LocalStorage not accessible, falling back to "vi"');
+}
+
 i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: localStorage.getItem('language') || 'vi', // Default to Vietnamese
+        lng: defaultLanguage,
         fallbackLng: 'vi',
         interpolation: {
             escapeValue: false, // React already escapes
