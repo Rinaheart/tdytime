@@ -1,0 +1,384 @@
+{
+    "app": {
+        "title": "TdyTime {{version}}",
+        "tagline": "Your Timetable, Your Time",
+        "uploadTitle": "Upload Schedule",
+        "uploadDesc": "Supports .html or .json",
+        "pasteTitle": "Paste HTML",
+        "pasteDesc": "Paste directly from portal",
+        "pastePlaceholder": "Paste HTML content here...",
+        "recentHistory": "Recent Data",
+        "dropToUpload": "Drop to upload"
+    },
+    "common": {
+        "appName": "TdyTime",
+        "copyright": "© 2026 TdyTime | Google AI Studio",
+        "version": "v{{version}}",
+        "loading": "Loading...",
+        "processing": "Processing data...",
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "save": "Save",
+        "reset": "Reset",
+        "close": "Close",
+        "back": "Back",
+        "next": "Next",
+        "previous": "Previous",
+        "current": "Current",
+        "horizontal": "Horizontal",
+        "vertical": "Vertical",
+        "none": "None",
+        "periods": "periods",
+        "periodShort": "P",
+        "sessions": "sessions",
+        "weeks": "weeks",
+        "week": "Week",
+        "month": "Month",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening",
+        "switchLanguage": "Switch language",
+        "conflicts": "Conflicts",
+        "warnings": "Warnings & Conflicts",
+        "viewDetails": "View Details",
+        "periodLabel": "Period"
+    },
+    "days": {
+        "0": "Mon",
+        "1": "Tue",
+        "2": "Wed",
+        "3": "Thu",
+        "4": "Fri",
+        "5": "Sat",
+        "6": "Sun"
+    },
+    "nav": {
+        "today": "Today",
+        "weekly": "Weekly",
+        "semester": "Semester",
+        "statistics": "Stats",
+        "settings": "Settings",
+        "about": "About",
+        "loadData": "Load Data",
+        "language": "Language",
+        "appearance": "Appearance"
+    },
+    "upload": {
+        "title": "Teaching Schedule Analysis",
+        "description": "System supports analysis from HTML (UMS) or JSON backup files. You can upload or paste source code directly.",
+        "historyTitle": "Continue Working (Recent)",
+        "deleteHistory": "Delete this record",
+        "method1": "Method 1: Upload File",
+        "method2": "Method 2: Paste Source",
+        "dragDrop": "Drag & drop or select file",
+        "chooseFile": "Choose File",
+        "pastePlaceholder": "Paste HTML or JSON content here...",
+        "analyzeContent": "Analyze Content",
+        "supportedFormats": "Supported: .HTML, .JSON",
+        "demoSection": "Or use demo data",
+        "enterCode": "Secret code...",
+        "useDemo": "Demo",
+        "features": {
+            "viz": "Visualized",
+            "warn": "Warnings",
+            "export": "Export"
+        },
+        "errors": {
+            "noData": "⚠️ File contains no data!",
+            "invalidStructure": "⚠️ Invalid structure!",
+            "invalidFormat": "❌ Format error! Only .HTML or .JSON files are supported."
+        }
+    },
+    "filter": {
+        "searchPlaceholder": "Search subject or group code...",
+        "allClasses": "All Classes",
+        "allRooms": "All Rooms",
+        "allTeachers": "All Teachers",
+        "clear": "Clear filters"
+    },
+    "weekly": {
+        "week": "Week {{number}}",
+        "dateRange": "From: {{start}} to {{end}}",
+        "currentWeek": "Current Week",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening",
+        "period": "Period {{number}}",
+        "room": "Room",
+        "class": "Class",
+        "group": "Group",
+        "teacher": "Teacher",
+        "conflict": "⚠️ Conflict",
+        "noClasses": "Empty",
+        "today": "Today",
+        "exportICS": {
+            "title": "Export to Google Calendar",
+            "description": "Select teachers to export schedule for <strong>Week {{week}}</strong>.",
+            "selectAll": "Select All",
+            "deselectAll": "Deselect All",
+            "teacherList": "Teacher List ({{count}})",
+            "noTeachers": "No teacher data found for this week.",
+            "copy": "Copy Content",
+            "copied": "Copied!",
+            "download": "Download .ics file"
+        }
+    },
+    "semester": {
+        "summaryBySubject": "Summary by Subject",
+        "detailByGroup": "Detailed by Group",
+        "weeklySummary": "Weekly Summary",
+        "table": {
+            "code": "Code",
+            "course": "Course",
+            "groups": "Groups",
+            "classes": "Classes",
+            "sessions": "Sessions",
+            "periods": "Periods"
+        }
+    },
+    "stats": {
+        "overview": "Activity Overview",
+        "totalPeriods": "Total Periods",
+        "totalSessions": "Teaching Sessions",
+        "totalWeeks": "Active Weeks",
+        "courses": "Courses",
+        "classes": "Classes",
+        "groups": "Groups",
+        "rooms": "Rooms",
+        "today": {
+            "greeting": {
+                "morning": "Good morning, {{name}}!",
+                "afternoon": "Good afternoon, {{name}}!",
+                "evening": "Good evening, {{name}}!"
+            },
+            "status": {
+                "teaching": "You have classes today",
+                "free": "You are free today",
+                "finished": "You have finished today's classes"
+            },
+            "next": "Upcoming Class",
+            "nextDate": "{{day}}, {{date}}",
+            "progress": "Weekly Progress",
+            "remaining": "{{count}} periods left",
+            "noMore": "No more classes this semester",
+            "currentTime": "Now",
+            "freeMessage": "Enjoy your rest time! ☕",
+            "progressDay": "Today",
+            "progressWeek": "This Week",
+            "progressMonth": "This Month",
+            "progressSemester": "Semester"
+        },
+        "weeklyTrend": "Weekly Trend",
+        "dailyDensity": "Daily Teaching Density",
+        "peakWeek": "Peak Week Analysis",
+        "shiftDistribution": "Shift Distribution",
+        "courseType": "Course Type Distribution",
+        "theory": "Theory",
+        "practice": "Practice",
+        "topRooms": "Top 10 Classrooms",
+        "classSummary": "Class Summary",
+        "courseSummary": "Course Summary",
+        "warnings": "Warnings & Optimization Notes",
+        "noWarnings": "No warnings. Schedule is balanced.",
+        "heatmapTitle": "Teaching Distribution Heatmap",
+        "heatmap": {
+            "less": "Less",
+            "more": "More"
+        },
+        "trend": {
+            "weekly": "Weekly Trend",
+            "daily": "Daily Frequency"
+        },
+        "structure": {
+            "title": "Teaching Structure",
+            "typeLabel": "Theory / Practice",
+            "shiftLabel": "Shift Distribution"
+        },
+        "topSubjects": "Top Teaching Subjects",
+        "topClasses": "Top Student Classes",
+        "topClassrooms": "Primary Classrooms",
+        "coTeachers": {
+            "title": "Co-teaching Faculty",
+            "teacher": "Faculty Member",
+            "periods": "Periods",
+            "subjects": "Related Subjects"
+        },
+        "conclusions": "Insights & Optimization Suggestions",
+        "intensity": "Intensity",
+        "eveningTeaching": "Evening Teaching",
+        "weekendTeaching": "Weekend Teaching",
+        "overloadWeeks": "Overload Weeks (>{{threshold}}p)",
+        "levels": {
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low"
+        }
+    },
+    "settings": {
+        "abbreviations": {
+            "title": "Course Name Abbreviations",
+            "description": "Helps display compactly on weekly schedule and Google Calendar exports.",
+            "suggest": "Suggest",
+            "reset": "Reset",
+            "save": "Save Abbreviations",
+            "originalName": "Original Course Name",
+            "shortName": "Abbreviation",
+            "placeholder": "Enter abbreviation...",
+            "noData": "No course data available."
+        },
+        "courseType": {
+            "title": "Customize Course Type",
+            "description": "Assign Theory (45min) or Practice (60min) for each class group.",
+            "setAllLT": "All Theory",
+            "setAllTH": "All Practice",
+            "code": "Group Code",
+            "course": "Course",
+            "class": "Class",
+            "group": "Group"
+        },
+        "thresholds": {
+            "title": "Warning Thresholds",
+            "description": "Configure teaching load limits for system warnings.",
+            "daily": "Daily",
+            "weekly": "Weekly",
+            "warning": "Warning",
+            "danger": "Danger",
+            "save": "Save Thresholds"
+        },
+        "export": {
+            "title": "Export Data",
+            "description": "Download current data for storage or processing.",
+            "csvButton": "Export Excel (.csv)",
+            "jsonButton": "Backup (.json)",
+            "csv": {
+                "code": "Course Code",
+                "name": "Course Name",
+                "class": "Class",
+                "group": "Group",
+                "type": "Type",
+                "totalPeriods": "Total Periods",
+                "totalSessions": "Total Sessions"
+            }
+        },
+        "dangerZone": {
+            "title": "Danger Zone",
+            "description": "Destructive actions and system resets.",
+            "confirmReset": "Are you sure you want to delete all data and reload?",
+            "resetButton": "Clear Data & Reload"
+        },
+        "toast": {
+            "abbreviationsSaved": "Abbreviations saved successfully!",
+            "abbreviationsSuggested": "Abbreviations suggested!",
+            "abbreviationsReset": "All abbreviations cleared! (Click Save to apply)",
+            "courseTypeSaved": "Course type customization saved successfully!",
+            "thresholdsSaved": "Warning thresholds saved successfully!",
+            "thresholdsReset": "Reset to defaults (Click Save to apply)",
+            "csvExported": "CSV exported successfully!",
+            "jsonExported": "Backup JSON exported successfully!"
+        }
+    },
+    "about": {
+        "title": "TdyTime",
+        "description": "Smart teaching schedule visualization and management tool. Specially designed for Faculty at College Division - University of Medicine and Pharmacy, Hue University.",
+        "copyright": "© 2026 TdyTime | Google AI Studio",
+        "periodStandards": "Standard Period Times",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening",
+        "note": "Note: Theory (LT) periods are 45 minutes each. Practice/Integrated (TH) periods are 60 minutes each.",
+        "changelog": "Changelog",
+        "changes": [
+            {
+                "version": "v0.4.0",
+                "date": "2026-01-31",
+                "changes": [
+                    "Smart Filtering: Intuitive filtering system that auto-hides for cleaner focus, featuring active indicators.",
+                    "Privacy Mode: Flexible security feature on the Stats page to conceal detailed metrics when needed.",
+                    "Mobile Horizontal Scrolling: Standardized horizontal scroll experience for weekly schedules on mobile devices.",
+                    "Visual Unification: Comprehensive synchronization of 2xl border radius and UI terminology across the app."
+                ]
+            },
+            {
+                "version": "v0.3.0",
+                "date": "2026-01-31",
+                "changes": [
+                    "Premium Minimal Language: Elegant and refined design philosophy featuring Glassmorphism and data-centric layouts.",
+                    "Semester Timeline: All-new semester timeline experience with smart navigation and space optimization.",
+                    "Insights Card: Next-gen analytical cards transforming raw data into vibrant, actionable insights.",
+                    "Visual Performance: Optimized fluid transaction effects for a premium native app feel."
+                ]
+            },
+            {
+                "version": "v0.2.0",
+                "date": "2026-01-29",
+                "changes": [
+                    "Welcome Center: Reimagined landing space built on professional app standards with aesthetic TdyTime branding.",
+                    "Conflict Intelligence: Automated analytical engine detecting time and space overlaps for 100% schedule accuracy.",
+                    "Smart History: Instant memory and access for recent schedules, eliminating the need for data re-uploads.",
+                    "Interface Polish: Refined UI components (Tabs, Toasts, Badges) for unified completion."
+                ]
+            },
+            {
+                "version": "v0.1.0",
+                "date": "2026-01-27",
+                "changes": [
+                    "Mobile Prowess: Redefined mobile experience with intuitive bottom Tab Bar and natural swipe navigation.",
+                    "Identity Refresh: Updated icons and splash screens following modern PWA standards.",
+                    "Dashboard Insights: Upgraded distribution charts and summary cards for 3-second schedule grasp."
+                ]
+            },
+            {
+                "version": "v0.015",
+                "date": "2026-01-26",
+                "changes": [
+                    "Executive Dashboard: Full redesign of the Statistics view towards clean management aesthetics.",
+                    "Color-Coded Alerts: Visual alert system using color language to identify hotspots and overload weeks instantly."
+                ]
+            },
+            {
+                "version": "v0.012",
+                "date": "2026-01-22",
+                "changes": [
+                    "The Blue Revolution: Standardized professional Blue/Teal color palette, eliminating legacy design inconsistencies.",
+                    "Skeleton Shimmer: Integrated modern loading effects for an uninterrupted user experience."
+                ]
+            },
+            {
+                "version": "v0.011",
+                "date": "2026-01-15",
+                "changes": [
+                    "Analytics Launch: First-ever teaching density analysis system with intuitive Heatmap visualizations.",
+                    "Parser Engine: Upgraded data processing engine for high-accuracy UMS system integration."
+                ]
+            },
+            {
+                "version": "v0.001 - v0.010",
+                "date": "2026-01-10",
+                "changes": [
+                    "Genesis: Foundation architecture established, focusing on raw schedule parsing into digital formats."
+                ]
+            }
+        ]
+    },
+    "success": {
+        "loadedPast": "Schedule loaded successfully! Past semester data (Ended {{date}}).",
+        "loadedFuture": "New schedule loaded! Semester starts on {{date}}.",
+        "loadedCurrent": "Schedule loaded successfully. Navigating to current week.",
+        "loaded": "Schedule loaded successfully!"
+    },
+    "error": {
+        "noData": "⚠️ File has no data!",
+        "invalidStructure": "⚠️ Data structure mismatch!",
+        "demoNotFound": "❌ Demo data not found for code: {{code}}",
+        "loadDemoError": "❌ Error loading demo data.",
+        "processing": "Processing data..."
+    },
+    "pwa": {
+        "offlineReady": "Ready for Offline Use",
+        "offlineReadyDesc": "The app is cached and ready to work offline.",
+        "updateReady": "New Update Available",
+        "updateReadyDesc": "Click Reload to update to the latest version.",
+        "reloadButton": "Reload & Update"
+    }
+}
