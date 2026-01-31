@@ -55,8 +55,7 @@ const UpcomingSessionCard: React.FC<{
                     </div>
                 )}
                 <div className={`flex flex-col items-center justify-center border-r ${isLive ? 'border-blue-200 dark:border-blue-700' : 'border-slate-100 dark:border-slate-800'} pr-2 md:pr-3 ${small ? 'min-w-[48px]' : 'min-w-[55px] md:min-w-[70px]'}`}>
-                    <span className={`${small ? 'text-[11px]' : 'text-base md:text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono leading-none mb-0.5`}>{startTimeStr}</span>
-                    <span className="text-[8px] font-bold text-slate-400 uppercase opacity-60">AM</span>
+                    <span className={`${small ? 'text-[11px]' : 'text-base md:text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono leading-none`}>{startTimeStr}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 md:gap-2 mb-1.5">
@@ -237,45 +236,52 @@ const TodayView: React.FC<TodayViewProps> = ({
         <div className="max-w-[1600px] mx-auto space-y-4 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-700 px-3 md:px-4 overflow-x-hidden">
 
             {/* 1. DASHBOARD LIGHT HERO */}
-            <div className="bg-white dark:bg-slate-950/20 rounded-xl md:rounded-2xl p-3 md:p-6 border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl md:rounded-[2.5rem] p-5 md:p-10 border border-blue-500/20 shadow-xl shadow-blue-500/20 relative overflow-hidden group transition-all">
                 {/* Subtle Background Accent */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-blue-500/10 transition-colors"></div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-3xl -mr-32 -mt-32 rounded-full group-hover:bg-white/15 transition-colors"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/10 blur-3xl -ml-24 -mb-24 rounded-full"></div>
 
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                         {/* Greeting & Time Badge */}
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <h2 className="text-lg md:text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{getGreeting()}</h2>
-                            <div className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-wider">
+                        <div className="flex items-center gap-3 mb-2 flex-wrap">
+                            <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight">{(() => {
+                                const hour = now.getHours();
+                                const name = data.metadata.teacher.split(' ').pop() || "";
+                                if (hour < 12) return t('stats.today.greeting.morning', { name });
+                                if (hour < 18) return t('stats.today.greeting.afternoon', { name });
+                                return t('stats.today.greeting.evening', { name });
+                            })()}</h2>
+                            <div className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] md:text-xs font-black uppercase tracking-wider border border-white/10">
                                 {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </div>
                         </div>
 
-                        <p className="text-[10px] md:text-sm font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-2">
-                            < Sparkles size={12} className="text-amber-500 fill-current md:w-[14px] md:h-[14px]" />
+                        <p className="text-xs md:text-lg font-bold text-blue-50/80 flex items-center gap-2 mb-4">
+                            <Sparkles size={14} className="text-amber-300 fill-current md:w-5 md:h-5" />
                             {todaySessions.length > 0
-                                ? `${getStatusMessage()} · ${todaySessions.length} ${t('common.sessions')} · ${todaySessions.reduce((acc, s) => acc + s.periodCount, 0)} ${t('common.periods')}`
-                                : getStatusMessage()
+                                ? `Bạn có lịch hôm nay · ${todaySessions.length} buổi · ${todaySessions.reduce((acc, s) => acc + s.periodCount, 0)} tiết`
+                                : t('stats.today.status.free')
                             }
                         </p>
 
                         {/* Date & Location Context */}
-                        <div className="flex items-center gap-3 text-slate-400 dark:text-slate-500 text-[10px] md:text-xs font-bold">
-                            <div className="flex items-center gap-1.5">
-                                <CalendarDays size={12} className="opacity-70 md:w-[14px] md:h-[14px]" />
+                        <div className="flex items-center gap-4 text-blue-100/60 text-[10px] md:text-sm font-bold">
+                            <div className="flex items-center gap-2">
+                                <CalendarDays size={14} className="opacity-70 md:w-5 md:h-5" />
                                 <span>{i18n.language === 'vi' ? `Thứ ${dayOfWeekIdx === 6 ? 'Nhật' : dayOfWeekIdx + 2}` : DAYS_OF_WEEK[dayOfWeekIdx]}, {todayStr}</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Desktop Visualization of Progress */}
-                    <div className="hidden md:flex gap-3">
-                        <div className="h-12 w-[1px] bg-slate-200 dark:bg-slate-800 hidden md:block mx-2"></div>
-                        <div className="flex flex-col justify-center">
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('common.sessions')}</span>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-2xl font-black text-slate-800 dark:text-white leading-none">{todaySessions.length}</span>
-                                <span className="text-xs font-bold text-slate-400">/ {t('nav.today')}</span>
+                    <div className="hidden md:flex gap-6 items-center">
+                        <div className="h-16 w-[1px] bg-white/10 mx-2"></div>
+                        <div className="flex flex-col items-end">
+                            <span className="text-xs font-black text-blue-100/40 uppercase tracking-widest mb-1">{t('common.sessions')}</span>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-5xl font-black text-white leading-none tracking-tighter">{todaySessions.length}</span>
+                                <span className="text-sm font-bold text-blue-100/60">/ {t('nav.today')}</span>
                             </div>
                         </div>
                     </div>

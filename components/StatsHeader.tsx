@@ -28,10 +28,10 @@ const StatsHeader: React.FC<StatsHeaderProps> = ({ metadata, metrics }) => {
                     <div className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm shrink-0">
                         <User size={20} md:size={24} className="text-blue-100" />
                     </div>
-                    <div className="min-w-0 flex-1">
-                        <h2 className="text-lg md:text-xl font-black uppercase tracking-tight truncate">{metadata.teacher}</h2>
+                    <div className="min-w-0 flex-1 bg-white/10 backdrop-blur-md rounded-2xl p-3 md:p-4 border border-white/20 shadow-inner">
+                        <h2 className="text-lg md:text-xl font-black uppercase tracking-tight truncate mb-1">{metadata.teacher}</h2>
                         <div className="flex gap-3 text-blue-100 text-[10px] md:text-xs font-bold opacity-70">
-                            <span className="flex items-center gap-1"><Briefcase size={10} /> {t('nav.semester')}{metadata.semester}</span>
+                            <span className="flex items-center gap-1"><Briefcase size={10} /> {t('nav.semester')} {metadata.semester}</span>
                             <span className="flex items-center gap-1"><Calendar size={10} /> {metadata.academicYear}</span>
                         </div>
                     </div>

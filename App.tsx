@@ -195,7 +195,11 @@ const App: React.FC = () => {
       case TabType.OVERVIEW:
         return (
           <Suspense fallback={<WeeklySkeleton />}>
-            <SemesterView data={dataWithOverrides} />
+            <SemesterView
+              data={dataWithOverrides}
+              overrides={overrides}
+              abbreviations={abbreviations}
+            />
           </Suspense>
         );
       case TabType.STATS:
