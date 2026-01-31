@@ -20,8 +20,8 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
     ];
 
     return (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-safe z-50 transition-all duration-300">
-            <div className="flex justify-around items-center px-2 py-3">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 pb-safe z-50 transition-all duration-200">
+            <div className="flex justify-around items-center px-1 py-2">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeTab === item.id;
@@ -29,17 +29,17 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
                         <button
                             key={item.id}
                             onClick={() => onTabChange(item.id)}
-                            className={`flex flex-col items-center justify-center min-w-[50px] p-2 rounded-2xl transition-all ${isActive
-                                ? 'text-blue-600 dark:text-blue-400 scale-110'
-                                : 'text-slate-500 dark:text-slate-400 opacity-70 hover:opacity-100'
+                            className={`flex flex-col items-center justify-center min-w-[48px] p-1.5 rounded-xl transition-all active:scale-95 ${isActive
+                                ? 'text-blue-600 dark:text-blue-400'
+                                : 'text-slate-400 dark:text-slate-500'
                                 }`}
                         >
-                            <div className={`relative ${isActive ? 'bg-blue-100 dark:bg-blue-900/30' : ''} p-2 rounded-xl transition-all duration-300`}>
-                                <Icon size={24} className={isActive ? 'fill-current' : ''} strokeWidth={isActive ? 2.5 : 2} />
-                                {isActive && (
-                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full"></div>
-                                )}
+                            <div className={`relative ${isActive ? 'bg-blue-50 dark:bg-blue-900/20' : ''} p-1.5 rounded-lg transition-all duration-200`}>
+                                <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
                             </div>
+                            {isActive && (
+                                <div className="w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full mt-0.5"></div>
+                            )}
                         </button>
                     );
                 })}

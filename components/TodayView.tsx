@@ -48,31 +48,32 @@ const UpcomingSessionCard: React.FC<{
         const displayName = abbreviations[session.courseName] || session.courseName;
 
         return (
-            <div className={`relative flex gap-3 items-start ${small ? 'p-2' : 'p-3 md:p-4'} rounded-xl md:rounded-2xl ${isLive ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-400 dark:border-blue-500 ring-4 ring-blue-100 dark:ring-blue-900/30' : 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} shadow-sm md:hover:shadow-md transition-all group`}>
+            <div className={`relative flex gap-3 items-start ${small ? 'p-2' : 'p-3 md:p-4'} rounded-xl md:rounded-2xl ${isLive ? 'bg-gradient-to-br from-blue-50/80 to-indigo-50/80 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-400 dark:border-blue-500 ring-4 ring-blue-100 dark:ring-blue-900/30' : 'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50'} shadow-sm md:hover:shadow-md transition-all group`}>
                 {isLive && (
-                    <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-500 text-white text-[8px] md:text-[9px] font-black uppercase rounded-full animate-pulse flex items-center gap-1 shadow-lg">
+                    <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-500 text-white text-[8px] md:text-[9px] font-black uppercase rounded-full animate-pulse flex items-center gap-1 shadow-lg z-20">
                         <span className="w-1.5 h-1.5 bg-white rounded-full"></span> LIVE
                     </div>
                 )}
-                <div className={`flex flex-col items-center justify-center border-r ${isLive ? 'border-blue-200 dark:border-blue-700' : 'border-slate-100 dark:border-slate-800'} pr-2 md:pr-3 ${small ? 'min-w-[50px]' : 'min-w-[60px] md:min-w-[70px]'}`}>
-                    <span className={`${small ? 'text-xs' : 'text-base md:text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono`}>{startTimeStr}</span>
+                <div className={`flex flex-col items-center justify-center border-r ${isLive ? 'border-blue-200 dark:border-blue-700' : 'border-slate-100 dark:border-slate-800'} pr-2 md:pr-3 ${small ? 'min-w-[48px]' : 'min-w-[55px] md:min-w-[70px]'}`}>
+                    <span className={`${small ? 'text-[11px]' : 'text-base md:text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono leading-none mb-0.5`}>{startTimeStr}</span>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase opacity-60">AM</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 md:gap-2 mb-1">
-                        <p className={`${small ? 'text-xs' : 'text-xs md:text-sm'} font-black text-slate-800 dark:text-slate-100 truncate flex-1`}>{displayName}</p>
-                        <span className={`${small ? 'px-1 text-[7px]' : 'px-1.5 md:px-2 py-0.5 text-[9px] md:text-[10px]'} font-bold rounded shrink-0 ${currentType === CourseType.LT ? 'bg-blue-100 text-blue-700' : 'bg-sky-100 text-sky-700'}`}>
+                    <div className="flex items-center gap-1.5 md:gap-2 mb-1.5">
+                        <p className={`${small ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'} font-black text-slate-800 dark:text-slate-100 truncate flex-1 tracking-tight`}>{displayName}</p>
+                        <span className={`${small ? 'px-1 text-[7px]' : 'px-1.5 md:px-2 py-0.5 text-[9px] md:text-[10px]'} font-black rounded-md shrink-0 shadow-sm ${currentType === CourseType.LT ? 'bg-blue-100/80 text-blue-700' : 'bg-sky-100/80 text-sky-700'}`}>
                             {currentType}
                         </span>
                     </div>
-                    <p className={`${small ? 'text-[9px]' : 'text-[10px] md:text-xs'} text-slate-500 font-bold mb-1 flex items-center gap-1`}>
-                        <Users size={small ? 10 : 11} className="shrink-0" /> <span className="truncate">{session.className} ({session.group})</span>
+                    <p className={`${small ? 'text-[9px]' : 'text-[10px] md:text-xs'} text-slate-500 dark:text-slate-400 font-bold mb-1.5 flex items-center gap-1.5`}>
+                        <Users size={small ? 9 : 11} className="shrink-0 opacity-60" /> <span className="truncate">{session.className} <span className="opacity-50 font-medium">({session.group})</span></span>
                     </p>
-                    <p className={`${small ? 'text-[9px]' : 'text-[10px] md:text-xs'} text-slate-400 flex items-center justify-between gap-2`}>
-                        <span className="font-mono">{t('common.periodLabel')} {session.timeSlot}</span>
-                        <span className="flex items-center gap-1 font-bold text-slate-600 dark:text-slate-300 shrink-0">
-                            <MapPin size={small ? 9 : 11} /> {session.room}
+                    <div className="flex items-center justify-between gap-2">
+                        <span className="text-[8px] md:text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter shrink-0">{t('common.periodLabel')} {session.timeSlot}</span>
+                        <span className="flex items-center gap-1 font-black text-slate-600 dark:text-slate-300 shrink-0 bg-slate-50 dark:bg-slate-800/50 px-1.5 py-0.5 rounded text-[9px] border border-black/5 dark:border-white/5">
+                            <MapPin size={small ? 9 : 11} strokeWidth={3} className="opacity-60" /> {session.room}
                         </span>
-                    </p>
+                    </div>
                 </div>
             </div>
         );
@@ -318,67 +319,57 @@ const TodayView: React.FC<TodayViewProps> = ({
     };
 
     return (
-        <div className="max-w-[1600px] mx-auto space-y-6 pb-24 animate-in fade-in slide-in-from-bottom-2 duration-700 px-3 md:px-0 overflow-x-hidden">
+        <div className="max-w-[1600px] mx-auto space-y-4 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-700 px-3 md:px-4 overflow-x-hidden">
 
-            {/* 1. HERO HEADER */}
-            <div className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 p-5 md:p-12 text-white shadow-2xl shadow-indigo-500/20">
-                <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
-                    <div className="absolute top-[-20%] right-[-10%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] rounded-full border-[30px] md:border-[40px] border-white/20 blur-3xl"></div>
-                    <div className="absolute bottom-[-20%] left-[-10%] w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bg-white/20 blur-3xl"></div>
-                </div>
+            {/* 1. DASHBOARD LIGHT HERO */}
+            <div className="bg-white dark:bg-slate-950/20 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group">
+                {/* Subtle Background Accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-blue-500/10 transition-colors"></div>
 
-                <div className="relative z-10">
-                    {/* Time badge */}
-                    <div className="flex items-center gap-2 mb-2 opacity-90">
-                        <span className="px-2 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[9px] md:text-[10px] font-bold uppercase tracking-wider border border-white/10">{t('stats.today.currentTime')}</span>
-                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        {/* Greeting & Time Badge */}
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                            <h2 className="text-xl md:text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{getGreeting()}</h2>
+                            <div className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-wider animate-pulse">
+                                {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                        </div>
+
+                        {/* Status line with combined stats */}
+                        <p className="text-xs md:text-sm font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-3">
+                            < Zap size={14} className="text-amber-500 fill-current" />
+                            {todaySessions.length > 0
+                                ? `${getStatusMessage()} · ${todaySessions.length} ${t('common.sessions')} · ${todaySessions.reduce((acc, s) => acc + s.periodCount, 0)} ${t('common.periods')}`
+                                : getStatusMessage()
+                            }
+                        </p>
+
+                        {/* Date & Location Context */}
+                        <div className="flex items-center gap-3 text-slate-400 dark:text-slate-500 text-[10px] md:text-xs font-bold">
+                            <div className="flex items-center gap-1.5">
+                                <CalendarDays size={14} className="opacity-70" />
+                                <span>{i18n.language === 'vi' ? `Thứ ${dayOfWeekIdx === 6 ? 'Nhật' : dayOfWeekIdx + 2}` : DAYS_OF_WEEK[dayOfWeekIdx]}, {todayStr}</span>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Greeting */}
-                    <h2 className="text-2xl md:text-5xl font-black mb-1 md:mb-2 tracking-tight leading-tight">{getGreeting()}</h2>
-
-                    {/* Status message */}
-                    <p className="text-sm md:text-base font-medium text-blue-100 mb-3">
-                        {todaySessions.length > 0
-                            ? `${getStatusMessage()} (${todaySessions.length} ${t('common.sessions')}, ${todaySessions.reduce((acc, s) => acc + s.periodCount, 0)} ${t('common.periods')})`
-                            : getStatusMessage()
-                        }
-                    </p>
-
-                    {/* Date */}
-                    <div className="flex items-center gap-2 text-blue-100 text-xs md:text-lg font-medium opacity-90">
-                        <CalendarDays size={16} className="md:w-5 md:h-5" />
-                        {i18n.language === 'vi' ? `Thứ ${dayOfWeekIdx === 6 ? 'Nhật' : dayOfWeekIdx + 2}` : DAYS_OF_WEEK[dayOfWeekIdx]}, {todayStr}
+                    {/* Desktop Visualization of Progress */}
+                    <div className="hidden md:flex gap-3">
+                        <div className="h-12 w-[1px] bg-slate-200 dark:bg-slate-800 hidden md:block mx-2"></div>
+                        <div className="flex flex-col justify-center">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('common.sessions')}</span>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-2xl font-black text-slate-800 dark:text-white leading-none">{todaySessions.length}</span>
+                                <span className="text-xs font-bold text-slate-400">/ {t('common.today')}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Desktop Stats */}
-                <div className="hidden md:flex gap-4 absolute top-12 right-12">
-                    <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
-                        <span className="text-3xl font-black">{todaySessions.length}</span>
-                        <span className="text-[10px] font-bold uppercase opacity-80">{t('common.sessions')}</span>
-                    </div>
-                    <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
-                        <span className="text-3xl font-black">{todaySessions.reduce((acc, s) => acc + s.periodCount, 0)}</span>
-                        <span className="text-[10px] font-bold uppercase opacity-80">{t('common.periods')}</span>
-                    </div>
-                </div>
 
-                {/* Quick Actions */}
-                <div className="relative z-10 flex flex-wrap gap-2 mt-4 md:mt-6">
-                    <button
-                        onClick={() => onSwitchTab('WEEK')}
-                        className="px-3 md:px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                    >
-                        <Calendar size={12} className="md:w-[14px] md:h-[14px]" /> {t('nav.weekly')}
-                    </button>
-                    <button
-                        onClick={() => onSwitchTab('STATS')}
-                        className="px-3 md:px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                    >
-                        <TrendingUp size={12} className="md:w-[14px] md:h-[14px]" /> {t('nav.statistics')}
-                    </button>
-                </div>
+
+
             </div>
 
             {/* 2. BENTO GRID LAYOUT */}
@@ -391,7 +382,7 @@ const TodayView: React.FC<TodayViewProps> = ({
                     </h3>
 
                     {todaySessions.length > 0 ? (
-                        <div className="space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
+                        <div className="space-y-3 max-h-[500px] overflow-y-auto custom-scrollbar pr-1">
                             {todaySessions.map((session, idx) => (
                                 <UpcomingSessionCard
                                     key={idx}
@@ -414,26 +405,26 @@ const TodayView: React.FC<TodayViewProps> = ({
                 </div>
 
                 {/* B. RIGHT COLUMN: WIDGETS (5/12) */}
-                <div className="lg:col-span-5 space-y-6">
+                <div className="lg:col-span-5 space-y-3 md:space-y-4">
 
                     {/* Widget 1: Next Class */}
                     {nextTeaching ? (
-                        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
-                            <div className="p-6">
-                                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                                    <ArrowRight size={14} className="text-blue-500" /> {t('stats.today.next')}
+                        <div className="bg-white dark:bg-slate-900 rounded-xl md:rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div className="p-4 md:p-5">
+                                <h3 className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3">
+                                    <ArrowRight size={12} className="md:w-[14px] md:h-[14px] text-blue-500" /> {t('stats.today.next')}
                                 </h3>
 
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-12 h-12 bg-blue-50 dark:bg-slate-800 rounded-2xl flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-slate-700">
-                                        <span className="text-[10px] font-bold">{t(`days.${nextTeaching.dayIdx}`)}</span>
-                                        <span className="text-xl font-black leading-none">{nextTeaching.date.getDate()}</span>
+                                <div className="flex items-center gap-2.5 mb-4">
+                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-50 dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-slate-700">
+                                        <span className="text-[9px] md:text-[10px] font-bold">{t(`days.${nextTeaching.dayIdx}`)}</span>
+                                        <span className="text-base md:text-xl font-black leading-none">{nextTeaching.date.getDate()}</span>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-tighter">
+                                        <p className="text-[10px] md:text-xs font-black text-slate-800 dark:text-white uppercase tracking-tighter">
                                             {t('stats.today.nextDate', { day: t(`days.${nextTeaching.dayIdx}`), date: formatDate(nextTeaching.date) })}
                                         </p>
-                                        <p className="text-[10px] font-bold text-slate-400">{nextTeaching.sessions.length} {t('common.sessions')}</p>
+                                        <p className="text-[9px] md:text-[10px] font-bold text-slate-400">{nextTeaching.sessions.length} {t('common.sessions')}</p>
                                     </div>
                                 </div>
 
@@ -459,14 +450,14 @@ const TodayView: React.FC<TodayViewProps> = ({
 
                                 <button
                                     onClick={() => { setCurrentWeekIndex(nextTeaching.weekIdx); onSwitchTab('WEEK'); }}
-                                    className="mt-6 w-full py-4 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-2xl text-[11px] font-black text-slate-600 dark:text-slate-300 transition-all flex items-center justify-center gap-2"
+                                    className="mt-4 md:mt-6 w-full py-3 md:py-4 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black text-slate-600 dark:text-slate-300 transition-all flex items-center justify-center gap-2"
                                 >
                                     {t('common.viewDetails')} <ChevronRight size={14} />
                                 </button>
                             </div>
                         </div>
                     ) : (
-                        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800 p-8 flex flex-col items-center justify-center text-center">
+                        <div className="bg-white dark:bg-slate-900 rounded-xl md:rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 md:p-8 flex flex-col items-center justify-center text-center">
                             <div className="w-16 h-16 bg-gradient-to-tr from-green-100 to-emerald-50 dark:from-green-900/20 dark:to-slate-800 text-emerald-500 rounded-full flex items-center justify-center mb-4">
                                 <Calendar size={32} strokeWidth={1.5} />
                             </div>
@@ -475,8 +466,8 @@ const TodayView: React.FC<TodayViewProps> = ({
                         </div>
                     )}
 
-                    {/* Widget 2: Detailed Progress */}
-                    <div className="bg-slate-900 rounded-2xl md:rounded-3xl p-4 md:p-6 text-white shadow-xl shadow-indigo-500/20 space-y-4 md:space-y-6">
+                    {/* Widget 2: Detailed Progress - HIDDEN ON MOBILE */}
+                    <div className="hidden md:block bg-slate-900 rounded-2xl md:rounded-3xl p-4 md:p-6 text-white shadow-xl shadow-indigo-500/20 space-y-4 md:space-y-6">
                         <div className="flex items-center gap-2 text-indigo-200">
                             <TrendingUp size={14} className="md:w-4 md:h-4" />
                             <h3 className="text-[10px] md:text-xs font-black uppercase tracking-widest">{t('stats.today.progress')}</h3>
@@ -502,7 +493,7 @@ const TodayView: React.FC<TodayViewProps> = ({
             </div>
 
             {/* Copyright Footer */}
-            <div className="text-center text-slate-400 text-[10px] mt-12 pt-8 border-t border-slate-100 dark:border-slate-900">
+            <div className="text-center text-slate-400 text-[10px] mt-8 md:mt-12 pt-6 md:pt-8 border-t border-slate-100 dark:border-slate-900">
                 {t('about.copyright')}
             </div>
         </div>

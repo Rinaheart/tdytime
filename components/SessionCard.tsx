@@ -54,50 +54,50 @@ const SessionCard: React.FC<SessionCardProps> = ({
         <div
             onClick={() => isVertical && setIsExpanded(!isExpanded)}
             className={`
-        p-3 rounded-xl shadow-sm text-left relative transition-all duration-300
-        ${SESSION_COLORS[session.sessionTime]} dark:bg-opacity-10 dark:border-opacity-60
+        p-2 md:p-3 rounded-xl shadow-sm text-left relative transition-all duration-300
+        ${SESSION_COLORS[session.sessionTime]} dark:bg-opacity-5 dark:border-opacity-40
         ${session.hasConflict ? 'conflict-border' : ''}
-        ${isCurrent ? 'ring-2 ring-blue-500 scale-[1.02] shadow-lg z-10' : ''}
-        ${isVertical ? 'cursor-pointer active:scale-[0.98]' : ''}
+        ${isCurrent ? 'ring-2 ring-blue-500/80 bg-blue-50/50 dark:bg-blue-900/10 shadow-indigo-500/10 shadow-lg z-10' : 'border border-slate-100/50 dark:border-slate-800/50'}
+        ${isVertical ? 'cursor-pointer active:scale-[0.97]' : ''}
       `}
         >
             {/* Header Section */}
-            <div className="flex justify-between items-start gap-1">
+            <div className="flex justify-between items-start gap-1 mb-1">
                 <div className="flex-1 min-w-0">
-                    <p className="text-[11px] font-bold leading-tight mb-1 text-slate-800 dark:text-slate-100 line-clamp-2" title={session.courseName}>
+                    <p className="text-[10px] md:text-[11px] font-black leading-tight text-slate-800 dark:text-slate-100 line-clamp-2" title={session.courseName}>
                         {displayName}
                     </p>
                 </div>
 
                 {/* Indicators */}
-                <div className="flex items-center gap-1 flex-shrink-0">
-                    {session.hasConflict && <AlertCircle size={14} className="text-red-500" />}
+                <div className="flex items-center gap-0.5 flex-shrink-0 -mt-0.5 opacity-80">
+                    {session.hasConflict && <AlertCircle size={11} className="text-red-500 md:w-[13px] md:h-[13px]" />}
                     {isVertical && (
                         <div className="text-slate-400">
-                            {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                            {isExpanded ? <ChevronUp size={12} strokeWidth={3} className="md:w-[14px] md:h-[14px]" /> : <ChevronDown size={12} strokeWidth={3} className="md:w-[14px] md:h-[14px]" />}
                         </div>
                     )}
                 </div>
 
                 {isCurrent && (
-                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
                     </span>
                 )}
             </div>
 
             {/* Primary Info (Always Visible) */}
-            <div className="flex items-center justify-between gap-2 mt-1">
-                <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-medium opacity-70 uppercase tracking-tight">{t('weekly.period', { number: session.timeSlot })}</span>
-                    <span className={`text-[8px] font-bold px-1 rounded ${currentType === CourseType.LT ? 'bg-blue-100 text-blue-700' : 'bg-sky-100 text-sky-700'}`}>
+            <div className="flex items-center justify-between gap-1.5">
+                <div className="flex items-center gap-1.5">
+                    <span className="text-[8px] md:text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{t('weekly.period', { number: session.timeSlot })}</span>
+                    <span className={`text-[7px] md:text-[8px] font-black px-1 py-0.5 rounded-md ${currentType === CourseType.LT ? 'bg-blue-100/80 text-blue-700' : 'bg-sky-100/80 text-sky-700'}`}>
                         {currentType}
                     </span>
                 </div>
 
-                <div className="highlight-room inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold">
-                    <MapPin size={10} />
+                <div className="highlight-room inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px] md:text-[10px] font-black shrink-0 shadow-sm border border-black/5 dark:border-white/5">
+                    <MapPin size={9} strokeWidth={3} className="md:w-[10px] md:h-[10px]" />
                     <span>{session.room}</span>
                 </div>
             </div>
@@ -105,18 +105,18 @@ const SessionCard: React.FC<SessionCardProps> = ({
             {/* Collapsible Details */}
             <div className={`
         grid transition-all duration-300 ease-in-out
-        ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-2 pt-2 border-t border-slate-400/10' : 'grid-rows-[0fr] opacity-0'}
+        ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-2 pt-2 border-t border-slate-400/5' : 'grid-rows-[0fr] opacity-0'}
       `}>
                 <div className="overflow-hidden">
-                    <p className="text-[10px] text-slate-600 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
-                        <Users size={10} className="text-slate-400" />
-                        <span className="font-bold text-slate-700 dark:text-slate-200">{session.className}</span>
-                        <span className="font-normal opacity-70">({session.group})</span>
+                    <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
+                        <Users size={9} className="text-slate-400/80 md:w-[10px] md:h-[10px]" />
+                        <span className="font-black text-slate-700 dark:text-slate-200">{session.className}</span>
+                        <span className="font-bold opacity-50 sm:block hidden">({session.group})</span>
                     </p>
 
                     {showTeacher && (
-                        <div className={`flex items-center gap-1.5 text-[9px] font-bold px-1.5 py-0.5 rounded border max-w-full ${getTeacherColor(session.teacher)}`}>
-                            <User size={10} className="flex-shrink-0" />
+                        <div className={`flex items-center gap-1 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-md border border-transparent max-w-full ${getTeacherColor(session.teacher)}`}>
+                            <User size={9} strokeWidth={3} className="flex-shrink-0 md:w-[10px] md:h-[10px]" />
                             <span className="truncate">{session.teacher}</span>
                         </div>
                     )}
