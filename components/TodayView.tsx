@@ -48,29 +48,29 @@ const UpcomingSessionCard: React.FC<{
         const displayName = abbreviations[session.courseName] || session.courseName;
 
         return (
-            <div className={`relative flex gap-3 items-start ${small ? 'p-2' : 'p-4'} rounded-2xl ${isLive ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-400 dark:border-blue-500 ring-4 ring-blue-100 dark:ring-blue-900/30' : 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} shadow-sm md:hover:shadow-md transition-all group`}>
+            <div className={`relative flex gap-3 items-start ${small ? 'p-2' : 'p-3 md:p-4'} rounded-xl md:rounded-2xl ${isLive ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-400 dark:border-blue-500 ring-4 ring-blue-100 dark:ring-blue-900/30' : 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} shadow-sm md:hover:shadow-md transition-all group`}>
                 {isLive && (
-                    <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-500 text-white text-[9px] font-black uppercase rounded-full animate-pulse flex items-center gap-1 shadow-lg">
+                    <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-500 text-white text-[8px] md:text-[9px] font-black uppercase rounded-full animate-pulse flex items-center gap-1 shadow-lg">
                         <span className="w-1.5 h-1.5 bg-white rounded-full"></span> LIVE
                     </div>
                 )}
-                <div className={`flex flex-col items-center justify-center border-r ${isLive ? 'border-blue-200 dark:border-blue-700' : 'border-slate-100 dark:border-slate-800'} pr-3 ${small ? 'min-w-[60px]' : 'min-w-[70px]'}`}>
-                    <span className={`${small ? 'text-sm' : 'text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono`}>{startTimeStr}</span>
+                <div className={`flex flex-col items-center justify-center border-r ${isLive ? 'border-blue-200 dark:border-blue-700' : 'border-slate-100 dark:border-slate-800'} pr-2 md:pr-3 ${small ? 'min-w-[50px]' : 'min-w-[60px] md:min-w-[70px]'}`}>
+                    <span className={`${small ? 'text-xs' : 'text-base md:text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono`}>{startTimeStr}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                        <p className={`${small ? 'text-xs' : 'text-sm'} font-black text-slate-800 dark:text-slate-100 truncate`}>{displayName}</p>
-                        <span className={`${small ? 'px-1 text-[8px]' : 'px-2 py-0.5 text-[10px]'} font-bold rounded ${currentType === CourseType.LT ? 'bg-blue-100 text-blue-700' : 'bg-sky-100 text-sky-700'}`}>
+                    <div className="flex items-center gap-1.5 md:gap-2 mb-1">
+                        <p className={`${small ? 'text-xs' : 'text-xs md:text-sm'} font-black text-slate-800 dark:text-slate-100 truncate flex-1`}>{displayName}</p>
+                        <span className={`${small ? 'px-1 text-[7px]' : 'px-1.5 md:px-2 py-0.5 text-[9px] md:text-[10px]'} font-bold rounded shrink-0 ${currentType === CourseType.LT ? 'bg-blue-100 text-blue-700' : 'bg-sky-100 text-sky-700'}`}>
                             {currentType}
                         </span>
                     </div>
-                    <p className={`${small ? 'text-[10px]' : 'text-xs'} text-slate-500 font-bold mb-1 flex items-center gap-1`}>
-                        <Users size={small ? 10 : 12} /> {session.className} ({session.group})
+                    <p className={`${small ? 'text-[9px]' : 'text-[10px] md:text-xs'} text-slate-500 font-bold mb-1 flex items-center gap-1`}>
+                        <Users size={small ? 10 : 11} className="shrink-0" /> <span className="truncate">{session.className} ({session.group})</span>
                     </p>
-                    <p className={`${small ? 'text-[10px]' : 'text-xs'} text-slate-400 flex items-center justify-between`}>
+                    <p className={`${small ? 'text-[9px]' : 'text-[10px] md:text-xs'} text-slate-400 flex items-center justify-between gap-2`}>
                         <span className="font-mono">{t('common.periodLabel')} {session.timeSlot}</span>
-                        <span className="flex items-center gap-1 font-bold text-slate-600 dark:text-slate-300">
-                            <MapPin size={small ? 10 : 12} /> {session.room}
+                        <span className="flex items-center gap-1 font-bold text-slate-600 dark:text-slate-300 shrink-0">
+                            <MapPin size={small ? 9 : 11} /> {session.room}
                         </span>
                     </p>
                 </div>
@@ -476,10 +476,10 @@ const TodayView: React.FC<TodayViewProps> = ({
                     )}
 
                     {/* Widget 2: Detailed Progress */}
-                    <div className="bg-slate-900 rounded-3xl p-6 text-white shadow-xl shadow-indigo-500/20 space-y-6">
+                    <div className="bg-slate-900 rounded-2xl md:rounded-3xl p-4 md:p-6 text-white shadow-xl shadow-indigo-500/20 space-y-4 md:space-y-6">
                         <div className="flex items-center gap-2 text-indigo-200">
-                            <TrendingUp size={16} />
-                            <h3 className="text-xs font-black uppercase tracking-widest">{t('today.progress')}</h3>
+                            <TrendingUp size={14} className="md:w-4 md:h-4" />
+                            <h3 className="text-[10px] md:text-xs font-black uppercase tracking-widest">{t('stats.today.progress')}</h3>
                         </div>
 
                         {[
