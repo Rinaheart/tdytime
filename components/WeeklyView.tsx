@@ -92,8 +92,10 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
     sessionTime: ''
   });
 
-  // Enforce Horizontal View Mode by default for all devices
-  const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>('horizontal');
+  // Default to vertical on mobile, horizontal on desktop
+  const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>(() => {
+    return typeof window !== 'undefined' && window.innerWidth < 768 ? 'vertical' : 'horizontal';
+  });
 
   // Export Modal State
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -288,6 +290,14 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
             <Zap size={16} className="fill-current" />
             <span className="hidden sm:inline">{t('common.current')}</span>
           </button>
+          <button
+            onClick={() => setViewMode(viewMode === 'vertical' ? 'horizontal' : 'vertical')}
+            className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 active:scale-95 transition-all shadow-sm"
+            title={viewMode === 'vertical' ? 'Chuyển sang lịch ngang' : 'Chuyển sang lịch dọc'}
+          >
+            {viewMode === 'vertical' ? <LayoutTemplate size={16} className="text-blue-500" /> : <Columns size={16} className="text-blue-500" />}
+            <span className="hidden sm:inline">{viewMode === 'vertical' ? 'Lịch ngang' : 'Lịch dọc'}</span>
+          </button>
 
           <button
             onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -332,56 +342,73 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
       )}
 
       {viewMode === 'horizontal' ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm overflow-hidden relative group max-w-full">
-          <div className="overflow-x-auto w-full pb-2 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 touch-pan-x">
-            <table className="w-full border-collapse min-w-[1000px]">
-              <thead>
-                <tr className="bg-slate-50/50 dark:bg-slate-800/30">
-                  <th className="w-10 md:w-14 p-2 border border-slate-100/60 dark:border-slate-800/60 text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-slate-800/50"></th>
-                  {DAYS_OF_WEEK.map((day, idx) => {
-                    const isToday = isDayToday(idx);
-                    return (
-                      <th key={day} className={`min-w-[120px] p-2 md:p-4 border border-slate-100/60 dark:border-slate-800/60 text-center transition-colors ${isToday ? 'bg-blue-50/30 dark:bg-blue-900/10' : ''}`}>
-                        <div className="flex flex-col items-center gap-1">
-                          {isToday && (
-                            <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest mb-1 animate-bounce">Today</span>
-                          )}
-                          <p className={`text-[10px] md:text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
-                            {(t(`days.${idx}`))}
-                          </p>
-                          <p className={`text-[10px] md:text-xs font-mono font-bold ${isToday ? 'text-blue-700 dark:text-blue-300' : 'text-slate-800 dark:text-slate-300'}`}>
-                            {getDayDateString(idx)}
-                          </p>
-                        </div>
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { key: 'morning', label: 'S', fullLabel: t('weekly.morning'), time: '07:00' },
-                  { key: 'afternoon', label: 'C', fullLabel: t('weekly.afternoon'), time: '13:30' },
-                  { key: 'evening', label: 'T', fullLabel: t('weekly.evening'), time: '17:10' }
-                ].map((shift) => (
-                  <tr key={shift.key} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10 transition-colors">
-                    <td className="p-1 md:p-2 border border-slate-100/60 dark:border-slate-800/60 text-center bg-slate-50/30 dark:bg-slate-800/20 align-middle">
-                      <div className="flex flex-col items-center justify-center h-full gap-1">
-                        <span className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 flex items-center justify-center text-[9px] md:text-[10px] font-black">{shift.label}</span>
-                      </div>
-                    </td>
-                    {DAYS_OF_WEEK.map((day, dayIdx) => {
-                      const isToday = isDayToday(dayIdx);
-                      return (
-                        <td key={`${day}-${shift.key}`} className={`p-1.5 md:p-3 border border-slate-100/60 dark:border-slate-800/60 align-top min-h-[120px] md:min-h-[140px] transition-colors ${isToday ? 'bg-blue-50/20 dark:bg-blue-900/5' : ''}`}>
-                          {renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
+        <div className="relative group">
+          {/* Scroll Hint Icon for Mobile */}
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none md:hidden animate-pulse">
+            <div className="bg-blue-600/20 text-blue-600 p-2 rounded-full backdrop-blur-sm">
+              <ChevronRight size={20} />
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            <div className="overflow-x-auto w-full custom-scrollbar touch-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+              <div className="min-w-[1024px]">
+                <table className="w-full border-collapse border-hidden">
+                  <thead>
+                    <tr className="bg-slate-50/50 dark:bg-slate-800/50">
+                      <th className="w-14 p-4 border border-slate-100 dark:border-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-100/50 dark:bg-slate-800/80 sticky left-0 z-20 backdrop-blur-md"></th>
+                      {DAYS_OF_WEEK.map((day, idx) => {
+                        const isToday = isDayToday(idx);
+                        return (
+                          <th key={day} className={`min-w-[140px] p-4 border border-slate-100 dark:border-slate-800 text-center transition-colors ${isToday ? 'bg-blue-50/50 dark:bg-blue-900/20' : ''}`}>
+                            <div className="flex flex-col items-center gap-1">
+                              {isToday && (
+                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-1">Hôm nay</span>
+                              )}
+                              <p className={`text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                                {(t(`days.${idx}`))}
+                              </p>
+                              <p className={`text-xs font-mono font-bold ${isToday ? 'text-blue-700 dark:text-blue-300' : 'text-slate-800 dark:text-slate-300'}`}>
+                                {getDayDateString(idx)}
+                              </p>
+                            </div>
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {[
+                      { key: 'morning', label: 'S', fullLabel: t('weekly.morning') },
+                      { key: 'afternoon', label: 'C', fullLabel: t('weekly.afternoon') },
+                      { key: 'evening', label: 'T', fullLabel: t('weekly.evening') }
+                    ].map((shift) => (
+                      <tr key={shift.key} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10 transition-colors">
+                        <td className="p-4 border border-slate-100 dark:border-slate-800 text-center bg-slate-50/50 dark:bg-slate-800/80 align-middle sticky left-0 z-20 backdrop-blur-md shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
+                          <div className="flex flex-col items-center justify-center">
+                            <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-lg shadow-blue-500/20">{shift.label}</span>
+                          </div>
                         </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        {DAYS_OF_WEEK.map((day, dayIdx) => {
+                          const isToday = isDayToday(dayIdx);
+                          return (
+                            <td key={`${day}-${shift.key}`} className={`p-3 border border-slate-100 dark:border-slate-800 align-top min-h-[160px] transition-colors ${isToday ? 'bg-blue-50/20 dark:bg-blue-900/5' : ''}`}>
+                              <div className="min-h-[120px]">
+                                {renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {/* Scroll Progress Bar for Mobile */}
+          <div className="mt-4 h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden md:hidden">
+            <div className="h-full bg-blue-600 w-1/3 rounded-full animate-[shimmer_2s_infinite_linear]"></div>
           </div>
         </div>
       ) : (
