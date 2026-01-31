@@ -333,11 +333,11 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
 
       {viewMode === 'horizontal' ? (
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm overflow-hidden relative group">
-          <div className="overflow-x-auto w-full pb-2 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
-            <table className="w-full border-collapse table-fixed min-w-[1000px]">
+          <div className="overflow-x-auto w-full pb-2 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 touch-pan-x">
+            <table className="w-full border-collapse min-w-[1000px]">
               <thead>
                 <tr className="bg-slate-50/50 dark:bg-slate-800/30">
-                  <th className="w-8 md:w-14 p-2 border border-slate-100/60 dark:border-slate-800/60 text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-slate-800/50"></th>
+                  <th className="w-10 md:w-14 p-2 border border-slate-100/60 dark:border-slate-800/60 text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-slate-800/50"></th>
                   {DAYS_OF_WEEK.map((day, idx) => {
                     const isToday = isDayToday(idx);
                     return (
