@@ -34,12 +34,15 @@
         "sessions": "buổi dạy",
         "weeks": "tuần",
         "week": "Tuần",
+        "month": "Tháng",
         "morning": "Sáng",
         "afternoon": "Chiều",
         "evening": "Tối",
         "switchLanguage": "Chuyển đổi ngôn ngữ",
         "conflicts": "Xung đột",
-        "warnings": "Cảnh báo & Xung đột"
+        "warnings": "Cảnh báo & Xung đột",
+        "viewDetails": "Xem chi tiết",
+        "periodLabel": "Tiết"
     },
     "days": {
         "0": "T2",
@@ -157,8 +160,11 @@
             "progress": "Tiến độ tuần này",
             "remaining": "Còn lại {{count}} tiết",
             "noMore": "Không còn lịch dạy trong kỳ này",
-            "currentTime": "Giờ hiện tại",
-            "freeMessage": "Hãy tận hưởng thời gian nghỉ ngơi nhé! ☕"
+            "currentTime": "Bây giờ",
+            "freeMessage": "Hãy tận hưởng thời gian nghỉ ngơi nhé! ☕",
+            "progressDay": "Hôm nay",
+            "progressWeek": "Tuần này",
+            "progressMonth": "Tháng này"
         },
         "weeklyTrend": "Biến động theo Tuần",
         "dailyDensity": "Mật độ Giảng dạy theo Thứ",

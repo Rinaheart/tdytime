@@ -1,5 +1,5 @@
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     Clock,
@@ -30,11 +30,13 @@ interface TodayViewProps {
 const UpcomingSessionCard: React.FC<{
     session: CourseSession,
     small?: boolean,
+    isLive?: boolean,
     overrides?: Record<string, CourseType>,
     abbreviations?: Record<string, string>
 }> = ({
     session,
     small = false,
+    isLive = false,
     overrides = {},
     abbreviations = {}
 }) => {
@@ -46,9 +48,14 @@ const UpcomingSessionCard: React.FC<{
         const displayName = abbreviations[session.courseName] || session.courseName;
 
         return (
-            <div className={`flex gap-3 items-start ${small ? 'p-2' : 'p-4'} rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm md:hover:shadow-md transition-all group`}>
-                <div className={`flex flex-col items-center justify-center border-r border-slate-100 dark:border-slate-800 pr-3 ${small ? 'min-w-[60px]' : 'min-w-[70px]'}`}>
-                    <span className={`${small ? 'text-sm' : 'text-lg'} font-black text-blue-600 dark:text-blue-400 font-mono`}>{startTimeStr}</span>
+            <div className={`relative flex gap-3 items-start ${small ? 'p-2' : 'p-4'} rounded-2xl ${isLive ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-400 dark:border-blue-500 ring-4 ring-blue-100 dark:ring-blue-900/30' : 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} shadow-sm md:hover:shadow-md transition-all group`}>
+                {isLive && (
+                    <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-500 text-white text-[9px] font-black uppercase rounded-full animate-pulse flex items-center gap-1 shadow-lg">
+                        <span className="w-1.5 h-1.5 bg-white rounded-full"></span> LIVE
+                    </div>
+                )}
+                <div className={`flex flex-col items-center justify-center border-r ${isLive ? 'border-blue-200 dark:border-blue-700' : 'border-slate-100 dark:border-slate-800'} pr-3 ${small ? 'min-w-[60px]' : 'min-w-[70px]'}`}>
+                    <span className={`${small ? 'text-sm' : 'text-lg'} font-black ${isLive ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} font-mono`}>{startTimeStr}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
@@ -61,7 +68,7 @@ const UpcomingSessionCard: React.FC<{
                         <Users size={small ? 10 : 12} /> {session.className} ({session.group})
                     </p>
                     <p className={`${small ? 'text-[10px]' : 'text-xs'} text-slate-400 flex items-center justify-between`}>
-                        <span className="font-mono">Tiết {session.timeSlot}</span>
+                        <span className="font-mono">{t('common.periodLabel')} {session.timeSlot}</span>
                         <span className="flex items-center gap-1 font-bold text-slate-600 dark:text-slate-300">
                             <MapPin size={small ? 10 : 12} /> {session.room}
                         </span>
@@ -80,7 +87,20 @@ const TodayView: React.FC<TodayViewProps> = ({
 }) => {
     const { t, i18n } = useTranslation();
 
-    const now = new Date();
+    // Real-time clock state
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 60000); // Update every minute
+        return () => clearInterval(timer);
+    }, []);
+
+    const now = currentTime;
+
+    // State for mobile expand/collapse
+    const [expandNextSessions, setExpandNextSessions] = useState(false);
     // Adjust to Mon-Sun (0-6)
     const currentJsDay = now.getDay();
     const dayOfWeekIdx = currentJsDay === 0 ? 6 : currentJsDay - 1;
@@ -264,6 +284,26 @@ const TodayView: React.FC<TodayViewProps> = ({
         };
     }, [data, now, todaySessions, currentWeek]);
 
+    // 5. Check if session is currently LIVE
+    const isSessionLive = (session: CourseSession) => {
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTotalMin = currentHour * 60 + currentMinute;
+
+        const startP = parseInt(session.timeSlot.split('-')[0]);
+        const endP = parseInt(session.timeSlot.split('-')[1] || session.timeSlot.split('-')[0]);
+
+        const startPeriod = PERIOD_TIMES[startP];
+        const endPeriod = PERIOD_TIMES[endP] || startPeriod;
+
+        if (!startPeriod || !endPeriod) return false;
+
+        const startMin = startPeriod.start[0] * 60 + startPeriod.start[1];
+        const endMin = endPeriod.end[0] * 60 + endPeriod.end[1];
+
+        return currentTotalMin >= startMin && currentTotalMin <= endMin;
+    };
+
     const getGreeting = () => {
         const hour = now.getHours();
         const name = data.metadata.teacher.split(' ').pop() || "";
@@ -285,7 +325,7 @@ const TodayView: React.FC<TodayViewProps> = ({
                 <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                     <div>
                         <div className="flex items-center gap-2 mb-3 opacity-90">
-                            <span className="px-2 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider border border-white/10">{t('today.currentTime')}</span>
+                            <span className="px-2 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider border border-white/10">{t('stats.today.currentTime')}</span>
                             <span className="text-[10px] font-bold uppercase tracking-widest">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                         </div>
                         <h2 className="text-3xl md:text-5xl font-black mb-2 tracking-tight leading-tight">{getGreeting()}</h2>
@@ -300,7 +340,39 @@ const TodayView: React.FC<TodayViewProps> = ({
                             <span className="text-3xl font-black">{todaySessions.length}</span>
                             <span className="text-[10px] font-bold uppercase opacity-80">{t('common.sessions')}</span>
                         </div>
+                        <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex flex-col items-center min-w-[100px]">
+                            <span className="text-3xl font-black">{todaySessions.reduce((acc, s) => acc + s.periodCount, 0)}</span>
+                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.periods')}</span>
+                        </div>
                     </div>
+
+                    {/* Mobile Stats - visible only on mobile */}
+                    <div className="flex md:hidden gap-3 mt-4">
+                        <div className="flex-1 px-4 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center gap-2">
+                            <span className="text-2xl font-black">{todaySessions.length}</span>
+                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.sessions')}</span>
+                        </div>
+                        <div className="flex-1 px-4 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center gap-2">
+                            <span className="text-2xl font-black">{todaySessions.reduce((acc, s) => acc + s.periodCount, 0)}</span>
+                            <span className="text-[10px] font-bold uppercase opacity-80">{t('common.periods')}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="relative z-10 flex flex-wrap gap-2 mt-6">
+                    <button
+                        onClick={() => onSwitchTab('WEEK')}
+                        className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                    >
+                        <Calendar size={14} /> {t('nav.weekly')}
+                    </button>
+                    <button
+                        onClick={() => onSwitchTab('STATS')}
+                        className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-[11px] font-bold uppercase tracking-wider border border-white/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                    >
+                        <TrendingUp size={14} /> {t('nav.statistics')}
+                    </button>
                 </div>
             </div>
 
@@ -314,9 +386,15 @@ const TodayView: React.FC<TodayViewProps> = ({
                     </h3>
 
                     {todaySessions.length > 0 ? (
-                        <div className="space-y-4">
+                        <div className="space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
                             {todaySessions.map((session, idx) => (
-                                <UpcomingSessionCard key={idx} session={session} overrides={overrides} abbreviations={abbreviations} />
+                                <UpcomingSessionCard
+                                    key={idx}
+                                    session={session}
+                                    isLive={isSessionLive(session)}
+                                    overrides={overrides}
+                                    abbreviations={abbreviations}
+                                />
                             ))}
                         </div>
                     ) : (
@@ -324,8 +402,8 @@ const TodayView: React.FC<TodayViewProps> = ({
                             <div className="w-24 h-24 bg-gradient-to-tr from-orange-100 to-amber-50 dark:from-orange-900/20 dark:to-slate-800 text-orange-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                                 <Coffee size={48} strokeWidth={1.5} />
                             </div>
-                            <h4 className="text-2xl font-black text-slate-800 dark:text-slate-100 mb-2">{t('today.status.free')}</h4>
-                            <p className="text-slate-400 font-medium max-w-xs mx-auto">{t('today.freeMessage')}</p>
+                            <h4 className="text-2xl font-black text-slate-800 dark:text-slate-100 mb-2">{t('stats.today.status.free')}</h4>
+                            <p className="text-slate-400 font-medium max-w-xs mx-auto">{t('stats.today.freeMessage')}</p>
                         </div>
                     )}
                 </div>
@@ -334,11 +412,11 @@ const TodayView: React.FC<TodayViewProps> = ({
                 <div className="lg:col-span-5 space-y-6">
 
                     {/* Widget 1: Next Class */}
-                    {nextTeaching && (
+                    {nextTeaching ? (
                         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
                             <div className="p-6">
                                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                                    <ArrowRight size={14} className="text-blue-500" /> {t('today.next')}
+                                    <ArrowRight size={14} className="text-blue-500" /> {t('stats.today.next')}
                                 </h3>
 
                                 <div className="flex items-center gap-3 mb-6">
@@ -348,16 +426,30 @@ const TodayView: React.FC<TodayViewProps> = ({
                                     </div>
                                     <div>
                                         <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-tighter">
-                                            {t('today.nextDate', { day: t(`days.${nextTeaching.dayIdx}`), date: formatDate(nextTeaching.date) })}
+                                            {t('stats.today.nextDate', { day: t(`days.${nextTeaching.dayIdx}`), date: formatDate(nextTeaching.date) })}
                                         </p>
                                         <p className="text-[10px] font-bold text-slate-400">{nextTeaching.sessions.length} {t('common.sessions')}</p>
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    {nextTeaching.sessions.map((s, i) => (
+                                    {/* Mobile: show 2, Desktop: show 3 */}
+                                    {nextTeaching.sessions.slice(0, expandNextSessions ? undefined : (window.innerWidth < 768 ? 2 : 3)).map((s, i) => (
                                         <UpcomingSessionCard key={i} session={s} small={true} overrides={overrides} abbreviations={abbreviations} />
                                     ))}
+
+                                    {/* Expand/Collapse button for mobile */}
+                                    {nextTeaching.sessions.length > 2 && (
+                                        <button
+                                            onClick={() => setExpandNextSessions(!expandNextSessions)}
+                                            className="w-full py-2 text-center text-[10px] font-bold text-blue-500 hover:text-blue-600 transition-colors"
+                                        >
+                                            {expandNextSessions
+                                                ? `▲ ${t('common.close')}`
+                                                : `+${nextTeaching.sessions.length - 2} ${t('common.sessions')} ▼`
+                                            }
+                                        </button>
+                                    )}
                                 </div>
 
                                 <button
@@ -367,6 +459,14 @@ const TodayView: React.FC<TodayViewProps> = ({
                                     {t('common.viewDetails')} <ChevronRight size={14} />
                                 </button>
                             </div>
+                        </div>
+                    ) : (
+                        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800 p-8 flex flex-col items-center justify-center text-center">
+                            <div className="w-16 h-16 bg-gradient-to-tr from-green-100 to-emerald-50 dark:from-green-900/20 dark:to-slate-800 text-emerald-500 rounded-full flex items-center justify-center mb-4">
+                                <Calendar size={32} strokeWidth={1.5} />
+                            </div>
+                            <h4 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-2">{t('stats.today.noMore')}</h4>
+                            <p className="text-xs text-slate-400 font-medium">🎉</p>
                         </div>
                     )}
 
@@ -378,9 +478,9 @@ const TodayView: React.FC<TodayViewProps> = ({
                         </div>
 
                         {[
-                            { label: t('common.current'), val: progress.today, color: 'bg-blue-400' },
-                            { label: t('common.week'), val: progress.week, color: 'bg-indigo-400' },
-                            { label: t('semester.weeklySummary'), val: progress.month, color: 'bg-violet-400' }
+                            { label: t('stats.today.progressDay'), val: progress.today, color: 'bg-blue-400' },
+                            { label: t('stats.today.progressWeek'), val: progress.week, color: 'bg-indigo-400' },
+                            { label: t('stats.today.progressMonth'), val: progress.month, color: 'bg-violet-400' }
                         ].map((p, i) => (
                             <div key={i} className="space-y-2">
                                 <div className="flex justify-between items-end">
@@ -394,6 +494,11 @@ const TodayView: React.FC<TodayViewProps> = ({
                         ))}
                     </div>
                 </div>
+            </div>
+
+            {/* Copyright Footer */}
+            <div className="text-center text-slate-400 text-[10px] mt-12 pt-8 border-t border-slate-100 dark:border-slate-900">
+                {t('about.copyright')}
             </div>
         </div>
     );

@@ -3,10 +3,25 @@
 <head>
 </head>
 <body>
+    <!-- header-->
+    <!-- Header and Menu -->
 <div class="container-fluid">
     <div class="row hitec-title">
         <div class="col-xs-9 nopadding">
             <h1>TRƯỜNG ĐẠI HỌC Y - DƯỢC</h1>
+        </div>
+        <div class="col-xs-3 text-right" style="padding-top:3px;">
+            <!--
+            <a href="~/Message/Inbox" title="Tin nhắn">
+                <span class="glyphicon glyphicon-envelope"></span>
+                <span class="noti-unreadmessages"></span>
+            </a>
+            &nbsp;&nbsp;
+            <a href="~/Common/Event" title="Công việc - sự kiện">
+                <span class="glyphicon glyphicon-education"></span>
+                <span class="noti-workevents"></span>
+            </a>
+            -->
         </div>
     </div>
 </div>
@@ -36,15 +51,73 @@
 
     <div class="hitec-information">
         <h5>
-            User DEMO A
+            Phan Đức Th&#225;i Duy
         </h5>
+        <p>
+            <img src="/giangvien/images/icons/people.png" alt="">
+            <a id="link_userProfile" href="/giangvien/Account/UserProfile">Thông tin cá nhân</a>
+        </p>
+        <p>
+            <img src="/giangvien/images/icons/curriculum_vitae16.png" alt="">
+            <a id="link_userProfile" href="/giangvien/CurriculumVitae">Lý lịch cán bộ - viên chức</a>
+        </p>
+        <!--
+        <p>
+            <img src="~/images/icons/setting.png" alt="">
+            <a id="link_userPassword" href="~/Account/Intergrated">Tích hợp tài khoản</a>
+        </p>
+        -->
+        <p>
+            <img src="/giangvien/images/icons/key.png" alt="">
+            <a id="link_userPassword" href="/giangvien/Account/ChangePassword">Đổi mật khẩu</a>
+        </p>
+
+        <p>
+            <img src="/giangvien/images/icons/logout.png" alt="">
+            <a id="link_userLogout" href="/giangvien/Account/Logout" onclick="return confirm('Thoát khỏi hệ thống')">Đăng xuất</a>
+        </p>
     </div>
+<div class="hitec-general-function">
+    <h5>CÁC CHỨC NĂNG CHUNG</h5>
+    <p>
+        <img src="/giangvien/images/icons/book.png" alt="">
+        <a id="linkNews" href="/giangvien/Home">Tin tức - thông báo <span class="notification-news"></span></a>
+    </p>
+    <p>
+        <img src="/giangvien/images/icons/calendar.png" alt="">
+        <a id="linkCalendar" href="/giangvien/Common/Calendar">Lịch công tác <span class="notification-calendar"></span></a>
+    </p>
+    <p>
+        <img src="/giangvien/images/icons/message.png" alt="">
+        <a id="linkMessage" href="/giangvien/Message/Inbox">Tin nhắn <span class="notification-message"></span></a>
+    </p>
+    <p>
+        <img src="/giangvien/images/icons/calendar2.png" alt="">
+        <a id="linkEvent" href="/giangvien/Common/Event">Công việc - sự kiện <strong><span class="notification-event"></span></strong></a>
+    </p>
+</div>
+<!-- Layout dùng cho các view dạng một phần nội dung trong trang web -->
+
+<div class="hitec-notification">
+    <h5>TIN TỨC - THÔNG BÁO</h5>
+</div>
+
+
                     </div>
                 </div>
             </div>
             <!-- Main content -->
+            <div class="col-xs-12 col-offset-200">
+                <div class="hitec-content">
+                    <img id="ajax-loader" src="/giangvien/images/icons/ajax-loader.gif" alt="" />
+                    
 
 <h2>LỊCH TRÌNH GIẢNG DẠY</h2>
+<div class="container-fluid text-right" style="margin-bottom:5px">
+    <a href="/giangvien/Teaching/TimeTable/" class="btn btn-default disabled">Lịch trình giảng dạy toàn học kỳ</a>
+    <a href="/giangvien/Teaching/TimeTable/Week" class="btn btn-default">Thời khóa biểu tuần hiện tại</a>
+    <a href="/giangvien/Teaching/TimeTable/Summary" class="btn btn-default">Thống kê khối lượng giảng dạy</a>
+</div>
 <div class="container-fluid">
     <table class=" table table-bordered">
         <thead>
@@ -68,14 +141,14 @@
                     <tr>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.005/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 5 - Đ8E"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.005/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 5 - ĐD 18E"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.005</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.005</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -83,14 +156,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.002/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 2 - Đ8B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.002/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 2 - ĐD 18B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.002</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.002</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -98,14 +171,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.005/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 5 - Đ8E"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.005/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 5 - ĐD 18E"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.005</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.005</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -113,14 +186,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.002/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 2 - Đ8B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.002/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 2 - ĐD 18B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.002</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.002</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -128,14 +201,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.001/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 1 - Đ8A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.001/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 1 - ĐD 18A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -143,14 +216,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -163,14 +236,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -178,14 +251,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.001/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 1 - Đ8A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.001/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 1 - ĐD 18A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.001</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
@@ -193,14 +266,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.004/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 4 - Đ8D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.004/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 4 - ĐD 18D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.004</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.004</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
@@ -208,27 +281,27 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.004/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 4 - Đ8D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.004/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 4 - ĐD 18D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.004</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.004</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
                                     </p>
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO B">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Hồ Ngọc Đức">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 9 [.B.105]
                                         </a>
@@ -236,14 +309,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -264,14 +337,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -293,14 +366,14 @@
                     <tr>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.005/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 5 - Đ8E"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.005/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 5 - ĐD 18E"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.005</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.005</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -308,14 +381,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.002/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 2 - Đ8B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.002/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 2 - ĐD 18B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.002</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.002</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -323,14 +396,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.005/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 5 - Đ8E"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.005/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 5 - ĐD 18E"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 3 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.005</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 3 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.005</strong>
                                             <br />
                                             1 - 3 [.B.102]
                                         </a>
@@ -338,14 +411,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.002/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 2 - Đ8B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.002/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 2 - ĐD 18B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 3 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.002</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 3 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.002</strong>
                                             <br />
                                             1 - 3 [.B.102]
                                         </a>
@@ -353,14 +426,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.001/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 1 - Đ8A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.001/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 1 - ĐD 18A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 3 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 3 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.001</strong>
                                             <br />
                                             1 - 3 [.B.102]
                                         </a>
@@ -368,14 +441,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -388,14 +461,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -403,14 +476,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.001/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 1 - Đ8A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.001/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 1 - ĐD 18A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.001</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
@@ -418,14 +491,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.004/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 4 - Đ8D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.004/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 4 - ĐD 18D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.004</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.004</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
@@ -433,27 +506,27 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX52-LT.004/"
-                                           title="Môn học Demo A1 - L&#253; thuyết - Nh&#243;m 4 - Đ8D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1052-LT.004/"
+                                           title="Chăm s&#243;c sức khỏe cộng đồng - L&#253; thuyết - Nh&#243;m 4 - ĐD 18D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 8 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX52-LT.004</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 8 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1052-LT.004</strong>
                                             <br />
                                             6 - 8 [.B.102]
                                         </a>
                                     </p>
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO B">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Hồ Ngọc Đức">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 9 [.B.105]
                                         </a>
@@ -461,14 +534,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -489,14 +562,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -520,14 +593,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -541,14 +614,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -561,14 +634,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -580,14 +653,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO B">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Hồ Ngọc Đức">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 9 [.B.105]
                                         </a>
@@ -595,14 +668,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -623,14 +696,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -654,14 +727,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -675,14 +748,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -695,14 +768,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -714,14 +787,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 8 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO B">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 8 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Hồ Ngọc Đức">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 8 [.B.105]
                                         </a>
@@ -729,14 +802,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -757,14 +830,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -788,14 +861,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -809,14 +882,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -829,14 +902,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -848,14 +921,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
@@ -863,14 +936,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -891,14 +964,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -922,14 +995,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -943,14 +1016,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             1 - 4 [.B.102]
                                         </a>
@@ -963,14 +1036,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -982,14 +1055,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.102<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             6 - 9 [.B.102]
                                         </a>
@@ -997,14 +1070,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -1025,14 +1098,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -1056,14 +1129,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -1084,14 +1157,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -1103,14 +1176,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 9 [.B.105]
                                         </a>
@@ -1118,14 +1191,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -1146,14 +1219,14 @@
                             </td>
                             <td class="hitec-td-tkbToi ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.001/"
-                                           title="Môn học Demo B1 - Nh&#243;m 1 - D1A"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.001/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 1 - DS 13A"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.001</strong>
+                                           data-content="Phòng học: .B.101<br />Tiết: 11 - 13 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.001</strong>
                                             <br />
                                             11 - 13 [.B.101]
                                         </a>
@@ -1177,14 +1250,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -1205,14 +1278,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -1224,14 +1297,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 9 [.B.105]
                                         </a>
@@ -1239,14 +1312,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -1283,14 +1356,14 @@
                     <tr>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.108<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.108<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.108]
                                         </a>
@@ -1298,14 +1371,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -1315,14 +1388,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -1339,14 +1412,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -1354,14 +1427,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.202<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.202<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 9 [.B.202]
                                         </a>
@@ -1371,14 +1444,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -1386,14 +1459,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -1430,14 +1503,14 @@
                     <tr>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.108<br />Tiết: 1 - 1 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.108<br />Tiết: 1 - 1 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 1 [.B.108]
                                         </a>
@@ -1445,14 +1518,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.003/"
-                                           title="Môn học Demo B1 - Nh&#243;m 3 - D1C"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.003/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 3 - DS 13C"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.003</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 4 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.003</strong>
                                             <br />
                                             1 - 4 [.B.105]
                                         </a>
@@ -1462,14 +1535,14 @@
                             </td>
                             <td class="hitec-td-tkbSang ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 1 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.105<br />Tiết: 1 - 1 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             1 - 1 [.B.105]
                                         </a>
@@ -1486,14 +1559,14 @@
                     <tr>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 9 [.B.106]
                                         </a>
@@ -1501,14 +1574,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.X292.001/"
-                                           title="Môn học Demo A2 - Nh&#243;m 1 - H2"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHLSG1292.001/"
+                                           title="Quản l&#253; Hộ sinh &amp; CS sức khỏe SSCĐ - Nh&#243;m 1 - HS 12"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 8 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>X292.001</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 8 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHLSG1292.001</strong>
                                             <br />
                                             6 - 8 [.B.106]
                                         </a>
@@ -1518,14 +1591,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.002/"
-                                           title="Môn học Demo B1 - Nh&#243;m 2 - D1B"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.002/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 2 - DS 13B"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 6 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.002</strong>
+                                           data-content="Phòng học: .B.106<br />Tiết: 6 - 6 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.002</strong>
                                             <br />
                                             6 - 6 [.B.106]
                                         </a>
@@ -1533,14 +1606,14 @@
                             </td>
                             <td class="hitec-td-tkbChieu ">
                                     <p>
-                                        <a href="/giangvien/Course/Details/2025-2026.2.XX92.004/"
-                                           title="Môn học Demo B1 - Nh&#243;m 4 - D1D"
+                                        <a href="/giangvien/Course/Details/2025-2026.2.MHCĐO1092.004/"
+                                           title="Thực h&#224;nh Nghi&#234;n cứu khoa học - Nh&#243;m 4 - DS 13D"
                                            data-toggle="popover"
                                            data-trigger="hover"
                                            data-placement="bottom"
                                            data-html="true"
-                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: User DEMO A">
-                                            <strong>XX92.004</strong>
+                                           data-content="Phòng học: .B.104<br />Tiết: 6 - 9 (Thực dạy <b>0</b> tiết)<br />Giáo viên: Phan Đức Thái Duy">
+                                            <strong>MHCĐO1092.004</strong>
                                             <br />
                                             6 - 9 [.B.104]
                                         </a>
@@ -1577,5 +1650,64 @@
             </div>
         </div>
     </div>
+    <div class="container-fluid nopadding">
+    <footer>
+        <div class="row">
+            <div class="col-xs-12 text-center nopadding">
+            <!--
+                <p>&copy; Trường Đại học Khoa học – Đại học Huế</p>
+                <p>Địa chỉ: 77 Nguyễn Huệ – Thành phố Huế</p>
+                <p>Điện thoại: 0234.3823290 – Fax: 0234.3824901</p>
+                <p>Website: <a href="http://www.husc.edu.vn" target="_blank">http://www.husc.edu.vn</a></p>
+            -->
+            </div>
+        </div>
+    </footer>
+</div>
+
+    <!-- for main popup dialog -->
+    <div id="dialogMain" class="modal fade" role="dialog" style="margin-top:40px; display:none"></div>
+    <!-- Scripts-->
+    <script src="/giangvien/js/jquery?v=JVBM4Dk7eZ-fjWvmxvoCeVR5MAt_3YXn4K7MRdHsuR81"></script>
+
+    <script src="/giangvien/js/bootstrap?v=M4Nk6kIOwMFflsEKET0iPL9i5YBqbzMzvUOrd8gyCnw1"></script>
+
+    <script src="/giangvien/js/bootstrap-datepicker?v=YOtide9jtVl-6EDJkfMYY-JY5I2KV8SAqPBEKsnI2jI1"></script>
+
+    <script src="/giangvien/Themes/ums.teacher.js"></script>
+    <script src="/giangvien/Themes/ums.message.js"></script>
+    <script language="javascript" type="text/javascript">
+        applicationUrl = "https://cd.huemed-univ.edu.vn/giangvien/";
+        $(document).ready(function () {
+            //teacher_EventChecking();
+            //message_CountUnreadMessage();
+            //window.setInterval(teacher_EventChecking, 300000);
+            //window.setInterval(message_CountUnreadMessage, 300000);
+            get_notifications();
+            window.setInterval(get_notifications, 300000);
+            $(".hitec-datepicker").datepicker({
+                format: "dd/mm/yyyy",
+                language: "vi",
+                autoclose: true,
+                todayHighlight: true,
+                weekStart: 1
+            });
+            $('#dialogMain').on('hidden.bs.modal', function () {
+                $("#dialogMain").html("");
+            });
+            $('#divThietLapHocKy .dropdown-menu').on({
+                "click": function (e) {
+                    e.stopPropagation();
+                }
+            });
+        });
+    </script>
+    
+    <script language="javasript" type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+
 </body>
 </html>

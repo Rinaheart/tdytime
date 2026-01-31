@@ -1,0 +1,63 @@
+{
+    "metadata": {
+        "teacher": "TS. Nguyễn Văn Demo",
+        "semester": "1",
+        "academicYear": "2025-2026",
+        "extractedDate": "2026-01-28"
+    },
+    "weeks": [
+        {
+            "weekNumber": 1,
+            "dateRange": "28/01/2026 - 03/02/2026",
+            "days": {
+                "Monday": {
+                    "morning": [],
+                    "afternoon": [],
+                    "evening": []
+                },
+                "Tuesday": {
+                    "morning": [],
+                    "afternoon": [],
+                    "evening": []
+                },
+                "Wednesday": {
+                    "morning": [
+                        {
+                            "courseCode": "DEMO101-LT",
+                            "courseName": "Lập trình Web (Demo)",
+                            "group": "01",
+                            "className": "Lớp Demo 1",
+                            "timeSlot": "1-4",
+                            "periodCount": 4,
+                            "room": "H.101",
+                            "teacher": "TS. Nguyễn Văn Demo",
+                            "actualHours": 3,
+                            "type": "LT",
+                            "dayOfWeek": "Wednesday",
+                            "sessionTime": "morning"
+                        }
+                    ],
+                    "afternoon": [],
+                    "evening": []
+                }
+            }
+        }
+    ],
+    "allCourses": [
+        {
+            "code": "DEMO101-LT",
+            "name": "Lập trình Web (Demo)",
+            "totalPeriods": 45,
+            "totalSessions": 15,
+            "groups": [
+                "01"
+            ],
+            "classes": [
+                "Lớp Demo 1"
+            ],
+            "types": [
+                "LT"
+            ]
+        }
+    ]
+}

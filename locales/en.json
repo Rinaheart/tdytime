@@ -34,12 +34,15 @@
         "sessions": "sessions",
         "weeks": "weeks",
         "week": "Week",
+        "month": "Month",
         "morning": "Morning",
         "afternoon": "Afternoon",
         "evening": "Evening",
         "switchLanguage": "Switch language",
         "conflicts": "Conflicts",
-        "warnings": "Warnings & Conflicts"
+        "warnings": "Warnings & Conflicts",
+        "viewDetails": "View Details",
+        "periodLabel": "Period"
     },
     "days": {
         "0": "Mon",
@@ -157,8 +160,11 @@
             "progress": "Weekly Progress",
             "remaining": "{{count}} periods left",
             "noMore": "No more classes this semester",
-            "currentTime": "Current Time",
-            "freeMessage": "Enjoy your rest time! ☕"
+            "currentTime": "Now",
+            "freeMessage": "Enjoy your rest time! ☕",
+            "progressDay": "Today",
+            "progressWeek": "This Week",
+            "progressMonth": "This Month"
         },
         "weeklyTrend": "Weekly Trend",
         "dailyDensity": "Daily Teaching Density",
