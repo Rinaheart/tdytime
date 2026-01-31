@@ -283,32 +283,63 @@
         "changelog": "Nhật ký thay đổi (Changelog)",
         "changes": [
             {
-                "version": "v0.3.0 (Premium Edition)",
+                "version": "v0.3.0 (Premium Special)",
                 "date": "2026-01-31",
                 "changes": [
-                    "Semester Timeline: Giao diện Dòng thời gian học kỳ chuyên nghiệp, tự động định vị tuần hiện tại và tối ưu hóa diện tích hiển thị.",
-                    "Analytics Insights: Hệ thống Thống kê lột xác với các Insights Card trực quan và biểu đồ mật độ giảng dạy cao cấp.",
-                    "Mobile-First Premium: Toàn bộ các View lõi (Today, Weekly, Semester, Stats) đạt chuẩn trải nghiệm ứng dụng Native.",
-                    "Visual Excellence: Áp dụng triết lý thiết kế Premium Minimal xuyên suốt với hiệu ứng Glassmorphism và đổ bóng mịn."
+                    "Premium Minimal Language: Triết lý thiết kế tinh giản, sang trọng với hiệu ứng Glassmorphism và layout tập trung tối đa vào dữ liệu.",
+                    "Semester Timeline: Trải nghiệm dòng thời gian học kỳ hoàn toàn mới, tự động điều hướng thông minh và tối ưu không gian hiển thị.",
+                    "Insights Card: Hệ thống thẻ phân tích thế hệ mới, biến dữ liệu thô thành những nhận định trực quan, sống động.",
+                    "Visual Performance: Tối ưu hóa các hiệu ứng chuyển cảnh mượt động, tạo cảm giác như ứng dụng Native cao cấp."
                 ]
             },
             {
                 "version": "v0.2.0",
                 "date": "2026-01-29",
                 "changes": [
-                    "Welcome Center: Trang chào mừng được thiết kế lại sang trọng, hỗ trợ nhận diện thương hiệu TdyTime.",
-                    "Conflict Intelligence: Tự động phân tích và cảnh báo thông minh các tiết dạy trùng hoặc phòng học bị xung đột.",
-                    "Smart History: Hệ thống lưu trữ lịch sử file gần nhất giúp truy cập dữ liệu tức thì không cần tải lại.",
-                    "Performance: Tối ưu tốc độ phản hồi và các hiệu ứng chuyển trang mượt mà."
+                    "Welcome Center: Không gian khởi đầu được thiết kế lại theo tiêu chuẩn App chuyên nghiệp với bộ nhận diện TdyTime duy mỹ.",
+                    "Conflict Intelligence: Trí tuệ phân tích tự động phát hiện xung đột thời gian và không gian, đảm bảo lịch trình chuẩn xác 100%.",
+                    "Smart History: Khả năng ghi nhớ và truy cập tức thì các lịch trình gần đây, loại bỏ hoàn toàn thao tác nạp lại dữ liệu.",
+                    "Interface Polish: Tinh chỉnh các thành phần giao diện nhỏ (Tabs, Toasts, Badges) đạt độ hoàn thiện đồng nhất."
                 ]
             },
             {
                 "version": "v0.1.0",
                 "date": "2026-01-27",
                 "changes": [
-                    "Calendar Clean: Redesign giao diện Lịch tuần tập trung vào sự tinh gọn, làm nổi bật ngày hiện tại.",
-                    "PWA Experience: Hỗ trợ cài đặt như ứng dụng thực thụ trên điện thoại, làm việc mượt mà ngay cả khi ngoại tuyến.",
-                    "Navigation: Hệ thống điều hướng Tab Bar phía dưới cùng cử chỉ Swipe được chuẩn hóa cho di động."
+                    "Mobile Prowess: Tái định nghĩa trải nghiệm di động với hệ thống Tab Bar và cử chỉ Swipe (vuốt) tự nhiên để điều hướng tuần.",
+                    "Identity Refresh: Cập nhật hệ thống Icon và Splash screen theo tiêu chuẩn PWA hiện đại.",
+                    "Dashboard Insights: Nâng cấp biểu đồ phân bổ và thẻ tóm tắt giúp giảng viên nắm bắt lịch dạy trong 3 giây."
+                ]
+            },
+            {
+                "version": "v0.015",
+                "date": "2026-01-26",
+                "changes": [
+                    "Executive Dashboard: Thiết kế lại toàn bộ màn hình Thống kê theo phong cách quản trị tinh gọn.",
+                    "Color-Coded Alerts: Hệ thống cảnh báo trực quan bằng màu sắc giúp nhận diện các điểm nóng và tuần quá tải tức thì."
+                ]
+            },
+            {
+                "version": "v0.012",
+                "date": "2026-01-22",
+                "changes": [
+                    "The Blue Revolution: Chuẩn hóa bảng màu Blue/Teal chuyên nghiệp, loại bỏ hoàn toàn các lỗi thiết kế cũ.",
+                    "Skeleton Shimmer: Ứng dụng hiệu ứng tải dữ liệu hiện đại, đảm bảo trải nghiệm không bao giờ bị ngắt quãng."
+                ]
+            },
+            {
+                "version": "v0.011",
+                "date": "2026-01-15",
+                "changes": [
+                    "Analytics Launch: Ra mắt hệ thống phân tích mật độ giảng dạy đầu tiên với biểu đồ Heatmap trực quan.",
+                    "Parser Engine: Nâng cấp bộ máy xử lý dữ liệu từ hệ thống UMS đạt độ chính xác cao."
+                ]
+            },
+            {
+                "version": "v0.001 - v0.010",
+                "date": "2026-01-10",
+                "changes": [
+                    "Genesis: Khởi tạo kiến trúc nền tảng, tập trung vào khả năng bóc tách lịch giảng thô sang định dạng kỹ thuật số."
                 ]
             }
         ]

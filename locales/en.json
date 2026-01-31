@@ -287,32 +287,63 @@
         "changelog": "Changelog",
         "changes": [
             {
-                "version": "v0.3.0 (Premium Edition)",
+                "version": "v0.3.0 (Premium Special)",
                 "date": "2026-01-31",
                 "changes": [
-                    "Semester Timeline: Professional timeline-based semester view with automated current week positioning and space optimization.",
-                    "Analytics Insights: Re-imagined Statistics system featuring visual Insight Cards and high-end teaching density charts.",
-                    "Mobile-First Premium: All core views (Today, Weekly, Semester, Stats) now meet Native App experience standards.",
-                    "Visual Excellence: Implemented 'Premium Minimal' design language with glassmorphism and soft shadow effects."
+                    "Premium Minimal Language: Elegant and refined design philosophy featuring Glassmorphism and data-centric layouts.",
+                    "Semester Timeline: All-new semester timeline experience with smart navigation and space optimization.",
+                    "Insights Card: Next-gen analytical cards transforming raw data into vibrant, actionable insights.",
+                    "Visual Performance: Optimized fluid transaction effects for a premium native app feel."
                 ]
             },
             {
                 "version": "v0.2.0",
                 "date": "2026-01-29",
                 "changes": [
-                    "Welcome Center: Luxurious landing page redesign featuring TdyTime branding and logo focus.",
-                    "Conflict Intelligence: Smart automated detection and alerts for overlapping sessions and classroom conflicts.",
-                    "Smart History: Recent file history system for instant data restoration without re-uploading.",
-                    "Performance: Optimized response times and fluid page-to-page transition effects."
+                    "Welcome Center: Reimagined landing space built on professional app standards with aesthetic TdyTime branding.",
+                    "Conflict Intelligence: Automated analytical engine detecting time and space overlaps for 100% schedule accuracy.",
+                    "Smart History: Instant memory and access for recent schedules, eliminating the need for data re-uploads.",
+                    "Interface Polish: Refined UI components (Tabs, Toasts, Badges) for unified completion."
                 ]
             },
             {
                 "version": "v0.1.0",
                 "date": "2026-01-27",
                 "changes": [
-                    "Calendar Clean: Weekly view redesign focused on minimalism and elegant current-day highlighting.",
-                    "PWA Experience: Native-like installation support on mobile devices with smooth offline capabilities.",
-                    "Navigation: Standardized bottom Tab Bar and swipe gestures specifically for mobile-first interaction."
+                    "Mobile Prowess: Redefined mobile experience with intuitive bottom Tab Bar and natural swipe navigation.",
+                    "Identity Refresh: Updated icons and splash screens following modern PWA standards.",
+                    "Dashboard Insights: Upgraded distribution charts and summary cards for 3-second schedule grasp."
+                ]
+            },
+            {
+                "version": "v0.015",
+                "date": "2026-01-26",
+                "changes": [
+                    "Executive Dashboard: Full redesign of the Statistics view towards clean management aesthetics.",
+                    "Color-Coded Alerts: Visual alert system using color language to identify hotspots and overload weeks instantly."
+                ]
+            },
+            {
+                "version": "v0.012",
+                "date": "2026-01-22",
+                "changes": [
+                    "The Blue Revolution: Standardized professional Blue/Teal color palette, eliminating legacy design inconsistencies.",
+                    "Skeleton Shimmer: Integrated modern loading effects for an uninterrupted user experience."
+                ]
+            },
+            {
+                "version": "v0.011",
+                "date": "2026-01-15",
+                "changes": [
+                    "Analytics Launch: First-ever teaching density analysis system with intuitive Heatmap visualizations.",
+                    "Parser Engine: Upgraded data processing engine for high-accuracy UMS system integration."
+                ]
+            },
+            {
+                "version": "v0.001 - v0.010",
+                "date": "2026-01-10",
+                "changes": [
+                    "Genesis: Foundation architecture established, focusing on raw schedule parsing into digital formats."
                 ]
             }
         ]
