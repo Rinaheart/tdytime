@@ -133,6 +133,13 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
     } catch (e) { return ""; }
   };
 
+  const isDayToday = (dayIdx: number) => {
+    const dayDate = getDayDateString(dayIdx);
+    const today = new Date();
+    const todayStr = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+    return dayDate === todayStr;
+  };
+
   const uniqueData = useMemo(() => {
     const rooms = new Set<string>();
     const teachers = new Set<string>();
@@ -244,20 +251,36 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
         getDayDateString={getDayDateString}
       />
 
-      {/* Semester Progress Banner */}
-      <div className="mb-8 p-4 bg-slate-900 rounded-2xl text-white shadow-xl shadow-indigo-500/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-xl shadow-lg">
+      {/* 0. SEMESTER PROGRESS BANNER */}
+      <div className="mb-8 p-5 bg-white dark:bg-slate-950/20 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+
+        <div className="relative z-10 flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/20 ring-4 ring-indigo-50 dark:ring-indigo-900/20">
             {semesterProgress}%
           </div>
           <div>
-            <h4 className="text-sm font-black uppercase tracking-widest text-indigo-200">{t('semester.weeklySummary')}</h4>
-            <p className="text-[10px] font-bold text-slate-400">Tiến trình học kỳ ({weekIdx + 1}/{totalWeeks} tuần)</p>
+            <div className="flex items-center gap-2 mb-1">
+              <h4 className="text-sm font-black text-slate-800 dark:text-slate-100 uppercase tracking-tight">{t('semester.weeklySummary')}</h4>
+              {weekIdx === Math.floor(semesterProgress / (100 / totalWeeks)) && (
+                <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
+                  Current Week
+                </span>
+              )}
+            </div>
+            <p className="text-[10px] md:text-xs font-bold text-slate-400 capitalize">
+              {t('stats.today.nextDate', { day: weekIdx + 1, date: totalWeeks })} {t('common.week').toLowerCase()}
+            </p>
           </div>
         </div>
-        <div className="flex-1 max-w-md hidden md:block">
-          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-indigo-500 transition-all duration-1000" style={{ width: `${semesterProgress}%` }}></div>
+
+        <div className="relative z-10 flex-1 max-w-md hidden md:block">
+          <div className="flex justify-between items-center mb-1.5 px-1">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('stats.today.progress')}</span>
+            <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400">{semesterProgress}%</span>
+          </div>
+          <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+            <div className="h-full bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full transition-all duration-1000 shadow-sm" style={{ width: `${semesterProgress}%` }}></div>
           </div>
         </div>
       </div>
@@ -305,37 +328,53 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
-        <FilterBar
-          filters={filters}
-          onChange={setFilters}
-          uniqueRooms={uniqueData.rooms}
-          uniqueTeachers={uniqueData.teachers}
-          uniqueClasses={uniqueData.classes}
-        />
-        <label className="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 h-11 rounded-xl shadow-sm hover:bg-slate-50 transition-all select-none">
-          <input
-            type="checkbox"
-            checked={showCoTeacher}
-            onChange={(e) => setShowCoTeacher(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+        <div className="flex-1 min-w-[300px]">
+          <FilterBar
+            filters={filters}
+            onChange={setFilters}
+            uniqueRooms={uniqueData.rooms}
+            uniqueTeachers={uniqueData.teachers}
+            uniqueClasses={uniqueData.classes}
           />
-          <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{t('stats.sections.coTeachers')}</span>
+        </div>
+        <label className="flex items-center gap-2.5 cursor-pointer bg-white dark:bg-slate-950/20 border border-slate-200/60 dark:border-slate-800/60 px-4 h-11 rounded-xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all select-none group">
+          <div className="relative flex items-center justify-center">
+            <input
+              type="checkbox"
+              checked={showCoTeacher}
+              onChange={(e) => setShowCoTeacher(e.target.checked)}
+              className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 bg-transparent transition-all group-hover:scale-110"
+            />
+          </div>
+          <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{t('stats.sections.coTeachers')}</span>
         </label>
       </div>
 
       {viewMode === 'horizontal' ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm overflow-hidden relative group">
           <div className="overflow-x-auto custom-scrollbar">
             <table className="w-full border-collapse table-fixed min-w-[1000px]">
               <thead>
-                <tr className="bg-slate-50 dark:bg-slate-800/50">
-                  <th className="w-20 p-4 border border-slate-100 dark:border-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('stats.shiftDistribution')}</th>
-                  {DAYS_OF_WEEK.map((day, idx) => (
-                    <th key={day} className="p-4 border border-slate-100 dark:border-slate-800 text-center">
-                      <p className="text-[11px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{(t(`days.${idx}`))}</p>
-                      <p className="text-xs text-slate-800 dark:text-slate-300 font-bold mt-1 font-mono">{getDayDateString(idx)}</p>
-                    </th>
-                  ))}
+                <tr className="bg-slate-50/50 dark:bg-slate-800/30">
+                  <th className="w-20 p-4 border border-slate-100/60 dark:border-slate-800/60 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('stats.shiftDistribution')}</th>
+                  {DAYS_OF_WEEK.map((day, idx) => {
+                    const isToday = isDayToday(idx);
+                    return (
+                      <th key={day} className={`p-4 border border-slate-100/60 dark:border-slate-800/60 text-center transition-colors ${isToday ? 'bg-blue-50/30 dark:bg-blue-900/10' : ''}`}>
+                        <div className="flex flex-col items-center gap-1">
+                          {isToday && (
+                            <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest mb-1 animate-bounce">Today</span>
+                          )}
+                          <p className={`text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                            {(t(`days.${idx}`))}
+                          </p>
+                          <p className={`text-xs font-mono font-bold ${isToday ? 'text-blue-700 dark:text-blue-300' : 'text-slate-800 dark:text-slate-300'}`}>
+                            {getDayDateString(idx)}
+                          </p>
+                        </div>
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
@@ -344,16 +383,19 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
                   { key: 'afternoon', label: t('weekly.afternoon'), time: '13:30' },
                   { key: 'evening', label: t('weekly.evening'), time: '17:10' }
                 ].map((shift) => (
-                  <tr key={shift.key}>
-                    <td className="p-4 border border-slate-100 dark:border-slate-800 text-center">
-                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter leading-none">{shift.label}</p>
+                  <tr key={shift.key} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10 transition-colors">
+                    <td className="p-4 border border-slate-100/60 dark:border-slate-800/60 text-center bg-slate-50/30 dark:bg-slate-800/20">
+                      <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tighter leading-none">{shift.label}</p>
                       <p className="text-[9px] text-slate-400 mt-1 font-mono">{shift.time}</p>
                     </td>
-                    {DAYS_OF_WEEK.map((day, dayIdx) => (
-                      <td key={`${day}-${shift.key}`} className="p-3 border border-slate-100 dark:border-slate-800 align-top min-h-[140px]">
-                        {renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
-                      </td>
-                    ))}
+                    {DAYS_OF_WEEK.map((day, dayIdx) => {
+                      const isToday = isDayToday(dayIdx);
+                      return (
+                        <td key={`${day}-${shift.key}`} className={`p-3 border border-slate-100/60 dark:border-slate-800/60 align-top min-h-[140px] transition-colors ${isToday ? 'bg-blue-50/20 dark:bg-blue-900/5' : ''}`}>
+                          {renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
@@ -365,25 +407,30 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
           {DAYS_OF_WEEK.map((day, idx) => {
             const dayData = week.days[day];
             const hasAny = [...dayData.morning, ...dayData.afternoon, ...dayData.evening].some(filterSession);
+            const isToday = isDayToday(idx);
+
             if (!hasAny && (filters.search || filters.className || filters.room || filters.teacher)) return null;
 
             return (
-              <div key={day} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col md:flex-row">
-                <div className="md:w-32 bg-slate-50 dark:bg-slate-800/50 p-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800">
-                  <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{t(`days.${idx}`)}</p>
-                  <p className="text-sm font-black mt-1 font-mono">{getDayDateString(idx)}</p>
+              <div key={day} className={`bg-white dark:bg-slate-900 rounded-2xl border ${isToday ? 'border-blue-400 dark:border-blue-500 ring-4 ring-blue-100/50 dark:ring-blue-900/20' : 'border-slate-200/60 dark:border-slate-800/60'} shadow-sm overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md relative group`}>
+                <div className={`md:w-32 ${isToday ? 'bg-blue-600 dark:bg-blue-600 text-white' : 'bg-slate-50 dark:bg-slate-800/30'} p-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 transition-colors`}>
+                  {isToday && (
+                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 opacity-80">Today</span>
+                  )}
+                  <p className={`text-xs font-black uppercase tracking-widest ${isToday ? 'text-white' : 'text-blue-600 dark:text-blue-400'}`}>{t(`days.${idx}`)}</p>
+                  <p className={`text-sm font-black mt-1 font-mono ${isToday ? 'text-white' : 'text-slate-800 dark:text-slate-100'}`}>{getDayDateString(idx)}</p>
                 </div>
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 dark:divide-slate-800">
-                  <div className="p-4">
-                    <div className="text-[9px] font-black text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.morning')} <span className="font-mono">07:00</span></div>
+                  <div className={`p-4 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-3 flex items-center justify-between">{t('weekly.morning')} <span className="font-mono opacity-60">07:00</span></div>
                     {renderSessionCell(dayData.morning, idx, true)}
                   </div>
-                  <div className="p-4">
-                    <div className="text-[9px] font-black text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.afternoon')} <span className="font-mono">13:30</span></div>
+                  <div className={`p-4 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-3 flex items-center justify-between">{t('weekly.afternoon')} <span className="font-mono opacity-60">13:30</span></div>
                     {renderSessionCell(dayData.afternoon, idx, true)}
                   </div>
-                  <div className="p-4">
-                    <div className="text-[9px] font-black text-slate-400 uppercase mb-3 flex items-center justify-between">{t('weekly.evening')} <span className="font-mono">17:10</span></div>
+                  <div className={`p-4 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-3 flex items-center justify-between">{t('weekly.evening')} <span className="font-mono opacity-60">17:10</span></div>
                     {renderSessionCell(dayData.evening, idx, true)}
                   </div>
                 </div>

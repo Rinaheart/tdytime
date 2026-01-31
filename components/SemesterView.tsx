@@ -71,17 +71,53 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data }) => {
     } catch (e) { return ""; }
   };
 
-  return (
-    <div className="pb-12">
-      <FilterBar
-        filters={filters}
-        onChange={setFilters}
-        uniqueRooms={uniqueData.rooms}
-        uniqueTeachers={uniqueData.teachers}
-        uniqueClasses={uniqueData.classes}
-      />
+  const [expandedWeeks, setExpandedWeeks] = useState<Record<number, boolean>>({});
 
-      <div className="space-y-12">
+  const toggleWeek = (wIdx: number) => {
+    setExpandedWeeks(prev => ({ ...prev, [wIdx]: !prev[wIdx] }));
+  };
+
+  const isCurrentWeek = (week: WeekSchedule) => {
+    const now = new Date();
+    const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
+    const matches = week.dateRange.match(dateRegex);
+    if (!matches || matches.length < 2) return false;
+
+    const [ds, ms, ys] = matches[0].split('/').map(Number);
+    const [de, me, ye] = matches[1].split('/').map(Number);
+
+    const start = new Date(ys, ms - 1, ds);
+    const end = new Date(ye, me - 1, de);
+    const check = new Date(now);
+    check.setHours(0, 0, 0, 0);
+    return check >= start && check <= end;
+  };
+
+  const isPastWeek = (week: WeekSchedule) => {
+    const now = new Date();
+    const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
+    const matches = week.dateRange.match(dateRegex);
+    if (!matches || matches.length < 2) return false;
+
+    const [de, me, ye] = matches[1].split('/').map(Number);
+    const end = new Date(ye, me - 1, de);
+    const check = new Date(now);
+    check.setHours(23, 59, 59, 999);
+    return check > end;
+  };
+  return (
+    <div className="pb-12 px-3 md:px-0">
+      <div className="mb-6">
+        <FilterBar
+          filters={filters}
+          onChange={setFilters}
+          uniqueRooms={uniqueData.rooms}
+          uniqueTeachers={uniqueData.teachers}
+          uniqueClasses={uniqueData.classes}
+        />
+      </div>
+
+      <div className="relative space-y-8 before:absolute before:left-[19px] md:before:left-[23px] before:top-4 before:bottom-4 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800 before:z-0">
         {data.weeks.map((week, wIdx) => {
           const hasData = Object.values(week.days).some(d => {
             const day = d as DaySchedule;
@@ -90,70 +126,104 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data }) => {
 
           if (!hasData && (filters.search || filters.className || filters.room || filters.teacher)) return null;
 
+          const isCurrent = isCurrentWeek(week);
+          const isPast = isPastWeek(week);
+          const isExpanded = expandedWeeks[wIdx] ?? (!isPast || isCurrent);
+
           return (
-            <div key={wIdx} className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-white dark:bg-slate-900/40 rounded-xl border-2 border-slate-300 dark:border-slate-700 shadow-md relative overflow-hidden">
-              {/* Enhanced Header */}
-              <div className="flex items-center gap-3 p-3 md:p-4 bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-lg md:text-xl shadow-md shadow-blue-500/20 shrink-0">
-                  {week.weekNumber}
-                </div>
-                <div>
-                  <h4 className="text-base md:text-lg font-black text-slate-800 dark:text-slate-100 uppercase tracking-tight leading-none mb-1">{t('weekly.week', { number: week.weekNumber })}</h4>
-                  <p className="text-[10px] md:text-xs text-slate-500 font-mono font-bold">{week.dateRange}</p>
-                </div>
-              </div>
+            <div key={wIdx} className={`relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-500 bg-white dark:bg-slate-950/40 rounded-2xl border ${isCurrent ? 'border-blue-400 dark:border-blue-500 ring-4 ring-blue-100/50 dark:ring-blue-900/20 shadow-lg shadow-blue-500/10' : 'border-slate-200/60 dark:border-slate-800/60 shadow-sm'} overflow-hidden transition-all duration-300`}>
+              {/* Timeline Dot */}
+              <div className={`absolute left-4 md:left-[20px] top-6 w-2 h-2 rounded-full z-20 ${isCurrent ? 'bg-blue-500 ring-4 ring-blue-100 dark:ring-blue-900/40' : (isPast ? 'bg-slate-300 dark:bg-slate-700' : 'bg-slate-200 dark:bg-slate-800')}`}></div>
 
-              <div className="p-3 md:p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 md:gap-6 relative z-10">
-                {DAYS_OF_WEEK.map((dayName, dIdx) => {
-                  const day = week.days[dayName];
-                  const sessions = [...day.morning, ...day.afternoon, ...day.evening].filter(filterSession);
-
-                  if (sessions.length === 0) return null; // Hide empty days on mobile grid
-
-                  return (
-                    <div key={dayName} className="min-h-[100px] flex flex-col group border-l-2 border-slate-100 dark:border-slate-800 md:border-transparent md:hover:border-slate-100 md:dark:hover:border-slate-800 pl-3 md:pl-2 transition-all">
-                      <div className="mb-3 pb-1.5 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center sm:flex-col sm:items-center">
-                        <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{t(`days.${dIdx}`)}</span>
-                        <span className="text-[10px] md:text-[11px] font-black text-slate-400 tracking-tighter">{getDayDateString(week, dIdx)}</span>
-                      </div>
-                      <div className="space-y-3 flex-1">
-                        {sessions.map((s, sidx) => {
-                          const showTeacher = !filters.teacher;
-                          return (
-                            <div key={sidx} className={`p-2 rounded-xl border-l-4 ${SESSION_COLORS[s.sessionTime]} dark:bg-opacity-10 shadow-sm transition-all ${s.hasConflict ? 'conflict-border' : ''}`}>
-                              <p className="text-[10px] font-bold leading-tight mb-1" title={s.courseName}>{s.courseName}</p>
-                              <div className="flex flex-wrap gap-1 items-center mb-1">
-                                <span className="text-[9px] font-black text-slate-700 dark:text-slate-300 opacity-80 uppercase leading-none">{s.className}</span>
-                                {showTeacher && (
-                                  <span className={`text-[8px] font-bold px-1 py-0.5 rounded border truncate max-w-[80px] ${getTeacherColor(s.teacher)}`}>
-                                    {s.teacher}
-                                  </span>
-                                )}
-                              </div>
-
-                              <div className="flex justify-between items-center mt-1 pt-1 border-t border-black/5 dark:border-white/5">
-                                <span className="text-[8px] font-mono opacity-60 font-bold">{t('common.periodShort', { defaultValue: 'T' })}{s.timeSlot}</span>
-                                <span className="text-[8px] font-black bg-white/50 dark:bg-black/20 px-1.5 py-0.5 rounded-md uppercase tracking-tight">{s.room}</span>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
+              {/* Enhanced Header - Collapsible */}
+              <button
+                onClick={() => toggleWeek(wIdx)}
+                className={`w-full flex items-center justify-between p-3 md:p-4 text-left transition-colors ${isExpanded ? 'bg-slate-50/50 dark:bg-slate-800/20' : 'hover:bg-slate-50 dark:hover:bg-slate-800/20'}`}
+              >
+                <div className="flex items-center gap-4 pl-6 md:pl-8">
+                  <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center font-black text-lg md:text-xl shadow-sm tracking-tighter shrink-0 ${isCurrent ? 'bg-blue-600 text-white shadow-blue-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}`}>
+                    {week.weekNumber}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h4 className={`text-base md:text-lg font-black uppercase tracking-tight leading-none ${isCurrent ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-100'}`}>
+                        {t('weekly.week', { number: week.weekNumber })}
+                      </h4>
+                      {isCurrent && (
+                        <span className="px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
+                          Today
+                        </span>
+                      )}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                    <p className="text-[10px] md:text-xs text-slate-400 font-mono font-bold tracking-tight">{week.dateRange}</p>
+                  </div>
+                </div>
 
+                <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-slate-300 dark:text-slate-600">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </div>
+              </button>
+
+              {isExpanded && (
+                <div className="animate-in fade-in zoom-in-95 duration-300">
+                  <div className="p-3 md:p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 md:gap-6 relative z-10 border-t border-slate-100 dark:border-slate-800/60 pl-8 md:pl-12">
+                    {DAYS_OF_WEEK.map((dayName, dIdx) => {
+                      const day = week.days[dayName];
+                      const sessions = [...day.morning, ...day.afternoon, ...day.evening].filter(filterSession);
+
+                      if (sessions.length === 0) return null; // Hide empty days on mobile grid
+
+                      return (
+                        <div key={dayName} className="min-h-[100px] flex flex-col group border-l-2 border-slate-100 dark:border-slate-800 md:border-transparent md:hover:border-slate-100 md:dark:hover:border-slate-800 pl-3 md:pl-2 transition-all">
+                          <div className="mb-3 pb-1.5 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center sm:flex-col sm:items-center">
+                            <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{t(`days.${dIdx}`)}</span>
+                            <span className="text-[10px] md:text-[11px] font-black text-slate-400 tracking-tighter">{getDayDateString(week, dIdx)}</span>
+                          </div>
+                          <div className="space-y-3 flex-1">
+                            {sessions.map((s, sidx) => {
+                              const showTeacher = !filters.teacher;
+                              return (
+                                <div key={sidx} className={`p-3 rounded-2xl border-l-4 ${SESSION_COLORS[s.sessionTime]} bg-white dark:bg-slate-900 shadow-sm transition-all hover:shadow-md ${s.hasConflict ? 'ring-2 ring-red-500/50' : ''}`}>
+                                  <p className="text-[11px] font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 line-clamp-2" title={s.courseName}>{s.courseName}</p>
+
+                                  <div className="flex flex-wrap gap-1.5 items-center mb-2.5">
+                                    <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{s.className}</span>
+                                    {showTeacher && (
+                                      <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-lg border border-transparent shadow-sm truncate max-w-[90px] ${getTeacherColor(s.teacher)}`}>
+                                        {s.teacher}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  <div className="flex justify-between items-center pt-2.5 border-t border-slate-100 dark:border-slate-800/60">
+                                    <div className="flex items-center gap-1 opacity-60">
+                                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{t('common.periodShort', { defaultValue: 'T' })}</span>
+                                      <span className="text-[10px] font-mono font-black text-slate-600 dark:text-slate-300">{s.timeSlot}</span>
+                                    </div>
+                                    <span className="text-[9px] font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-lg uppercase tracking-tight">{s.room}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
+
       <div className="text-center text-slate-400 text-[10px] mt-12 pt-8 border-t border-slate-100 dark:border-slate-900">
         {t('about.copyright')}
       </div>
     </div>
   );
 };
-
 
 export default SemesterView;
