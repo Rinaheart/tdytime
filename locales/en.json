@@ -287,46 +287,32 @@
         "changelog": "Changelog",
         "changes": [
             {
-                "version": "v0.1.0",
+                "version": "v0.3.0 (Premium Edition)",
+                "date": "2026-01-31",
+                "changes": [
+                    "Semester Timeline: Professional timeline-based semester view with automated current week positioning and space optimization.",
+                    "Analytics Insights: Re-imagined Statistics system featuring visual Insight Cards and high-end teaching density charts.",
+                    "Mobile-First Premium: All core views (Today, Weekly, Semester, Stats) now meet Native App experience standards.",
+                    "Visual Excellence: Implemented 'Premium Minimal' design language with glassmorphism and soft shadow effects."
+                ]
+            },
+            {
+                "version": "v0.2.0",
                 "date": "2026-01-29",
                 "changes": [
-                    "Welcome Center: Professional re-design of the landing page with Logo and TdyTime branding.",
-                    "Conflict Intelligence: Smart automated detection of overlapping sessions and room conflicts.",
-                    "Mobile Optimization: Fully responsive card-based layouts for SemesterView and StatisticsView.",
-                    "Paste Logic: Direct HTML paste support from the faculty portal for rapid data entry.",
-                    "Performance: Enhanced Code Splitting, Lazy Loading, and Skeleton Shimmer effects."
+                    "Welcome Center: Luxurious landing page redesign featuring TdyTime branding and logo focus.",
+                    "Conflict Intelligence: Smart automated detection and alerts for overlapping sessions and classroom conflicts.",
+                    "Smart History: Recent file history system for instant data restoration without re-uploading.",
+                    "Performance: Optimized response times and fluid page-to-page transition effects."
                 ]
             },
             {
-                "version": "v0.016",
-                "date": "2026-01-28",
+                "version": "v0.1.0",
+                "date": "2026-01-27",
                 "changes": [
-                    "Mobile: Comprehensive mobile experience improvement (Mobile-First Weekly View).",
-                    "Navigation: Added swipe left/right gestures to change weeks.",
-                    "PWA: Updated branding (Icons) & Offline optimization.",
-                    "Core: Upgraded dynamic demo data loading & Code refactoring."
-                ]
-            },
-            {
-                "version": "v0.015",
-                "date": "2026-01-26",
-                "changes": [
-                    "Statistics Dashboard: Full re-design towards Executive Dashboard - Clean & Professional.",
-                    "Statistics: Visual Insight Cards with color alerts (Orange/Red borders).",
-                    "Feature: Restored and upgraded 'Co-teaching Faculty' table.",
-                    "Details: Accurate display of weekend session counts."
-                ]
-            },
-            {
-                "version": "v0.014",
-                "date": "2026-01-26",
-                "changes": [
-                    "UI: Completed Blue Theme (Blue tone across the interface).",
-                    "PWA: Offline functionality and Desktop/Mobile installation support.",
-                    "Feature: Smart History - Auto-save 5 recent files.",
-                    "Feature: Heatmap Chart showing detailed teaching density.",
-                    "UX: Shortcut support (Arrow Left/Right) for week switching, Auto-scroll.",
-                    "Fix: Subject distribution logic for primary faculty."
+                    "Calendar Clean: Weekly view redesign focused on minimalism and elegant current-day highlighting.",
+                    "PWA Experience: Native-like installation support on mobile devices with smooth offline capabilities.",
+                    "Navigation: Standardized bottom Tab Bar and swipe gestures specifically for mobile-first interaction."
                 ]
             }
         ]

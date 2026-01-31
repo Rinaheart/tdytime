@@ -283,46 +283,32 @@
         "changelog": "Nhật ký thay đổi (Changelog)",
         "changes": [
             {
-                "version": "v0.1.0",
+                "version": "v0.3.0 (Premium Edition)",
+                "date": "2026-01-31",
+                "changes": [
+                    "Semester Timeline: Giao diện Dòng thời gian học kỳ chuyên nghiệp, tự động định vị tuần hiện tại và tối ưu hóa diện tích hiển thị.",
+                    "Analytics Insights: Hệ thống Thống kê lột xác với các Insights Card trực quan và biểu đồ mật độ giảng dạy cao cấp.",
+                    "Mobile-First Premium: Toàn bộ các View lõi (Today, Weekly, Semester, Stats) đạt chuẩn trải nghiệm ứng dụng Native.",
+                    "Visual Excellence: Áp dụng triết lý thiết kế Premium Minimal xuyên suốt với hiệu ứng Glassmorphism và đổ bóng mịn."
+                ]
+            },
+            {
+                "version": "v0.2.0",
                 "date": "2026-01-29",
                 "changes": [
-                    "Welcome Center: Thiết kế lại trang chào mừng chuyên nghiệp với Logo và định danh TdyTime.",
-                    "Conflict Intelligence: Tự động phát hiện trùng tiết dạy hoặc trùng phòng học thông minh.",
-                    "Mobile Optimization: Tối ưu hóa giao diện di động cho SemesterView và StatisticsView (Card-based).",
-                    "Paste Logic: Hỗ trợ Dán trực tiếp mã HTML từ cổng thông tin giảng viên để tạo lịch nhanh.",
-                    "Performance: Cải thiện Code Splitting, Lazy Loading và hiệu ứng Skeleton Shimmer."
+                    "Welcome Center: Trang chào mừng được thiết kế lại sang trọng, hỗ trợ nhận diện thương hiệu TdyTime.",
+                    "Conflict Intelligence: Tự động phân tích và cảnh báo thông minh các tiết dạy trùng hoặc phòng học bị xung đột.",
+                    "Smart History: Hệ thống lưu trữ lịch sử file gần nhất giúp truy cập dữ liệu tức thì không cần tải lại.",
+                    "Performance: Tối ưu tốc độ phản hồi và các hiệu ứng chuyển trang mượt mà."
                 ]
             },
             {
-                "version": "v0.016",
-                "date": "2026-01-28",
+                "version": "v0.1.0",
+                "date": "2026-01-27",
                 "changes": [
-                    "Mobile: Cải thiện toàn diện trải nghiệm di động (Mobile-First Weekly View).",
-                    "Navigation: Thêm thao tác vuốt (Swipe) trái/phải để chuyển tuần.",
-                    "PWA: Cập nhật bộ nhận diện thương hiệu (Icons) mới & Tối ưu offline.",
-                    "Core: Nâng cấp cơ chế tải dữ liệu demo động & Refactor mã nguồn."
-                ]
-            },
-            {
-                "version": "v0.015",
-                "date": "2026-01-26",
-                "changes": [
-                    "Thống kê Dashboard: Re-design toàn diện theo hướng Executive Dashboard - Gọn gàng & Chuyên nghiệp.",
-                    "Thống kê: Insight Cards trực quan với cảnh báo màu sắc (Viền Cam/Đỏ khi có vấn đề).",
-                    "Tính năng: Khôi phục và nâng cấp bảng danh sách 'GV phối hợp chuyên môn'.",
-                    "Chi tiết: Hiển thị chính xác số lượng buổi dạy cuối tuần thay vì cảnh báo chung chung."
-                ]
-            },
-            {
-                "version": "v0.014",
-                "date": "2026-01-26",
-                "changes": [
-                    "UI: Hoàn thiện Blue Theme (Chuyển đổi toàn bộ giao diện sang tone Xanh dương).",
-                    "PWA: Ứng dụng hoạt động offline và hỗ trợ cài đặt trên Desktop/Mobile.",
-                    "Tính năng: Smart History - Tự động lưu 5 file làm việc gần nhất.",
-                    "Tính năng: Heatmap Chart (Biểu đồ nhiệt) hiển thị mật độ dạy chi tiết.",
-                    "UX: Hỗ trợ phím tắt (Mũi tên Trái/Phải) chuyển tuần, Auto-scroll.",
-                    "Fix: Logic tính toán thống kê môn học (Filter chính xác GV chính)."
+                    "Calendar Clean: Redesign giao diện Lịch tuần tập trung vào sự tinh gọn, làm nổi bật ngày hiện tại.",
+                    "PWA Experience: Hỗ trợ cài đặt như ứng dụng thực thụ trên điện thoại, làm việc mượt mà ngay cả khi ngoại tuyến.",
+                    "Navigation: Hệ thống điều hướng Tab Bar phía dưới cùng cử chỉ Swipe được chuẩn hóa cho di động."
                 ]
             }
         ]
