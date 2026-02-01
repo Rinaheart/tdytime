@@ -30,5 +30,5 @@ Bạn đã bao giờ mệt mỏi khi phải nhìn vào những file thời khóa
 3.  Tải file `.html` của bạn và tận hưởng!
 
 ---
-**Sáng tạo bởi TdyPhan**  
+**Phát triển bởi TdyPhan**  
 *Cập nhật: 02/02/2026 (Phiên bản v0.6.0 - Premium Special)*
