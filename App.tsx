@@ -12,7 +12,7 @@ const SemesterView = lazy(() => import('./components/SemesterView'));
 const StatisticsView = lazy(() => import('./components/StatisticsView'));
 const SettingsView = lazy(() => import('./components/SettingsView'));
 const AboutView = lazy(() => import('./components/AboutView'));
-const TodayView = lazy(() => import('./components/TodayView'));
+import TodayView from './components/TodayView';
 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';

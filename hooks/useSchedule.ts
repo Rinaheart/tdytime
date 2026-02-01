@@ -60,11 +60,21 @@ export const useSchedule = () => {
         if (saved) {
             try {
                 const parsed: ScheduleData = JSON.parse(saved);
+
+                // Set data first
                 setData(parsed);
-                setOverrides(parsed.overrides || {});
-                setAbbreviations(parsed.abbreviations || {});
-                setMetrics(calculateMetrics(parsed));
+
+                // IMPORTANT: Calculate metrics once with the full context
+                const initialOverrides = parsed.overrides || {};
+                const initialAbbr = parsed.abbreviations || {};
+
+                setOverrides(initialOverrides);
+                setAbbreviations(initialAbbr);
+
+                // Calculate metrics only once here. 
+                setMetrics(calculateMetrics({ ...parsed, overrides: initialOverrides, abbreviations: initialAbbr }));
                 jumpToCurrentWeek(parsed);
+
             } catch (e) {
                 console.error("Failed to load saved data");
             }
@@ -72,11 +82,13 @@ export const useSchedule = () => {
     }, [jumpToCurrentWeek]);
 
     useEffect(() => {
+        // Prevent calculating metrics again if we just did it in the mount effect
         if (data) {
             const updatedData = { ...data, overrides, abbreviations };
             setMetrics(calculateMetrics(updatedData));
         }
-    }, [overrides, abbreviations, data]);
+    }, [overrides, abbreviations]); // Only trigger on user changes to settings, not initial data fetch
+
 
     const processLoadedData = useCallback((parsedData: ScheduleData) => {
         setIsProcessing(true);
