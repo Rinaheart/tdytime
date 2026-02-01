@@ -12,20 +12,10 @@
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/pwa-192x192.png">
     <link rel="mask-icon" href="/pwa-512x512.png" color="#ffffff">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
-    <div id="root">
-        <!-- App Shell / Immediate Loading Feedback -->
-        <div id="app-shell" style="position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: inherit; transition: opacity 0.3s ease-out;">
-            <div style="width: 48px; height: 48px; border: 3px solid #3b82f6; border-top-color: transparent; border-radius: 50%; animation: shell-spin 0.8s linear infinite;"></div>
-            <style>@keyframes shell-spin { to { transform: rotate(360deg); } }</style>
-        </div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>
 

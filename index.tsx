@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -17,10 +18,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-// Remove App Shell after mount 
-const shell = document.getElementById('app-shell');
-if (shell) {
-  shell.style.opacity = '0';
-  setTimeout(() => shell.remove(), 300);
-}

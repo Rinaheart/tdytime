@@ -8,11 +8,11 @@ import { parseScheduleHTML } from './services/parser';
 import { APP_VERSION } from './constants';
 
 import WeeklyView from './components/WeeklyView';
+import TodayView from './components/TodayView';
 const SemesterView = lazy(() => import('./components/SemesterView'));
 const StatisticsView = lazy(() => import('./components/StatisticsView'));
 const SettingsView = lazy(() => import('./components/SettingsView'));
 const AboutView = lazy(() => import('./components/AboutView'));
-import TodayView from './components/TodayView';
 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
