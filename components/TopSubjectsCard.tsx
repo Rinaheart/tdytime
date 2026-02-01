@@ -4,9 +4,10 @@ import { Layers } from 'lucide-react';
 
 interface TopSubjectsCardProps {
     subjects: { name: string; value: number }[];
+    abbreviations?: Record<string, string>;
 }
 
-const TopSubjectsCard: React.FC<TopSubjectsCardProps> = ({ subjects }) => {
+const TopSubjectsCard: React.FC<TopSubjectsCardProps> = ({ subjects, abbreviations = {} }) => {
     const { t } = useTranslation();
     return (
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
@@ -37,7 +38,7 @@ const TopSubjectsCard: React.FC<TopSubjectsCardProps> = ({ subjects }) => {
                                         {i + 1}
                                     </span>
                                     <span className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate" title={s.name}>
-                                        {s.name}
+                                        {abbreviations[s.name] || s.name}
                                     </span>
                                 </div>
 

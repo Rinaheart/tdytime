@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart3 } from 'lucide-react';
 
 interface DailyBarChartProps {
     data: { name: string; value: number }[];
@@ -10,8 +11,10 @@ interface DailyBarChartProps {
 const DailyBarChart: React.FC<DailyBarChartProps> = ({ data, color }) => {
     const { t } = useTranslation();
     return (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-4">{t('stats.trend.daily')}</h4>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
+            <h4 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                <BarChart3 size={16} className="text-blue-600" /> {t('stats.trend.daily')}
+            </h4>
             <div className="h-40">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>

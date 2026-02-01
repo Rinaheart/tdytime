@@ -60,6 +60,7 @@ const App: React.FC = () => {
     if (toastMessage) {
       setShowSuccess(true);
       setIsUploading(false); // <--- Ensure this is set to false
+      setActiveTab(TabType.TODAY); // <--- Auto-switch to TODAY tab
       const timer = setTimeout(() => setShowSuccess(false), 2000);
       return () => clearTimeout(timer);
     }
@@ -132,7 +133,7 @@ const App: React.FC = () => {
     }
   };
 
-  if (showSuccess) return <SuccessScreen message={toastMessage} />;
+  if (showSuccess) return <SuccessScreen message={toastMessage?.text || ''} />;
 
   const renderContent = () => {
     if (!data || isUploading) {
@@ -216,8 +217,6 @@ const App: React.FC = () => {
               onSave={setThresholds}
               version={APP_VERSION}
               data={dataWithOverrides}
-              overrides={overrides}
-              onSaveOverrides={handleSaveOverrides as any}
               abbreviations={abbreviations}
               onSaveAbbreviations={handleSaveAbbreviations}
               onReset={() => { setIsUploading(true); setError(null); }}
@@ -236,7 +235,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-200 bg-white dark:bg-slate-950 overflow-x-hidden">
+    <div className="min-h-dvh transition-colors duration-200 bg-white dark:bg-slate-950">
       {data && !isUploading && (
         <Header
           activeTab={activeTab}
@@ -251,7 +250,8 @@ const App: React.FC = () => {
         />
       )}
 
-      <div className="flex h-[calc(100vh-48px)] md:h-[calc(100vh-56px)] relative">
+      {/* USE dvh (Dynamic Viewport Height) to fix iOS safari bottom bar issues */}
+      <div className="flex h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] relative">
         {data && !isUploading && (
           <div className="hidden lg:block">
             <Sidebar
@@ -264,7 +264,7 @@ const App: React.FC = () => {
           </div>
         )}
 
-        <main className={`flex-1 transition-all duration-300 ${data && !isUploading ? (sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64') : ''}`}>
+        <main className={`flex-1 min-w-0 transition-all duration-300 ${data && !isUploading ? (sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64') : ''}`}>
           <div className="h-full overflow-y-auto custom-scrollbar p-3 md:p-8 pt-14 md:pt-20" ref={mainContentRef}>
             {error && !data && (
               <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-xl flex items-center gap-2 text-sm max-w-lg mx-auto">

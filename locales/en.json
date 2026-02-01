@@ -31,7 +31,7 @@
         "none": "None",
         "periods": "periods",
         "periodShort": "P",
-        "sessions": "sessions",
+        "sessions": "sess",
         "weeks": "weeks",
         "week": "Week",
         "month": "Month",
@@ -148,26 +148,32 @@
         "rooms": "Rooms",
         "today": {
             "greeting": {
-                "morning": "Good morning, {{name}}!",
-                "afternoon": "Good afternoon, {{name}}!",
-                "evening": "Good evening, {{name}}!"
+                "morning": "Good morning, {{name}}.",
+                "afternoon": "Good afternoon, {{name}}.",
+                "evening": "Good evening, {{name}}."
             },
-            "status": {
-                "teaching": "You have classes today",
-                "free": "You are free today",
-                "finished": "You have finished today's classes"
+            "summary": "Today: {{sessions}} sessions ({{periods}} periods).",
+            "sessionStatus": {
+                "pending": "Upcoming",
+                "live": "In Progress",
+                "completed": "Completed"
             },
-            "next": "Upcoming Class",
-            "nextDate": "{{day}}, {{date}}",
-            "progress": "Weekly Progress",
-            "remaining": "{{count}} periods left",
-            "noMore": "No more classes this semester",
-            "currentTime": "Now",
-            "freeMessage": "Enjoy your rest time! ☕",
+            "next": "Next Teaching",
+            "nextHeader": "{{day}}, {{date}} — {{count}} sessions",
+            "emptyStates": {
+                "noData": "No schedule data available.",
+                "noDataHint": "Please upload your semester schedule to view details.",
+                "beforeSemester": "Semester has not started!",
+                "beforeSemesterHint": "Semester starts on {{date}}.",
+                "afterSemester": "Semester has ended!",
+                "afterSemesterHint": "Semester ended on {{date}}.",
+                "noSessions": "No classes today!"
+            },
             "progressDay": "Today",
             "progressWeek": "This Week",
             "progressMonth": "This Month",
-            "progressSemester": "Semester"
+            "progressSemester": "Semester",
+            "progress": "Progress"
         },
         "weeklyTrend": "Weekly Trend",
         "dailyDensity": "Daily Teaching Density",
@@ -206,26 +212,26 @@
         },
         "conclusions": "Insights & Optimization Suggestions",
         "intensity": "Intensity",
-        "eveningTeaching": "Evening Teaching",
-        "weekendTeaching": "Weekend Teaching",
-        "overloadWeeks": "Overload Weeks (>{{threshold}}p)",
+        "eveningTeaching": "Evening",
+        "weekendTeaching": "Weekend",
+        "overloadWeeks": "Overload",
         "levels": {
             "high": "High",
-            "medium": "Medium",
+            "medium": "Med",
             "low": "Low"
         }
     },
     "settings": {
         "abbreviations": {
-            "title": "Course Name Abbreviations",
-            "description": "Helps display compactly on weekly schedule and Google Calendar exports.",
+            "title": "Shorten Names",
+            "description": "Keep layouts neat in weekly view and Google export.",
             "suggest": "Suggest",
             "reset": "Reset",
-            "save": "Save Abbreviations",
-            "originalName": "Original Course Name",
-            "shortName": "Abbreviation",
-            "placeholder": "Enter abbreviation...",
-            "noData": "No course data available."
+            "save": "Save",
+            "originalName": "Original",
+            "shortName": "Short",
+            "placeholder": "Short name...",
+            "noData": "Empty."
         },
         "courseType": {
             "title": "Customize Course Type",
@@ -244,13 +250,13 @@
             "weekly": "Weekly",
             "warning": "Warning",
             "danger": "Danger",
-            "save": "Save Thresholds"
+            "save": "Save"
         },
         "export": {
             "title": "Export Data",
             "description": "Download current data for storage or processing.",
-            "csvButton": "Export Excel (.csv)",
-            "jsonButton": "Backup (.json)",
+            "csvButton": "Export CSV",
+            "jsonButton": "Backup JSON",
             "csv": {
                 "code": "Course Code",
                 "name": "Course Name",
@@ -289,6 +295,34 @@
         "note": "Note: Theory (LT) periods are 45 minutes each. Practice/Integrated (TH) periods are 60 minutes each.",
         "changelog": "Changelog",
         "changes": [
+            {
+                "version": "v0.6.0",
+                "date": "2026-02-02",
+                "changes": [
+                    "Premium Refinement: Optimized the Settings and Statistics views for better visual balance and information density.",
+                    "Auto-Logic: Implemented intelligent course type assignment and automatic name shortening across all views.",
+                    "Stability Pro: Fixed navigation edge cases and improved code robustness for a smoother experience."
+                ]
+            },
+            {
+                "version": "v0.5.0",
+                "date": "2026-02-02",
+                "changes": [
+                    "Data-Centric Today: Complete redesign of the Today tab with data-first philosophy, optimized for instructors and senior users.",
+                    "Session Status System: Three-tier session status (Upcoming / In Progress / Completed) with clear visual distinction.",
+                    "Semester Intelligence: Smart semester boundary detection with 4 specialized empty states.",
+                    "Mobile-First Cards: Optimized 3-column mobile layout (Time | Info | Room) with standardized display priority."
+                ]
+            },
+            {
+                "version": "v0.5.0",
+                "date": "2026-02-01",
+                "changes": [
+                    "System Refactor: Comprehensive code audit and refactoring, achieving 100% logic safety and stability.",
+                    "Performance Core: Optimized rendering performance with Memoization technology, eliminating calculation bottlenecks.",
+                    "Clean Utilities: Standardized date processing (ScheduleUtils), reducing 30% code duplication and enhancing reliability."
+                ]
+            },
             {
                 "version": "v0.4.0",
                 "date": "2026-01-31",

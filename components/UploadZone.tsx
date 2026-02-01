@@ -75,8 +75,11 @@ const UploadZone: React.FC<UploadZoneProps> = ({
 
   const formatTime = (timestamp: number) => {
     const d = new Date(timestamp);
-    const date = d.toLocaleDateString();
-    const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    const date = `${day}/${month}/${year}`;
+    const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }); // 24h
     return `${time} ${date}`;
   };
 

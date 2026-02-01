@@ -34,14 +34,14 @@ const ThresholdsCard: React.FC<ThresholdsCardProps> = ({
 
     return (
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
-            <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-4 md:p-6 border-b border-slate-100 dark:border-slate-800">
                 <h3 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
                     <BellRing size={20} className="text-amber-500" /> {t('settings.thresholds.title')}
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">{t('settings.thresholds.description')}</p>
             </div>
 
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
+            <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
                 {/* Daily */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-300">
@@ -81,7 +81,7 @@ const ThresholdsCard: React.FC<ThresholdsCardProps> = ({
                     onClick={handleReset}
                     className="px-4 py-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-xs font-bold rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors flex items-center gap-2"
                 >
-                    <RefreshCw size={14} /> Reset
+                    <RefreshCw size={14} /> {t('settings.abbreviations.reset')}
                 </button>
                 <button
                     onClick={handleSave}

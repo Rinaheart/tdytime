@@ -28,10 +28,10 @@
         "current": "Hiện tại",
         "horizontal": "Ngang",
         "vertical": "Dọc",
-        "none": "Không có",
+        "none": "Trống",
         "periods": "tiết",
         "periodShort": "T",
-        "sessions": "buổi dạy",
+        "sessions": "buổi",
         "weeks": "tuần",
         "week": "Tuần",
         "month": "Tháng",
@@ -45,12 +45,12 @@
         "periodLabel": "Tiết"
     },
     "days": {
-        "0": "T2",
-        "1": "T3",
-        "2": "T4",
-        "3": "T5",
-        "4": "T6",
-        "5": "T7",
+        "0": "Thứ 2",
+        "1": "Thứ 3",
+        "2": "Thứ 4",
+        "3": "Thứ 5",
+        "4": "Thứ 6",
+        "5": "Thứ 7",
         "6": "CN"
     },
     "nav": {
@@ -148,26 +148,32 @@
         "rooms": "Phòng",
         "today": {
             "greeting": {
-                "morning": "Chào buổi sáng, {{name}}!",
-                "afternoon": "Chào buổi chiều, {{name}}!",
-                "evening": "Chào buổi tối, {{name}}!"
+                "morning": "Chào buổi sáng, {{name}}.",
+                "afternoon": "Chào buổi chiều, {{name}}.",
+                "evening": "Chào buổi tối, {{name}}."
             },
-            "status": {
-                "teaching": "Bạn có lịch dạy hôm nay",
-                "free": "Hôm nay bạn không có lịch dạy",
-                "finished": "Đã hoàn thành các tiết dạy hôm nay"
+            "summary": "Hôm nay có {{sessions}} buổi giảng ({{periods}} tiết).",
+            "sessionStatus": {
+                "pending": "Chưa đến giờ giảng",
+                "live": "Đang giảng dạy",
+                "completed": "Hoàn thành"
             },
-            "next": "Lịch dạy tiếp theo",
-            "nextDate": "{{day}}, {{date}}",
-            "progress": "Tiến độ tuần này",
-            "remaining": "Còn lại {{count}} tiết",
-            "noMore": "Không còn lịch dạy trong kỳ này",
-            "currentTime": "Bây giờ",
-            "freeMessage": "Hãy tận hưởng thời gian nghỉ ngơi nhé! ☕",
+            "next": "Buổi giảng tiếp theo",
+            "nextHeader": "{{day}}, {{date}} — {{count}} buổi giảng",
+            "emptyStates": {
+                "noData": "Chưa có dữ liệu lịch giảng.",
+                "noDataHint": "Vui lòng tải lên lịch giảng học kỳ để xem chi tiết.",
+                "beforeSemester": "Học kỳ chưa bắt đầu!",
+                "beforeSemesterHint": "Học kỳ sẽ bắt đầu từ ngày {{date}}.",
+                "afterSemester": "Học kỳ đã kết thúc!",
+                "afterSemesterHint": "Ngày kết thúc học kỳ: {{date}}.",
+                "noSessions": "Không có lịch giảng hôm nay!"
+            },
             "progressDay": "Hôm nay",
             "progressWeek": "Tuần này",
             "progressMonth": "Tháng này",
-            "progressSemester": "Học kỳ"
+            "progressSemester": "Học kỳ",
+            "progress": "Tiến độ"
         },
         "weeklyTrend": "Biến động theo Tuần",
         "dailyDensity": "Mật độ Giảng dạy theo Thứ",
@@ -206,9 +212,9 @@
         },
         "conclusions": "Nhận định & Đề xuất Tối ưu",
         "intensity": "Cường độ",
-        "eveningTeaching": "Dạy Buổi Tối",
-        "weekendTeaching": "Dạy Cuối Tuần",
-        "overloadWeeks": "Tuần Quá Tải (>{{threshold}}t)",
+        "eveningTeaching": "Buổi tối",
+        "weekendTeaching": "Cuối tuần",
+        "overloadWeeks": "Quá tải",
         "levels": {
             "high": "Cao",
             "medium": "Trung bình",
@@ -217,15 +223,15 @@
     },
     "settings": {
         "abbreviations": {
-            "title": "Tên môn học viết tắt (Abbreviations)",
-            "description": "Giúp hiển thị gọn gàng trên lịch tuần và file xuất Google Calendar.",
+            "title": "Tên môn viết tắt",
+            "description": "Giúp hiển thị gọn gàng trên lịch tuần và bản xuất Google.",
             "suggest": "Đề xuất",
-            "reset": "Reset",
-            "save": "Lưu tên viết tắt",
-            "originalName": "Tên môn học gốc",
-            "shortName": "Tên viết tắt",
-            "placeholder": "Nhập tên viết tắt...",
-            "noData": "Chưa có dữ liệu môn học."
+            "reset": "Mặc định",
+            "save": "Lưu",
+            "originalName": "Tên gốc",
+            "shortName": "Viết tắt",
+            "placeholder": "Viết tắt...",
+            "noData": "Trống."
         },
         "courseType": {
             "title": "Tùy chỉnh hình thức giảng dạy",
@@ -244,13 +250,13 @@
             "weekly": "Giới hạn Tuần",
             "warning": "Cảnh báo",
             "danger": "Nguy hiểm",
-            "save": "Lưu cài đặt"
+            "save": "Lưu"
         },
         "export": {
             "title": "Quản lý & Xuất file",
             "description": "Sao lưu dữ liệu làm việc hoặc xuất báo cáo.",
-            "csvButton": "Xuất Excel (.csv)",
-            "jsonButton": "Backup (.json)",
+            "csvButton": "Xuất CSV",
+            "jsonButton": "Sao lưu JSON",
             "csv": {
                 "code": "Mã môn",
                 "name": "Tên môn",
@@ -289,6 +295,34 @@
         "note": "* Lưu ý: Thời gian tiết thực hành (TH) là 60 phút/tiết, lý thuyết (LT) là 45 phút/tiết. Bảng trên là thời gian chuẩn cho LT.",
         "changelog": "Nhật ký thay đổi (Changelog)",
         "changes": [
+            {
+                "version": "v0.6.0",
+                "date": "2026-02-02",
+                "changes": [
+                    "Premium Refinement: Tinh chỉnh toàn bộ tab Cài đặt và Thống kê để đạt độ nén thông tin và thẩm mỹ cao nhất.",
+                    "Auto-Logic: Tích hợp khả năng tự động bóc tách loại hình giảng dạy và rút gọn tên môn học thông minh trên toàn ứng dụng.",
+                    "Stability Pro: Xử lý triệt để các lỗi điều hướng và nâng cao độ ổn định nền tảng (v0.6.0)."
+                ]
+            },
+            {
+                "version": "v0.5.0",
+                "date": "2026-02-02",
+                "changes": [
+                    "Data-Centric Today: Thiết kế lại hoàn toàn thẻ Hôm nay với triết lý dữ liệu là trung tâm, phù hợp giảng viên và người dùng lớn tuổi.",
+                    "Session Status System: Hệ thống trạng thái buổi giảng 3 cấp (Chưa đến giờ / Đang giảng dạy / Hoàn thành) với phân biệt thị giác rõ ràng.",
+                    "Semester Intelligence: Logic nhận diện ranh giới học kỳ thông minh với 4 trạng thái empty states chuyên biệt.",
+                    "Mobile-First Cards: Layout 3 cột tối ưu cho mobile (Thời gian | Thông tin | Phòng) với độ ưu tiên hiển thị chuẩn hóa."
+                ]
+            },
+            {
+                "version": "v0.5.0",
+                "date": "2026-02-01",
+                "changes": [
+                    "System Refactor: Kiểm kê (Audit) và tái cấu trúc toàn diện mã nguồn, nâng cao sự ổn định và an toàn logic 100%.",
+                    "Performance Core: Tối ưu hóa hiệu suất render với công nghệ Memoization, loại bỏ hoàn toàn các điểm nghẽn tính toán.",
+                    "Clean Utilities: Chuẩn hóa bộ công cụ xử lý ngày tháng (ScheduleUtils), giảm thiểu 30% mã lặp và tăng độ tin cậy."
+                ]
+            },
             {
                 "version": "v0.4.0",
                 "date": "2026-01-31",

@@ -10,9 +10,10 @@ interface CoTeacher {
 
 interface CoTeachersTableProps {
     coTeachers: CoTeacher[];
+    abbreviations?: Record<string, string>;
 }
 
-const CoTeachersTable: React.FC<CoTeachersTableProps> = ({ coTeachers }) => {
+const CoTeachersTable: React.FC<CoTeachersTableProps> = ({ coTeachers, abbreviations = {} }) => {
     const { t } = useTranslation();
     if (coTeachers.length === 0) return null;
 
@@ -30,7 +31,7 @@ const CoTeachersTable: React.FC<CoTeachersTableProps> = ({ coTeachers }) => {
                             <span className="text-sm font-black text-blue-600 dark:text-blue-400">{ct.periods} <span className="text-[10px] uppercase font-bold text-slate-400">{t('common.periods')}</span></span>
                         </div>
                         <div className="text-[11px] text-slate-500 italic leading-snug">
-                            {ct.subjects.join(', ')}
+                            {ct.subjects.map(s => abbreviations[s] || s).join(', ')}
                         </div>
                     </div>
                 ))}
@@ -51,7 +52,9 @@ const CoTeachersTable: React.FC<CoTeachersTableProps> = ({ coTeachers }) => {
                             <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                 <td className="px-4 py-3 font-bold text-slate-700 dark:text-slate-200">{t.name}</td>
                                 <td className="px-4 py-3 text-center font-black text-blue-600 dark:text-blue-400">{t.periods}</td>
-                                <td className="px-4 py-3 text-slate-500 text-xs italic">{t.subjects.join(', ')}</td>
+                                <td className="px-4 py-3 text-slate-500 text-xs italic">
+                                    {t.subjects.map(s => abbreviations[s] || s).join(', ')}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

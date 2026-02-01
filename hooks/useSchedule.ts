@@ -29,7 +29,7 @@ export const useSchedule = () => {
     const [abbreviations, setAbbreviations] = useState<Record<string, string>>({});
     const [error, setError] = useState<string | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
-    const [toastMessage, setToastMessage] = useState<string | null>(null);
+    const [toastMessage, setToastMessage] = useState<{ text: string, id: number } | null>(null);
     const [historyList, setHistoryList] = useState<HistoryItem[]>([]);
 
     const jumpToCurrentWeek = useCallback((scheduleData: ScheduleData) => {
@@ -122,7 +122,7 @@ export const useSchedule = () => {
         setHistoryList(historyService.getAll());
 
         setCurrentWeekIndex(targetWeekIdx);
-        setToastMessage(message);
+        setToastMessage({ text: message, id: Date.now() });
         setIsProcessing(false);
     }, [t, i18n.language]);
 

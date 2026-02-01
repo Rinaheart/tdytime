@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Metrics, ScheduleData, CourseType } from '../types';
 import {
@@ -6,7 +6,7 @@ import {
   LayoutGrid, Clock, AlertOctagon
 } from 'lucide-react';
 import { DAYS_OF_WEEK, PERIOD_TIMES } from '../constants';
-import HeatmapChart from './HeatmapChart';
+import HeatmapCard from './HeatmapCard';
 import InsightCard from './InsightCard';
 import StatsHeader from './StatsHeader';
 import WeeklyTrendChart from './WeeklyTrendChart';
@@ -36,7 +36,15 @@ const PIE_COLORS = [COLORS.primary, COLORS.secondary, COLORS.tertiary];
 
 const StatisticsView: React.FC<StatisticsViewProps> = ({ metrics, data }) => {
   const { t, i18n } = useTranslation();
-  const now = useMemo(() => new Date(), []);
+
+  // Auto-refresh every 60s for realtime progress
+  const [currentTime, setCurrentTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const now = currentTime;
 
   if (!metrics) return null;
 
@@ -150,23 +158,23 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ metrics, data }) => {
         {/* Right: Alerts Grid (6/12) */}
         <div className="lg:col-span-6 grid grid-cols-4 gap-2 md:gap-6">
           <InsightCard
-            icon={Activity} title="Cường độ"
+            icon={Activity} title={t('stats.intensity')}
             value={intensityStatus}
             statusColor={getStatusBorder(overloadWeeks > 0)}
           />
           <InsightCard
-            icon={Clock} title="Buổi tối"
-            value={eveningSessions > 0 ? `${eveningSessions} buổi` : t('common.none')}
+            icon={Clock} title={t('stats.eveningTeaching')}
+            value={eveningSessions > 0 ? `${eveningSessions} ${t('common.sessions')}` : t('common.none')}
             statusColor={getStatusBorder(eveningSessions > 0)}
           />
           <InsightCard
-            icon={Calendar} title="Cuối tuần"
-            value={weekendSessions.replace(t('common.sessions'), 'buổi')}
+            icon={Calendar} title={t('stats.weekendTeaching')}
+            value={weekendSessions}
             statusColor={getStatusBorder(weekendSessions !== t('common.none'))}
           />
           <InsightCard
-            icon={AlertOctagon} title="Quá tải"
-            value={overloadWeeks > 0 ? `${overloadWeeks} tuần` : t('common.none')}
+            icon={AlertOctagon} title={t('stats.overloadWeeks', { threshold: overloadWeeksBoundary })}
+            value={overloadWeeks > 0 ? `${overloadWeeks} ${t('common.weeks')}` : t('common.none')}
             statusColor={getStatusBorder(overloadWeeks > 0)}
           />
         </div>
@@ -178,29 +186,14 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ metrics, data }) => {
         {/* Row 1: Key Distributions (3 Columns Balance) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
 
-          {/* Col 1: Heatmap (Reduced Width) */}
-          <div className="bg-white dark:bg-slate-950/20 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800/60 p-5 relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full min-h-[340px]">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -mr-32 -mt-32 rounded-full group-hover:bg-blue-500/10 transition-colors"></div>
-
-            <h3 className="relative z-10 text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-sm bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
-                <LayoutGrid size={16} />
-              </div>
-              {t('stats.heatmapTitle')}
-            </h3>
-
-            <div className="relative z-10 flex-1 flex items-center justify-center w-full">
-              <div className="w-full h-full flex items-center justify-center">
-                <HeatmapChart data={metrics.heatmapData} />
-              </div>
-            </div>
-          </div>
+          {/* Col 1: Heatmap */}
+          <HeatmapCard heatmapData={metrics.heatmapData} />
 
           {/* Col 2: Structure */}
           <TeachingStructureCard metrics={metrics} pieColors={PIE_COLORS} />
 
           {/* Col 3: Top Subjects (Now Balanced) */}
-          <TopSubjectsCard subjects={subjectWeights} />
+          <TopSubjectsCard subjects={subjectWeights} abbreviations={data.abbreviations} />
         </div>
 
         {/* Row 2: Trend Charts (2 Columns) */}
@@ -212,21 +205,21 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ metrics, data }) => {
       </div>
 
       {/* 4. INFRASTRUCTURE INSIGHTS (Compact) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Top Classes Card */}
-        <div className="bg-white dark:bg-slate-950/20 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md">
-          <h3 className="relative z-10 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full">
+          <h3 className="relative z-10 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
             <Users size={14} className="text-indigo-500" />
             {t('stats.topClasses')}
           </h3>
-          <div className="relative z-10 grid grid-cols-2 gap-3">
+          <div className="relative z-10 grid grid-cols-2 gap-4">
             {metrics.classDistribution.slice(0, 6).map((c, i) => (
-              <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-900/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
+              <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{c.className}</span>
                   <span className="text-[9px] font-black text-indigo-600 dark:text-indigo-400">{c.periods}</span>
                 </div>
-                <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-sm overflow-hidden">
+                <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-sm overflow-hidden">
                   <div
                     className="h-full bg-indigo-500 rounded-sm"
                     style={{ width: `${Math.min(100, (c.periods / metrics.totalHours) * 350)}%` }}
@@ -238,19 +231,19 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ metrics, data }) => {
         </div>
 
         {/* Top Classrooms Card */}
-        <div className="bg-white dark:bg-slate-950/20 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md">
-          <h3 className="relative z-10 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full">
+          <h3 className="relative z-10 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
             <MapPin size={14} className="text-sky-500" />
             {t('stats.topClassrooms')}
           </h3>
-          <div className="relative z-10 grid grid-cols-2 gap-3">
+          <div className="relative z-10 grid grid-cols-2 gap-4">
             {metrics.topRooms.slice(0, 6).map((r, i) => (
-              <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-900/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
+              <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{r.room}</span>
                   <span className="text-[9px] font-black text-sky-600 dark:text-sky-400">{r.periods}</span>
                 </div>
-                <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-sm overflow-hidden">
+                <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-sm overflow-hidden">
                   <div
                     className="h-full bg-sky-500 rounded-sm"
                     style={{ width: `${Math.min(100, (r.periods / metrics.totalHours) * 350)}%` }}
@@ -263,7 +256,7 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ metrics, data }) => {
       </div>
 
       {/* 5. Co-Teachers Table Card */}
-      <CoTeachersTable coTeachers={metrics.coTeachers} />
+      <CoTeachersTable coTeachers={metrics.coTeachers} abbreviations={data.abbreviations} />
 
     </div>
   );

@@ -1,29 +1,34 @@
 # ⚡ TdyTime
-> **"Your Timetable, Your Time"** – Trợ lý thông minh giúp giảng viên tối ưu hóa lịch trình và quản lý thời gian hiệu quả.
+> **"Your Timetable, Your Time"** – Trợ lý thông minh giúp bạn làm chủ thời gian biểu mỗi ngày.
 
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
+[![Version](https://img.shields.io/badge/version-0.6.0-blue.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
 [![Status](https://img.shields.io/badge/status-active-success.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
 
 ---
 
-## 🌟 Tổng quan
-**TdyTime** biến file thời khóa biểu `.html` khô khan thành một Dashboard trực quan. Ứng dụng tập trung vào tính cá nhân hóa, phân tích dữ liệu chuyên sâu và trải nghiệm di động mượt mà, giúp giảng viên nắm bắt công việc trong nháy mắt.
+## 🌟 TdyTime là gì?
+Bạn đã bao giờ mệt mỏi khi phải nhìn vào những file thời khóa biểu `.html` lộn xộn từ hệ thống UMS? 
 
-## 🚀 Tính năng nổi bật
-*   **Smart Timeline**: Theo dõi tiến độ dạy theo Ngày, Tuần, Tháng với thanh trạng thái trực quan.
-*   **Focus Dashboard**: Tự động nhận diện Giảng viên chính, hiển thị lịch biểu cá nhân hóa cao.
-*   **Mobile-First UX**: Điều hướng thông minh, hỗ trợ thao tác vuốt (Swipe) mượt mà.
-*   **Data Analytics**: Bản đồ nhiệt (Heatmap) và biểu đồ xu hướng giúp tối ưu hóa khối lượng công việc.
-*   **Quick Utilities**: Xuất lịch iCal (Google Calendar), PWA hoạt động Offline, tự động lưu lịch sử tệp.
-*   **Privacy First**: Dữ liệu xử lý 100% tại trình duyệt, an toàn và bảo mật.
+**TdyTime** sinh ra để giải quyết vấn đề đó. Chỉ với một thao tác tải tệp, toàn bộ lịch trình của bạn sẽ được chuyển đổi ngay lập tức thành một **Dashboard hiện đại, trực quan và đầy cảm hứng.**
 
-## 🛠 Stack Công nghệ
-*   **Frontend**: React 19 + TypeScript.
-*   **Design**: Tailwind CSS v4 (Glassmorphism & Bento Grid).
-*   **Intelligence**: Google AI Studio Powered.
-*   **PWA**: Offline Ready & Installable.
+## 🚀 Những điểm "chạm" ấn tượng
+*   **🎯 Nhìn là thấy**: Theo dõi lịch dạy theo Ngày, Tuần, Tháng với thanh tiến độ thời gian thực.
+*   **🧠 Cá nhân hóa**: Tự động nhận diện giảng viên và lọc lịch cá nhân hóa 100%.
+*   **📱 Trải nghiệm "vuốt"**: Thiết kế tối ưu cho di động với hệ thống Tab Bar và cử chỉ điều hướng mượt mà.
+*   **📊 Phân tích thông minh**: Bản đồ nhiệt (Heatmap) và các biểu đồ xu hướng giúp bạn nắm bắt khối lượng công việc trong nháy mắt.
+*   **⚡ Tiện ích nhanh**: Xuất lịch sang Google Calendar, hỗ trợ PWA (truy cập ngoại tuyến như App thật).
+*   **🔒 Bảo mật tuyệt đối**: Dữ liệu được xử lý 100% tại máy của bạn. Không lưu trữ, không rò rỉ.
+
+## 🛠 Công nghệ sành điệu
+*   **Core**: React 19 + TypeScript (Tốc độ & Sự tin cậy).
+*   **Style**: Tailwind CSS v4 (Hiệu ứng kính mờ & Grid hiện đại).
+*   **Engine**: Phân tích dữ liệu thông minh hỗ trợ bởi Google AI Studio.
+
+## 🏁 Sẵn sàng bắt đầu?
+1.  `npm install` – Cài đặt phụ thuộc.
+2.  `npm run dev` – Khởi động cảm hứng.
+3.  Tải file `.html` của bạn và tận hưởng!
 
 ---
-**Phát triển bởi TdyPhan**  
-*Cập nhật lần cuối: 31/01/2026 (Phiên bản 0.2.0)*
+**Sáng tạo bởi TdyPhan**  
+*Cập nhật: 02/02/2026 (Phiên bản v0.6.0 - Premium Special)*

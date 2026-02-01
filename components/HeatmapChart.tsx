@@ -77,7 +77,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({ data }) => {
                 </div>
 
                 {/* Legend */}
-                <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-500 justify-start">
+                <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-500 justify-center">
                     <span>{t('stats.heatmap.less')}</span>
                     <div className="flex gap-1">
                         <div className="w-3 h-3 bg-slate-100 dark:bg-slate-800/50 rounded-sm"></div>

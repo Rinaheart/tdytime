@@ -1,9 +1,9 @@
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, CalendarPlus, LayoutTemplate, Columns, Zap, Search } from 'lucide-react';
 import { WeekSchedule, Thresholds, CourseSession, DaySchedule, FilterState, CourseType, Metadata } from '../types';
 import { DAYS_OF_WEEK, SESSION_COLORS, SESSION_ACCENT_COLORS, PERIOD_TIMES } from '../constants';
+import { isCurrentWeek, getDayDateString as getDateString } from '../utils/scheduleUtils';
 
 import FilterBar from './FilterBar';
 import SessionCard from './SessionCard';
@@ -33,8 +33,7 @@ const SLOT_TIMES_LOOKUP: Record<number, string> = {
   11: "171000", 12: "180000", 13: "185000"
 };
 
-const isSessionCurrent = (session: CourseSession, sessionDateStr: string): boolean => {
-  const now = new Date();
+const isSessionCurrent = (session: CourseSession, sessionDateStr: string, now: Date): boolean => {
   const [d, m, y] = sessionDateStr.split('/').map(Number);
   const sessionDate = new Date(y, m - 1, d);
 
@@ -92,10 +91,11 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
     sessionTime: ''
   });
 
-  // Default to vertical on mobile, horizontal on desktop
-  const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>(() => {
-    return typeof window !== 'undefined' && window.innerWidth < 768 ? 'vertical' : 'horizontal';
-  });
+  // Default to vertical on mobile, horizontal on desktop (SSR-safe)
+  const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>('horizontal');
+  useEffect(() => {
+    if (window.innerWidth < 768) setViewMode('vertical');
+  }, []);
 
   // Export Modal State
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -105,25 +105,14 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
     return filters.search !== '' || filters.className !== '' || filters.room !== '' || (filters.teacher !== '' && filters.teacher !== metadata?.teacher);
   }, [filters, metadata]);
 
-  const getDayDateString = (dayIndex: number) => {
-    try {
-      const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/;
-      const match = week.dateRange.match(dateRegex);
-      if (!match) return "";
-      const d = parseInt(match[1]);
-      const m = parseInt(match[2]);
-      const y = parseInt(match[3]);
-      const startDate = new Date(y, m - 1, d);
-      const targetDate = new Date(startDate);
-      targetDate.setDate(startDate.getDate() + dayIndex);
+  // Memoized current time for session checks (refreshes on component mount)
+  const now = useMemo(() => new Date(), []);
 
-      const day = String(targetDate.getDate()).padStart(2, '0');
-      const month = String(targetDate.getMonth() + 1).padStart(2, '0');
-      const year = targetDate.getFullYear();
+  // Memoize isCurrentWeek check to avoid recalculating on every render
+  const isCurrentWeekDisplayed = useMemo(() => isCurrentWeek(week.dateRange, now), [week.dateRange, now]);
 
-      return `${day}/${month}/${year}`;
-    } catch (e) { return ""; }
-  };
+  // Wrapper for getDayDateString to use week.dateRange
+  const getDayDateString = (dayIndex: number) => getDateString(week.dateRange, dayIndex);
 
   const isDayToday = (dayIdx: number) => {
     const dayDate = getDayDateString(dayIdx);
@@ -202,14 +191,15 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
 
     if (filtered.length === 0) return isVertical ? <div className="text-[10px] text-slate-300 dark:text-slate-700 italic">{t('weekly.noClasses')}</div> : null;
     return (
-      <div className={`flex flex-col gap-2 ${isVertical ? 'w-full' : ''}`}>
+      <div className={`flex flex-col gap-1.5 h-full ${isVertical ? 'w-full' : ''}`}>
         {filtered.map((session, sidx) => {
-          const isCurrent = isSessionCurrent(session, dateStr);
+          const isCurrent = isSessionCurrent(session, dateStr, now);
           return (
             <SessionCard
               key={`${session.courseCode}-${session.timeSlot}-${sidx}`}
               session={session}
               isVertical={isVertical}
+              isHorizontal={!isVertical}
               isCurrent={isCurrent}
               overrides={overrides}
               abbreviations={abbreviations}
@@ -239,26 +229,11 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight uppercase">{t('weekly.week', { number: weekIdx + 1 })}</h3>
-            {(() => {
-              const now = new Date();
-              now.setHours(0, 0, 0, 0);
-              const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
-              const matches = week.dateRange.match(dateRegex);
-              if (matches && matches.length >= 2) {
-                const [ds, ms, ys] = matches[0].split('/').map(Number);
-                const [de, me, ye] = matches[1].split('/').map(Number);
-                const start = new Date(ys, ms - 1, ds);
-                const end = new Date(ye, me - 1, de);
-                if (now >= start && now <= end) {
-                  return (
-                    <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
-                      {t('weekly.currentWeek')}
-                    </span>
-                  );
-                }
-              }
-              return null;
-            })()}
+            {isCurrentWeekDisplayed && (
+              <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
+                {t('weekly.currentWeek')}
+              </span>
+            )}
           </div>
           <p className="text-xs font-bold text-slate-400 font-mono">{week.dateRange}</p>
         </div>
@@ -266,26 +241,9 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
         <div className="flex items-center gap-2 flex-wrap justify-end">
           <button
             onClick={onCurrent}
-            className={`flex items-center gap-2 h-11 px-4 rounded-xl text-xs font-bold transition-all shadow-sm ${(() => {
-              const now = new Date();
-              now.setHours(0, 0, 0, 0);
-              const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
-              const matches = week.dateRange.match(dateRegex);
-              let isCurrentWeekDisplaying = false;
-              if (matches && matches.length >= 2) {
-                const [ds, ms, ys] = matches[0].split('/').map(Number);
-                const [de, me, ye] = matches[1].split('/').map(Number);
-                const start = new Date(ys, ms - 1, ds);
-                const end = new Date(ye, me - 1, de);
-                if (now >= start && now <= end) {
-                  isCurrentWeekDisplaying = true;
-                }
-              }
-
-              return isCurrentWeekDisplaying
-                ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-default'
-                : 'bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 active:scale-95 shadow-blue-500/20';
-            })()}`}
+            className={`flex items-center gap-2 h-11 px-4 rounded-xl text-xs font-bold transition-all shadow-sm ${isCurrentWeekDisplayed
+              ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-default'
+              : 'bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 active:scale-95 shadow-blue-500/20'}`}
           >
             <Zap size={16} className="fill-current" />
             <span className="hidden sm:inline">{t('common.current')}</span>
@@ -360,15 +318,15 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
                       {DAYS_OF_WEEK.map((day, idx) => {
                         const isToday = isDayToday(idx);
                         return (
-                          <th key={day} className={`min-w-[140px] p-4 border border-slate-100 dark:border-slate-800 text-center transition-colors ${isToday ? 'bg-blue-50/50 dark:bg-blue-900/20' : ''}`}>
-                            <div className="flex flex-col items-center gap-1">
+                          <th key={day} className={`min-w-[140px] p-3 border border-slate-100 dark:border-slate-800 text-center transition-all ${isToday ? 'bg-blue-600 dark:bg-blue-600 z-10 relative ring-2 ring-blue-400 dark:ring-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.3)]' : ''}`}>
+                            <div className="flex flex-col items-center gap-0.5">
                               {isToday && (
-                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-1">Hôm nay</span>
+                                <span className="text-[8px] font-black text-white/80 uppercase tracking-widest mb-0.5">{t('weekly.today')}</span>
                               )}
-                              <p className={`text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                              <p className={`text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`}>
                                 {(t(`days.${idx}`))}
                               </p>
-                              <p className={`text-xs font-mono font-bold ${isToday ? 'text-blue-700 dark:text-blue-300' : 'text-slate-800 dark:text-slate-300'}`}>
+                              <p className={`text-xs font-mono font-bold ${isToday ? 'text-white' : 'text-slate-800 dark:text-slate-300'}`}>
                                 {getDayDateString(idx)}
                               </p>
                             </div>
@@ -392,8 +350,8 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
                         {DAYS_OF_WEEK.map((day, dayIdx) => {
                           const isToday = isDayToday(dayIdx);
                           return (
-                            <td key={`${day}-${shift.key}`} className={`p-3 border border-slate-100 dark:border-slate-800 align-top min-h-[160px] transition-colors ${isToday ? 'bg-blue-50/20 dark:bg-blue-900/5' : ''}`}>
-                              <div className="min-h-[120px]">
+                            <td key={`${day}-${shift.key}`} className={`p-2 border border-slate-100 dark:border-slate-800 align-top min-h-[160px] transition-colors ${isToday ? 'bg-blue-50/40 dark:bg-blue-900/10 border-x-blue-200/50 dark:border-x-blue-800/50' : ''}`}>
+                              <div className="h-full">
                                 {renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
                               </div>
                             </td>
@@ -424,22 +382,22 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
               <div key={day} className={`bg-white dark:bg-slate-900 rounded-2xl border ${isToday ? 'border-blue-400 dark:border-blue-500 ring-4 ring-blue-100/50 dark:ring-blue-900/20' : 'border-slate-200/60 dark:border-slate-800/60'} shadow-sm overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md relative group`}>
                 <div className={`md:w-32 ${isToday ? 'bg-blue-600 dark:bg-blue-600 text-white' : 'bg-slate-50 dark:bg-slate-800/30'} p-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 transition-colors`}>
                   {isToday && (
-                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 opacity-80">Today</span>
+                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 opacity-80">{t('weekly.today')}</span>
                   )}
                   <p className={`text-xs font-black uppercase tracking-widest ${isToday ? 'text-white' : 'text-blue-600 dark:text-blue-400'}`}>{t(`days.${idx}`)}</p>
                   <p className={`text-sm font-black mt-1 font-mono ${isToday ? 'text-white' : 'text-slate-800 dark:text-slate-100'}`}>{getDayDateString(idx)}</p>
                 </div>
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 dark:divide-slate-800">
-                  <div className={`p-4 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
-                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-3 flex items-center justify-between">{t('weekly.morning')} <span className="font-mono opacity-60">07:00</span></div>
+                  <div className={`p-3 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-2 flex items-center justify-between">{t('weekly.morning')} <span className="font-mono opacity-60">07:00</span></div>
                     {renderSessionCell(dayData.morning, idx, true)}
                   </div>
-                  <div className={`p-4 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
-                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-3 flex items-center justify-between">{t('weekly.afternoon')} <span className="font-mono opacity-60">13:30</span></div>
+                  <div className={`p-3 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-2 flex items-center justify-between">{t('weekly.afternoon')} <span className="font-mono opacity-60">13:30</span></div>
                     {renderSessionCell(dayData.afternoon, idx, true)}
                   </div>
-                  <div className={`p-4 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
-                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-3 flex items-center justify-between">{t('weekly.evening')} <span className="font-mono opacity-60">17:10</span></div>
+                  <div className={`p-3 ${isToday ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                    <div className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mb-2 flex items-center justify-between">{t('weekly.evening')} <span className="font-mono opacity-60">17:10</span></div>
                     {renderSessionCell(dayData.evening, idx, true)}
                   </div>
                 </div>

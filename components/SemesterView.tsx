@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Zap,
@@ -16,7 +16,9 @@ import {
 } from 'lucide-react';
 import { ScheduleData, WeekSchedule, FilterState, DaySchedule, CourseSession, CourseType } from '../types';
 import { DAYS_OF_WEEK, SESSION_COLORS } from '../constants';
+import { getDayDateString as getDateString, isCurrentWeek as checkIsCurrentWeek, isPastWeek as checkIsPastWeek, createSessionFilter } from '../utils/scheduleUtils';
 import FilterBar from './FilterBar';
+import SessionCard from './SessionCard';
 
 interface SemesterViewProps {
   data: ScheduleData;
@@ -24,29 +26,21 @@ interface SemesterViewProps {
   abbreviations?: Record<string, string>;
 }
 
-const getTeacherColor = (name: string) => {
-  const colors = [
-    'bg-red-100 text-red-700 border-red-200',
-    'bg-orange-100 text-orange-700 border-orange-200',
-    'bg-amber-100 text-amber-700 border-amber-200',
-    'bg-lime-100 text-lime-700 border-lime-200',
-    'bg-cyan-100 text-cyan-700 border-cyan-200',
-    'bg-sky-100 text-sky-700 border-sky-200',
-    'bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200',
-    'bg-pink-100 text-pink-700 border-pink-200'
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  return colors[Math.abs(hash) % colors.length];
-};
+
 
 const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbreviations = {} }) => {
   const { t } = useTranslation();
   const [filters, setFilters] = useState<FilterState>({ search: '', className: '', room: '', teacher: data.metadata.teacher || '', sessionTime: '' });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>(() => {
-    return typeof window !== 'undefined' && window.innerWidth < 768 ? 'vertical' : 'horizontal';
-  });
+
+  // SSR-safe viewMode initialization
+  const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>('horizontal');
+  useEffect(() => {
+    if (window.innerWidth < 768) setViewMode('vertical');
+  }, []);
+
+  // Memoized current time for week checks
+  const now = useMemo(() => new Date(), []);
 
   const currentWeekRef = useRef<HTMLDivElement>(null);
 
@@ -67,31 +61,11 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbre
     return { rooms: Array.from(rooms).sort(), teachers: Array.from(teachers).sort(), classes: Array.from(classes).sort() };
   }, [data]);
 
-  const filterSession = (s: CourseSession) => {
-    if (filters.search && !s.courseName.toLowerCase().includes(filters.search.toLowerCase()) && !s.courseCode.toLowerCase().includes(filters.search.toLowerCase())) return false;
-    if (filters.className && s.className !== filters.className) return false;
-    if (filters.room && s.room !== filters.room) return false;
-    if (filters.teacher && s.teacher !== filters.teacher) return false;
-    return true;
-  };
+  // Use shared filterSession from utils
+  const filterSession = useMemo(() => createSessionFilter(filters), [filters]);
 
-  const getDayDateString = (week: WeekSchedule, dayIndex: number) => {
-    try {
-      const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/;
-      const match = week.dateRange.match(dateRegex);
-      if (!match) return "";
-      const d = parseInt(match[1]);
-      const m = parseInt(match[2]);
-      const y = parseInt(match[3]);
-      const startDate = new Date(y, m - 1, d);
-      const targetDate = new Date(startDate);
-      targetDate.setDate(startDate.getDate() + dayIndex);
-      const day = String(targetDate.getDate()).padStart(2, '0');
-      const month = String(targetDate.getMonth() + 1).padStart(2, '0');
-      const year = targetDate.getFullYear();
-      return `${day}/${month}/${year}`;
-    } catch (e) { return ""; }
-  };
+  // Wrapper for getDayDateString to match expected signature
+  const getDayDateString = (week: WeekSchedule, dayIndex: number) => getDateString(week.dateRange, dayIndex);
 
   const [expandedWeeks, setExpandedWeeks] = useState<Record<number, boolean>>({});
 
@@ -99,34 +73,10 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbre
     setExpandedWeeks(prev => ({ ...prev, [wIdx]: !prev[wIdx] }));
   };
 
-  const isCurrentWeek = (week: WeekSchedule) => {
-    const now = new Date();
-    const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
-    const matches = week.dateRange.match(dateRegex);
-    if (!matches || matches.length < 2) return false;
+  // Use shared week check functions
+  const isCurrentWeek = useCallback((week: WeekSchedule) => checkIsCurrentWeek(week.dateRange, now), [now]);
+  const isPastWeek = useCallback((week: WeekSchedule) => checkIsPastWeek(week.dateRange, now), [now]);
 
-    const [ds, ms, ys] = matches[0].split('/').map(Number);
-    const [de, me, ye] = matches[1].split('/').map(Number);
-
-    const start = new Date(ys, ms - 1, ds);
-    const end = new Date(ye, me - 1, de);
-    const check = new Date(now);
-    check.setHours(0, 0, 0, 0);
-    return check >= start && check <= end;
-  };
-
-  const isPastWeek = (week: WeekSchedule) => {
-    const now = new Date();
-    const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
-    const matches = week.dateRange.match(dateRegex);
-    if (!matches || matches.length < 2) return false;
-
-    const [de, me, ye] = matches[1].split('/').map(Number);
-    const end = new Date(ye, me - 1, de);
-    const check = new Date(now);
-    check.setHours(23, 59, 59, 999);
-    return check > end;
-  };
 
   const scrollToCurrentWeek = () => {
     if (currentWeekRef.current) {
@@ -229,7 +179,7 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbre
                         </h4>
                         {isCurrent && (
                           <span className="px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
-                            Today
+                            {t('common.current')}
                           </span>
                         )}
                       </div>
@@ -260,39 +210,17 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbre
                               <span className="text-[10px] md:text-[11px] font-black text-slate-400 tracking-tighter">{getDayDateString(week, dIdx)}</span>
                             </div>
                             <div className="space-y-3 flex-1">
-                              {sessions.map((s, sidx) => {
-                                const currentType = overrides[s.courseCode] || s.type;
-                                const displayName = abbreviations[s.courseName] || s.courseName;
-                                const showTeacher = !filters.teacher;
-                                return (
-                                  <div key={sidx} className={`p-3 rounded-2xl border-l-4 ${SESSION_COLORS[s.sessionTime]} bg-white dark:bg-slate-900 shadow-sm transition-all hover:shadow-md ${s.hasConflict ? 'ring-2 ring-red-500/50' : ''}`}>
-                                    <p className="text-[11px] font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 line-clamp-2" title={s.courseName}>{displayName}</p>
-
-                                    <div className="flex flex-wrap gap-1.5 items-center mb-2.5">
-                                      <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none">{s.className}</span>
-                                      <span className={`text-[7px] md:text-[8px] font-black px-1.5 py-0.5 rounded-lg border border-transparent shadow-sm ${currentType === CourseType.LT ? 'bg-blue-100/80 text-blue-700' : 'bg-sky-100/80 text-sky-700'}`}>
-                                        {currentType}
-                                      </span>
-                                      {showTeacher && (
-                                        <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-lg border border-transparent shadow-sm truncate max-w-[90px] ${getTeacherColor(s.teacher)}`}>
-                                          {s.teacher}
-                                        </span>
-                                      )}
-                                    </div>
-
-                                    <div className="flex justify-between items-center pt-2.5 border-t border-slate-100 dark:border-slate-800/60">
-                                      <div className="flex items-center gap-1 opacity-60">
-                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{t('common.periodShort', { defaultValue: 'T' })}</span>
-                                        <span className="text-[10px] font-mono font-black text-slate-600 dark:text-slate-300">{s.timeSlot}</span>
-                                      </div>
-                                      <div className="highlight-room inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px] font-black shrink-0 shadow-sm border border-black/5 dark:border-white/5">
-                                        <MapPin size={9} strokeWidth={3} />
-                                        <span>{s.room}</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              })}
+                              <div className="space-y-2 flex-1">
+                                {sessions.map((s, sidx) => (
+                                  <SessionCard
+                                    key={`${s.courseCode}-${s.timeSlot}-${sidx}`}
+                                    session={s}
+                                    overrides={overrides}
+                                    abbreviations={abbreviations}
+                                    showTeacher={!filters.teacher}
+                                  />
+                                ))}
+                              </div>
                             </div>
                           </div>
                         );
@@ -319,31 +247,38 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbre
             return (
               <div key={wIdx} ref={isCurrent ? currentWeekRef : null} className={`relative group animate-in fade-in slide-in-from-bottom-4 duration-500`}>
                 <div className="flex items-center gap-3 mb-4 pl-2">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm ${isCurrent ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-all ${isCurrent ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 ring-2 ring-blue-100 dark:ring-blue-900/40' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
                     {week.weekNumber}
                   </div>
                   <div>
-                    <h4 className={`text-sm font-black uppercase tracking-tight ${isCurrent ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-100'}`}>
-                      {t('weekly.week', { number: week.weekNumber })}
-                    </h4>
+                    <div className="flex items-center gap-2">
+                      <h4 className={`text-sm font-black uppercase tracking-tight ${isCurrent ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-100'}`}>
+                        {t('weekly.week', { number: week.weekNumber })}
+                      </h4>
+                      {isCurrent && (
+                        <span className="px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-[0.15em] animate-pulse">
+                          {t('common.current')}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-[10px] text-slate-400 font-mono font-bold">{week.dateRange}</p>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                <div className={`bg-white dark:bg-slate-900 rounded-3xl border transition-all duration-300 overflow-hidden ${isCurrent ? 'border-blue-400 dark:border-blue-500 ring-4 ring-blue-100/50 dark:ring-blue-900/20 shadow-xl shadow-blue-500/10' : 'border-slate-200 dark:border-slate-800 shadow-xl'}`}>
                   <div className="overflow-x-auto w-full custom-scrollbar touch-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
                     <div className="min-w-[1024px]">
                       <table className="w-full border-collapse border-hidden">
                         <thead>
-                          <tr className="bg-slate-50/50 dark:bg-slate-800/50">
-                            <th className="w-14 p-4 border border-slate-100 dark:border-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-100/50 dark:bg-slate-800/80 sticky left-0 z-20 backdrop-blur-md"></th>
+                          <tr className={`transition-colors ${isCurrent ? 'bg-blue-50/30 dark:bg-blue-950/20' : 'bg-slate-50/50 dark:bg-slate-800/50'}`}>
+                            <th className={`w-14 p-4 border border-slate-100 dark:border-slate-800 text-[10px] font-black uppercase tracking-widest sticky left-0 z-20 backdrop-blur-md transition-colors ${isCurrent ? 'text-blue-600 bg-blue-100/40 dark:bg-blue-900/40 border-r-blue-200' : 'text-slate-400 bg-slate-100/50 dark:bg-slate-800/80'}`}></th>
                             {DAYS_OF_WEEK.map((dayName, dIdx) => {
                               return (
-                                <th key={dayName} className={`min-w-[140px] p-4 border border-slate-100 dark:border-slate-800 text-center`}>
-                                  <p className="text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                                <th key={dayName} className={`min-w-[140px] p-4 border border-slate-100 dark:border-slate-800 text-center transition-colors ${isCurrent ? 'bg-blue-50/20 dark:bg-blue-900/10' : ''}`}>
+                                  <p className={`text-[11px] font-black uppercase tracking-widest ${isCurrent ? 'text-blue-500' : 'text-slate-500 dark:text-slate-400'}`}>
                                     {(t(`days.${dIdx}`))}
                                   </p>
-                                  <p className="text-xs font-mono font-bold text-slate-400">
+                                  <p className={`text-xs font-mono font-bold ${isCurrent ? 'text-blue-700 dark:text-blue-300' : 'text-slate-400'}`}>
                                     {getDayDateString(week, dIdx)}
                                   </p>
                                 </th>
@@ -358,27 +293,24 @@ const SemesterView: React.FC<SemesterViewProps> = ({ data, overrides = {}, abbre
                             { key: 'evening', label: 'T' }
                           ].map((shift) => (
                             <tr key={shift.key} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10 transition-colors">
-                              <td className="p-4 border border-slate-100 dark:border-slate-800 text-center bg-slate-50/50 dark:bg-slate-800/80 align-middle sticky left-0 z-20 backdrop-blur-md shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
-                                <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black mx-auto shadow-lg shadow-blue-500/20">{shift.label}</span>
+                              <td className={`p-4 border border-slate-100 dark:border-slate-800 text-center align-middle sticky left-0 z-20 backdrop-blur-md shadow-[2px_0_5px_rgba(0,0,0,0.02)] transition-colors ${isCurrent ? 'bg-blue-100/40 dark:bg-blue-900/40 border-r-blue-200' : 'bg-slate-50/50 dark:bg-slate-800/80'}`}>
+                                <span className={`w-8 h-8 rounded-full text-white flex items-center justify-center text-xs font-black mx-auto shadow-lg ${isCurrent ? 'bg-blue-700 shadow-blue-500/30' : 'bg-blue-600 shadow-blue-500/20'}`}>{shift.label}</span>
                               </td>
                               {DAYS_OF_WEEK.map((dayName) => {
                                 const sessions = week.days[dayName][shift.key as keyof DaySchedule].filter(filterSession);
                                 return (
-                                  <td key={`${dayName}-${shift.key}`} className={`p-3 border border-slate-100 dark:border-slate-800 align-top min-h-[160px]`}>
-                                    <div className="space-y-2">
-                                      {sessions.map((s, sidx) => {
-                                        const currentType = overrides[s.courseCode] || s.type;
-                                        const displayName = abbreviations[s.courseName] || s.courseName;
-                                        return (
-                                          <div key={sidx} className={`p-2 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm`}>
-                                            <p className="text-[10px] font-black text-slate-800 dark:text-slate-100 leading-tight mb-2 line-clamp-2">{displayName}</p>
-                                            <div className="flex items-center justify-between gap-1">
-                                              <span className="text-[8px] font-black text-slate-400 uppercase">{s.room}</span>
-                                              <span className={`text-[7px] font-black px-1 py-0.5 rounded ${currentType === CourseType.LT ? 'bg-blue-100 text-blue-700' : 'bg-sky-100 text-sky-700'}`}>{currentType}</span>
-                                            </div>
-                                          </div>
-                                        );
-                                      })}
+                                  <td key={`${dayName}-${shift.key}`} className={`p-3 border border-slate-100 dark:border-slate-800 align-top min-h-[160px] transition-colors ${isCurrent ? 'bg-blue-50/10 dark:bg-blue-900/5' : ''}`}>
+                                    <div className="space-y-2 h-full">
+                                      {sessions.map((s, sidx) => (
+                                        <SessionCard
+                                          key={`${s.courseCode}-${s.timeSlot}-${sidx}`}
+                                          session={s}
+                                          isHorizontal={true}
+                                          overrides={overrides}
+                                          abbreviations={abbreviations}
+                                          showTeacher={!filters.teacher}
+                                        />
+                                      ))}
                                     </div>
                                   </td>
                                 );

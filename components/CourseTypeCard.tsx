@@ -61,7 +61,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({
 
     return (
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
-            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="p-4 md:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h3 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
                         <ListChecks size={20} className="text-blue-600" /> {t('settings.courseType.title')}
@@ -88,7 +88,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({
                 <table className="w-full text-left text-xs border-collapse">
                     <thead className="bg-slate-50 dark:bg-slate-800 sticky top-0 z-10">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-slate-400 uppercase w-12 text-center">STT</th>
+                            <th className="px-4 py-3 font-bold text-slate-400 uppercase w-10 text-center">#</th>
                             {[
                                 { id: 'code', label: t('settings.courseType.code') },
                                 { id: 'name', label: t('settings.courseType.course') },
@@ -117,10 +117,10 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({
                                     className={`transition-colors duration-150 ${isLT ? 'bg-teal-50/40 dark:bg-teal-900/10' : 'bg-emerald-50/40 dark:bg-emerald-900/10'}`}
                                 >
                                     <td className="px-4 py-3 text-center text-slate-400 font-medium">{idx + 1}</td>
-                                    <td className="px-4 py-3 font-mono font-bold text-blue-600 dark:text-blue-400">{c.code}</td>
+                                    <td className="px-2 py-3 font-mono font-bold text-blue-600 dark:text-blue-400 text-[10px]">{c.code}</td>
                                     <td className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200">{c.name}</td>
-                                    <td className="px-4 py-3 text-slate-500">{c.classes.join(', ')}</td>
-                                    <td className="px-4 py-3 text-slate-500">{c.groups.join(', ')}</td>
+                                    <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{c.classes.join(', ')}</td>
+                                    <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{c.groups.join(', ')}</td>
                                     <td className="px-4 py-3 text-center">
                                         <button
                                             onClick={() => setTempOverrides({ ...tempOverrides, [c.code]: CourseType.LT })}

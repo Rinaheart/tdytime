@@ -200,7 +200,13 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                                     </div>
                                     <div className="flex items-center gap-4">
                                         <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
-                                            {new Date(item.savedAt).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit' })}
+                                            {(() => {
+                                                const d = new Date(item.savedAt);
+                                                const day = String(d.getDate()).padStart(2, '0');
+                                                const month = String(d.getMonth() + 1).padStart(2, '0');
+                                                const year = d.getFullYear();
+                                                return `${day}/${month}/${year}`;
+                                            })()}
                                         </span>
                                         <button
                                             onClick={(e) => {

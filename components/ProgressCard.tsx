@@ -33,7 +33,7 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ progress, currentDate }) =>
             <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 text-indigo-200">
                     <TrendingUp size={14} className="shrink-0" />
-                    <h3 className="text-[10px] font-black uppercase tracking-widest">Tiến độ</h3>
+                    <h3 className="text-[10px] font-black uppercase tracking-widest">{t('stats.today.progress')}</h3>
                 </div>
                 <span className="text-[9px] font-bold text-slate-500 tracking-tighter">{currentDate}</span>
             </div>

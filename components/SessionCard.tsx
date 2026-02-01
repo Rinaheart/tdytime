@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MapPin, AlertCircle, ChevronDown, ChevronUp, Users, User } from 'lucide-react';
+import { AlertCircle, User } from 'lucide-react';
 import { CourseSession, CourseType } from '../types';
 import { SESSION_COLORS } from '../constants';
 
@@ -8,6 +8,7 @@ interface SessionCardProps {
     session: CourseSession;
     isVertical?: boolean;
     isCurrent?: boolean;
+    isHorizontal?: boolean;
     overrides?: Record<string, CourseType>;
     abbreviations?: Record<string, string>;
     showTeacher?: boolean;
@@ -30,98 +31,77 @@ const getTeacherColor = (name: string) => {
     return colors[Math.abs(hash) % colors.length];
 };
 
+const SESSION_TIME_COLORS: Record<string, string> = {
+    morning: 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border-blue-200/50 dark:border-blue-800/50',
+    afternoon: 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 border-amber-200/50 dark:border-amber-800/50',
+    evening: 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border-indigo-200/50 dark:border-indigo-800/50'
+};
+
 const SessionCard: React.FC<SessionCardProps> = ({
     session,
     isVertical = false,
     isCurrent = false,
+    isHorizontal = false,
     overrides = {},
     abbreviations = {},
     showTeacher = true
 }) => {
     const { t } = useTranslation();
-    // Default expanded only if NOT vertical (desktop), or if it's the current session
-    const [isExpanded, setIsExpanded] = useState(!isVertical || isCurrent);
 
     const currentType = overrides[session.courseCode] || session.type;
     const displayName = abbreviations[session.courseName] || session.courseName;
 
-    const toggleExpand = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setIsExpanded(!isExpanded);
-    };
-
     return (
         <div
-            onClick={() => isVertical && setIsExpanded(!isExpanded)}
             className={`
-        p-2 md:p-3 rounded-xl shadow-sm text-left relative transition-all duration-300
+        p-2.5 rounded-xl shadow-sm text-left relative transition-all duration-300 border flex flex-col
+        ${isHorizontal ? 'h-full' : ''}
         ${SESSION_COLORS[session.sessionTime]} dark:bg-opacity-5 dark:border-opacity-40
-        ${session.hasConflict ? 'conflict-border' : ''}
-        ${isCurrent ? 'ring-2 ring-blue-500/80 bg-blue-50/50 dark:bg-blue-900/10 shadow-indigo-500/10 shadow-lg z-10' : 'border border-slate-100/50 dark:border-slate-800/50'}
-        ${isVertical ? 'cursor-pointer active:scale-[0.97]' : ''}
+        ${session.hasConflict ? 'conflict-border border-red-500/50' : 'border-slate-100/50 dark:border-slate-800/50'}
+        ${isCurrent ? 'ring-2 ring-blue-500/80 bg-blue-50/50 dark:bg-blue-900/10 z-10' : ''}
       `}
         >
-            {/* Header Section */}
-            <div className="flex justify-between items-start gap-1 mb-1">
-                <div className="flex-1 min-w-0">
-                    <p className="text-[10px] md:text-[11px] font-black leading-tight text-slate-800 dark:text-slate-100 line-clamp-2" title={session.courseName}>
-                        {displayName}
-                    </p>
-                </div>
-
-                {/* Indicators */}
-                <div className="flex items-center gap-0.5 flex-shrink-0 -mt-0.5 opacity-80">
-                    {session.hasConflict && <AlertCircle size={11} className="text-red-500 md:w-[13px] md:h-[13px]" />}
-                    {isVertical && (
-                        <div className="text-slate-400">
-                            {isExpanded ? <ChevronUp size={12} strokeWidth={3} className="md:w-[14px] md:h-[14px]" /> : <ChevronDown size={12} strokeWidth={3} className="md:w-[14px] md:h-[14px]" />}
-                        </div>
-                    )}
-                </div>
+            {/* Row 1: Course Name [LT/TH] */}
+            <div className="flex justify-between items-start gap-1">
+                <p className="text-[11px] md:text-xs font-black leading-tight text-slate-900 dark:text-slate-100" title={session.courseName}>
+                    {displayName}
+                    <span className={`ml-1 text-[10px] md:text-[11px] font-bold ${currentType === CourseType.LT ? 'text-blue-600 dark:text-blue-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                        [{currentType}]
+                    </span>
+                </p>
 
                 {isCurrent && (
-                    <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+                    <span className="shrink-0 flex h-2 w-2 mt-0.5">
+                        <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-blue-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                     </span>
                 )}
+                {session.hasConflict && <AlertCircle size={10} className="text-red-500 shrink-0 mt-0.5" />}
             </div>
 
-            {/* Primary Info (Always Visible) */}
-            <div className="flex items-center justify-between gap-1.5">
-                <div className="flex items-center gap-1.5">
-                    <span className="text-[8px] md:text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{t('weekly.period', { number: session.timeSlot })}</span>
-                    <span className={`text-[7px] md:text-[8px] font-black px-1 py-0.5 rounded-md ${currentType === CourseType.LT ? 'bg-blue-100/80 text-blue-700' : 'bg-sky-100/80 text-sky-700'}`}>
-                        {currentType}
+            <div className="flex-1 flex flex-col justify-between">
+                {/* Row 2: Class (Group) */}
+                <div className="mt-1.5 flex items-center gap-1 text-[10px] md:text-[11px] text-slate-600 dark:text-slate-400 overflow-hidden">
+                    <span className="font-bold truncate">{session.className}</span>
+                    <span className="opacity-40">({session.group})</span>
+                </div>
+
+                {/* Row 3: Tiết x-y -- Phòng */}
+                <div className="mt-1.5 flex items-center justify-between gap-1 text-[10px] md:text-[11px] font-bold">
+                    <span className="text-slate-500 dark:text-slate-500">{t('weekly.period', { number: session.timeSlot })}</span>
+                    <span className={`px-2 py-0.5 rounded border shadow-sm text-center min-w-[36px] ${SESSION_TIME_COLORS[session.sessionTime]}`}>
+                        {session.room}
                     </span>
                 </div>
-
-                <div className="highlight-room inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px] md:text-[10px] font-black shrink-0 shadow-sm border border-black/5 dark:border-white/5">
-                    <MapPin size={9} strokeWidth={3} className="md:w-[10px] md:h-[10px]" />
-                    <span>{session.room}</span>
-                </div>
             </div>
 
-            {/* Collapsible Details */}
-            <div className={`
-        grid transition-all duration-300 ease-in-out
-        ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-2 pt-2 border-t border-slate-400/5' : 'grid-rows-[0fr] opacity-0'}
-      `}>
-                <div className="overflow-hidden">
-                    <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
-                        <Users size={9} className="text-slate-400/80 md:w-[10px] md:h-[10px]" />
-                        <span className="font-black text-slate-700 dark:text-slate-200">{session.className}</span>
-                        <span className="font-bold opacity-50 sm:block hidden">({session.group})</span>
-                    </p>
-
-                    {showTeacher && (
-                        <div className={`flex items-center gap-1 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-md border border-transparent max-w-full ${getTeacherColor(session.teacher)}`}>
-                            <User size={9} strokeWidth={3} className="flex-shrink-0 md:w-[10px] md:h-[10px]" />
-                            <span className="truncate">{session.teacher}</span>
-                        </div>
-                    )}
+            {/* Small Teacher label if needed (compact) */}
+            {showTeacher && (
+                <div className="mt-1.5 pt-1.5 border-t border-black/5 dark:border-white/5 flex items-center gap-1 text-[8px] text-slate-400 truncate">
+                    <User size={8} />
+                    <span>{session.teacher}</span>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

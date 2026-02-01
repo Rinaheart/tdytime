@@ -12,15 +12,13 @@ interface SettingsViewProps {
   onSave: (t: Thresholds) => void;
   version: string;
   data: ScheduleData;
-  overrides: Record<string, CourseType>;
-  onSaveOverrides: (o: Record<string, CourseType>) => void;
   abbreviations: Record<string, string>;
   onSaveAbbreviations: (a: Record<string, string>) => void;
   onReset: () => void;
 }
 
 const SettingsView: React.FC<SettingsViewProps> = ({
-  thresholds, onSave, data, overrides, onSaveOverrides,
+  thresholds, onSave, data,
   abbreviations, onSaveAbbreviations, onReset
 }) => {
   const { t } = useTranslation();
@@ -48,7 +46,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 animate-in zoom-in duration-300 pb-20 relative">
+    <div className="max-w-5xl mx-auto space-y-6 animate-in zoom-in duration-300 pb-20 relative">
 
       {/* Toast Notification */}
       {toast && (
@@ -62,7 +60,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
       )}
 
-      {/* CARD 1: Tên môn học viết tắt */}
       <AbbreviationsCard
         uniqueSubjects={uniqueSubjects}
         abbreviations={abbreviations}
@@ -81,7 +78,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({
         {/* CARD 3: Xuất dữ liệu */}
         <ExportCard
           data={data}
-          overrides={overrides}
           abbreviations={abbreviations}
           onSuccess={handleSuccess}
         />

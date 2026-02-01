@@ -52,7 +52,7 @@ const AbbreviationsCard: React.FC<AbbreviationsCardProps> = ({
 
     return (
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
-            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="p-4 md:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h3 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
                         <Type size={20} className="text-cyan-600" /> {t('settings.abbreviations.title')}
@@ -79,9 +79,9 @@ const AbbreviationsCard: React.FC<AbbreviationsCardProps> = ({
                 <table className="w-full text-left text-xs border-collapse">
                     <thead className="bg-slate-50 dark:bg-slate-800 sticky top-0 z-10">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-slate-400 uppercase w-12 text-center">STT</th>
-                            <th className="px-4 py-3 font-bold text-slate-400 uppercase">{t('settings.abbreviations.originalName')}</th>
-                            <th className="px-4 py-3 font-bold text-slate-400 uppercase w-1/3">{t('settings.abbreviations.shortName')}</th>
+                            <th className="px-4 py-3 font-bold text-slate-400 uppercase w-10 text-center">#</th>
+                            <th className="px-4 py-3 font-bold text-slate-400 uppercase text-[10px] tracking-wider">{t('settings.abbreviations.originalName')}</th>
+                            <th className="px-4 py-3 font-bold text-slate-400 uppercase text-[10px] tracking-wider w-1/3 min-w-[120px]">{t('settings.abbreviations.shortName')}</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
