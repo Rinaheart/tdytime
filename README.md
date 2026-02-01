@@ -1,7 +1,7 @@
 # ⚡ TdyTime
 > **"Your Timetable, Your Time"** – Trợ lý thông minh giúp giảng viên tối ưu hóa lịch trình và quản lý thời gian hiệu quả.
 
-[![Version](https://img.shields.io/badge/véion-0.4.0-blue.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
 [![Status](https://img.shields.io/badge/status-active-success.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
 
