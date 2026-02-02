@@ -158,7 +158,8 @@
                 "live": "Đang giảng dạy",
                 "completed": "Hoàn thành"
             },
-            "next": "Buổi giảng tiếp theo",
+            "next": "Lịch giảng tiếp theo",
+            "firstOfSemester": "Lịch giảng đầu kỳ",
             "nextHeader": "{{day}}, {{date}} — {{count}} buổi giảng",
             "emptyStates": {
                 "noData": "Chưa có dữ liệu lịch giảng.",
@@ -167,7 +168,7 @@
                 "beforeSemesterHint": "Học kỳ sẽ bắt đầu từ ngày {{date}}.",
                 "afterSemester": "Học kỳ đã kết thúc!",
                 "afterSemesterHint": "Ngày kết thúc học kỳ: {{date}}.",
-                "noSessions": "Không có lịch giảng hôm nay!"
+                "noSessions": ""
             },
             "progressDay": "Hôm nay",
             "progressWeek": "Tuần này",
@@ -294,7 +295,18 @@
         "evening": "Buổi Tối",
         "note": "* Lưu ý: Thời gian tiết thực hành (TH) là 60 phút/tiết, lý thuyết (LT) là 45 phút/tiết. Bảng trên là thời gian chuẩn cho LT.",
         "changelog": "Nhật ký thay đổi (Changelog)",
-        "changes": [
+        "history": [
+            {
+                "version": "v0.7.0",
+                "date": "02/02/2026",
+                "title": "Daily Focus",
+                "description": "Tối ưu hóa tab Hôm nay cho giảng viên.",
+                "features": [
+                    "Sắp xếp thông minh: Đang dạy > Sắp dạy > Đã dạy.",
+                    "Giao diện tinh gọn: Bỏ nút bấm thừa, thêm liên kết nhanh.",
+                    "Hiệu suất: PWA tải nhanh dưới 1s, font hệ thống."
+                ]
+            },
             {
                 "version": "v0.6.0",
                 "date": "2026-02-02",

@@ -85,67 +85,70 @@ const SessionCard: React.FC<{
     const currentType = overrides[session.courseCode] || session.type;
     const displayName = abbreviations[session.courseName] || session.courseName;
 
-    // Status-based styling (no icons, no bright colors)
+    // Status-based styling
     const statusStyles = {
         PENDING: {
             container: 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900',
-            text: 'text-slate-900 dark:text-white',
+            text: 'text-slate-900 dark:text-white font-bold',
             statusText: 'text-slate-500 dark:text-slate-400'
         },
         LIVE: {
-            container: 'border-2 border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/20',
+            container: 'border-2 border-blue-500 dark:border-blue-400 bg-blue-50/10 dark:bg-blue-900/10',
             text: 'text-slate-900 dark:text-white font-bold',
             statusText: 'text-blue-600 dark:text-blue-400 font-bold'
         },
         COMPLETED: {
             container: 'border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50',
-            text: 'text-slate-400 dark:text-slate-500',
+            text: 'text-slate-400 dark:text-slate-500 font-bold',
             statusText: 'text-slate-400 dark:text-slate-500'
         }
     };
 
     const styles = statusStyles[status];
 
+    // Badge Colors
+    const isLT = currentType === CourseType.LT;
+    const badgeClass = status === 'COMPLETED'
+        ? 'bg-slate-100 text-slate-400 border-slate-200 dark:bg-slate-800 dark:text-slate-600 dark:border-slate-700'
+        : isLT
+            ? 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800'
+            : 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800';
+
     return (
-        <div className={`flex items-stretch rounded-xl overflow-hidden mb-3 border ${styles.container}`}>
-            {/* LEFT: Time */}
-            <div className="w-[60px] md:w-[68px] flex flex-col items-end py-2.5 px-2 bg-slate-100 dark:bg-slate-800 shrink-0">
-                <span className={`text-sm md:text-base font-bold leading-[1.2] ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>
+        <div className={`flex items-stretch rounded-2xl overflow-hidden mb-3 border bg-white dark:bg-slate-900 shadow-sm ${styles.container}`}>
+            {/* LEFT: Time (Emphasized) */}
+            <div className="w-[72px] flex flex-col items-end justify-center py-3 px-3 border-r border-slate-100 dark:border-slate-800 shrink-0">
+                <span className={`text-xl font-black leading-none tracking-tight mb-1 ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-800 dark:text-slate-200'}`}>
                     {startTimeStr}
                 </span>
-                <span className={`text-[10px] leading-tight ${status === 'COMPLETED' ? 'text-slate-300' : 'text-slate-400 dark:text-slate-500'}`}>
+                <span className={`text-xs font-medium ${status === 'COMPLETED' ? 'text-slate-300' : 'text-slate-400 dark:text-slate-500'}`}>
                     {endTimeStr}
                 </span>
             </div>
 
             {/* CENTER: Info */}
-            <div className="flex-1 py-2.5 px-3 min-w-0 flex flex-col">
-                {/* Course Name */}
-                <h4 className={`text-xs md:text-sm font-bold leading-[1.2] mb-2 truncate ${styles.text}`}>
-                    {displayName}
-                </h4>
-
-                {/* Class & Group */}
-                <div className={`flex items-center gap-1 text-[10px] md:text-xs mb-1.5 ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-600 dark:text-slate-400'}`}>
-                    <span className="font-medium truncate">{session.className}</span>
-                    <span className="text-slate-300 dark:text-slate-600">·</span>
-                    <span>({session.group})</span>
-                </div>
-
-                {/* Period & Type + Status */}
-                <div className="flex items-center gap-2 text-[9px] md:text-[10px]">
-                    <span className={`${status === 'COMPLETED' ? 'text-slate-300' : 'text-slate-500 dark:text-slate-500'}`}>
-                        {t('common.periodLabel')} {session.timeSlot}
-                    </span>
-                    <span className={`uppercase font-bold ${status === 'COMPLETED'
-                        ? 'text-slate-400'
-                        : currentType === CourseType.LT
-                            ? 'text-blue-600'
-                            : 'text-emerald-600'
-                        }`}>
+            <div className="flex-1 py-3 px-4 min-w-0 flex flex-col justify-center">
+                {/* Line 1: Name + Badge */}
+                <div className="flex items-center gap-2 mb-1">
+                    <h4 className={`text-sm md:text-base leading-tight truncate ${styles.text}`}>
+                        {displayName}
+                    </h4>
+                    <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded border ${badgeClass}`}>
                         {currentType}
                     </span>
-                    <span className="text-slate-300 dark:text-slate-600">|</span>
+                </div>
+
+                {/* Line 2: Class Info */}
+                <div className={`text-xs mb-1 truncate ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                    {session.className} <span className="opacity-50">·</span> ({session.group})
+                </div>
+
+                {/* Line 3: Period & Status */}
+                <div className="flex items-center gap-2 text-[11px]">
+                    <span className={`font-medium ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                        {t('common.periodLabel')} {session.timeSlot}
+                    </span>
+                    <span className="text-slate-300 dark:text-slate-700">|</span>
                     <span className={styles.statusText}>
                         {t(`stats.today.sessionStatus.${status.toLowerCase()}`)}
                     </span>
@@ -153,8 +156,8 @@ const SessionCard: React.FC<{
             </div>
 
             {/* RIGHT: Room */}
-            <div className="w-[52px] md:w-[60px] flex items-start py-2.5 px-2 bg-slate-50 dark:bg-slate-800/50 shrink-0 border-l border-slate-100 dark:border-slate-700">
-                <span className={`text-xs md:text-sm font-bold leading-[1.2] text-left ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>
+            <div className="w-[60px] flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 shrink-0 border-l border-slate-100 dark:border-slate-800 px-2">
+                <span className={`text-sm font-bold text-center leading-tight ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>
                     {session.room}
                 </span>
             </div>
@@ -169,8 +172,9 @@ const SessionCard: React.FC<{
 const EmptyStateCard: React.FC<{
     type: 'noData' | 'beforeSemester' | 'afterSemester' | 'noSessions';
     date?: string;
+    onAction?: (action: 'WEEK' | 'OVERVIEW') => void;
     t: any;
-}> = ({ type, date, t }) => {
+}> = ({ type, date, onAction, t }) => {
     const showCoffee = type === 'noSessions';
 
     return (
@@ -187,6 +191,24 @@ const EmptyStateCard: React.FC<{
                 <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
                     {t(`stats.today.emptyStates.${type}Hint`, { date })}
                 </p>
+            )}
+
+            {/* CTA for No Sessions */}
+            {type === 'noSessions' && onAction && (
+                <div className="flex items-center justify-center gap-6 mt-2">
+                    <span
+                        onClick={() => onAction('WEEK')}
+                        className="text-sm font-bold text-blue-600 dark:text-blue-400 cursor-pointer hover:underline"
+                    >
+                        {t('nav.weekly')}
+                    </span>
+                    <span
+                        onClick={() => onAction('OVERVIEW')}
+                        className="text-sm font-bold text-blue-600 dark:text-blue-400 cursor-pointer hover:underline"
+                    >
+                        {t('nav.semester')}
+                    </span>
+                </div>
             )}
         </div>
     );
@@ -208,9 +230,12 @@ const NextTeachingSection: React.FC<{
     onSwitchTab: (tab: any) => void;
     setCurrentWeekIndex: (idx: number) => void;
     isCompact?: boolean;
+    isBeforeSemester?: boolean;
     t: any;
-}> = ({ nextTeaching, abbreviations, overrides, onSwitchTab, setCurrentWeekIndex, isCompact = false, t }) => {
+}> = ({ nextTeaching, abbreviations, overrides, onSwitchTab, setCurrentWeekIndex, isCompact = false, isBeforeSemester = false, t }) => {
     const dateInfo = formatDateVN(nextTeaching.date);
+    // Use distinctive label for Before Semester vs In-Semester
+    const titleKey = isBeforeSemester ? 'stats.today.firstOfSemester' : 'stats.today.next';
 
     if (isCompact) {
         // Compact version shown below today's sessions
@@ -218,7 +243,7 @@ const NextTeachingSection: React.FC<{
             <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
                 <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3 flex items-center gap-2">
                     <ArrowRight size={14} className="text-blue-500" />
-                    {t('stats.today.next')}
+                    {t(titleKey)}
                 </h3>
                 <div
                     onClick={() => { setCurrentWeekIndex(nextTeaching.weekIdx); onSwitchTab('WEEK'); }}
@@ -264,7 +289,7 @@ const NextTeachingSection: React.FC<{
             <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
                     <ArrowRight size={16} className="text-blue-500" />
-                    {t('stats.today.next')}
+                    {t(titleKey)}
                 </h3>
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
                     {t(`days.${nextTeaching.dayIdx}`)}, {dateInfo.full} — {nextTeaching.sessions.length} {t('common.sessions')}
@@ -298,14 +323,15 @@ const NextTeachingSection: React.FC<{
                 })}
             </div>
 
-            {/* Action Button */}
-            <button
-                onClick={() => { setCurrentWeekIndex(nextTeaching.weekIdx); onSwitchTab('WEEK'); }}
-                className="w-full py-3 bg-slate-50 dark:bg-slate-800/50 text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide hover:bg-slate-100 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-2"
-            >
-                {t('common.viewDetails')}
-                <ArrowRight size={14} />
-            </button>
+            {/* Action Text Link (Replaced Button) */}
+            <div className="p-3 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex justify-center">
+                <span
+                    onClick={() => { setCurrentWeekIndex(nextTeaching.weekIdx); onSwitchTab('WEEK'); }}
+                    className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide cursor-pointer hover:underline flex items-center gap-2"
+                >
+                    {t('common.viewDetails')} <ArrowRight size={12} />
+                </span>
+            </div>
         </div>
     );
 };
@@ -362,15 +388,29 @@ const TodayView: React.FC<TodayViewProps> = ({
         return idx !== -1 ? data.weeks[idx] : null;
     }, [data.weeks, now]);
 
-    // Today's sessions
+    // Today's sessions (SORTED BY PRIORITY)
     const todaySessions = useMemo(() => {
         if (!currentWeek) return [];
         const dayData = currentWeek.days[dayName];
         if (!dayData) return [];
-        return [...dayData.morning, ...dayData.afternoon, ...dayData.evening]
-            .filter(s => isMainTeacher(s.teacher))
-            .sort((a, b) => parseInt(a.timeSlot.split('-')[0]) - parseInt(b.timeSlot.split('-')[0]));
-    }, [currentWeek, dayName]);
+
+        const sessions = [...dayData.morning, ...dayData.afternoon, ...dayData.evening]
+            .filter(s => isMainTeacher(s.teacher));
+
+        // PRIORITY SORT: LIVE -> PENDING -> COMPLETED
+        // If status is same, sort by time
+        return sessions.sort((a, b) => {
+            const statusA = getSessionStatus(a, now);
+            const statusB = getSessionStatus(b, now);
+
+            const priority = { LIVE: 0, PENDING: 1, COMPLETED: 2 };
+            if (priority[statusA] !== priority[statusB]) {
+                return priority[statusA] - priority[statusB];
+            }
+
+            return parseInt(a.timeSlot.split('-')[0]) - parseInt(b.timeSlot.split('-')[0]);
+        });
+    }, [currentWeek, dayName, now]);
 
     // Find next teaching day
     const nextTeaching = useMemo(() => {
@@ -437,38 +477,51 @@ const TodayView: React.FC<TodayViewProps> = ({
     // Calculate total periods
     const totalPeriods = todaySessions.reduce((acc, s) => acc + s.periodCount, 0);
 
+    // Switch action handler
+    const handleAction = (tab: 'WEEK' | 'OVERVIEW') => {
+        if (tab === 'WEEK') {
+            onSwitchTab('WEEK');
+        } else if (tab === 'OVERVIEW') {
+            onSwitchTab('OVERVIEW');
+        }
+    };
+
     return (
         <div className="max-w-2xl mx-auto pb-24">
-            {/* HEADER: Date & Time */}
-            <header className="pt-2 pb-4 flex items-end justify-between sticky top-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-sm z-30">
-                <div>
-                    <p className="text-xs md:text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">
-                        {t(`days.${dayOfWeekIdx}`)}
-                    </p>
-                    <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
-                        {dateInfo.day}
-                        <span className="text-lg md:text-2xl text-slate-300 dark:text-slate-600 font-bold"> / {dateInfo.month}</span>
-                    </h1>
-                </div>
-                <div className="flex flex-col items-end">
-                    <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-bold rounded mb-1">
-                        {dateInfo.year}
-                    </span>
-                    <div className="text-3xl md:text-5xl font-black text-blue-600 dark:text-blue-400 font-mono tracking-tight text-right">
-                        {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+            {/* HEADER: Apple Style Layout v2 */}
+            <header className="pt-6 pb-6 sticky top-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm z-30 border-b border-slate-100 dark:border-slate-800 mb-6">
+                <div className="flex items-stretch justify-between h-[88px]"> {/* Fixed height for consistency */}
+                    {/* LEFT: Day / Date / Year - Tight Stack */}
+                    <div className="flex flex-col justify-between py-1">
+                        <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none">
+                            {t(`days.${dayOfWeekIdx}`)}
+                        </span>
+                        <h1 className="text-5xl font-bold text-slate-900 dark:text-white tracking-tighter leading-none -ml-0.5">
+                            {dateInfo.day}<span className="text-slate-300 dark:text-slate-700 font-light mx-1">/</span>{dateInfo.month}
+                        </h1>
+                        <span className="text-sm font-medium text-slate-400 dark:text-slate-500 leading-none">
+                            {dateInfo.year}
+                        </span>
+                    </div>
+
+                    {/* RIGHT: Big Time - Balanced Height */}
+                    <div className="flex items-center h-full">
+                        <div className="text-6xl font-medium text-blue-600 dark:text-blue-500 tracking-tighter font-mono leading-none">
+                            {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+                        </div>
                     </div>
                 </div>
             </header>
 
             {/* GREETING & SUMMARY */}
             {displayState === 'HAS_SESSIONS' && (
-                <div className="mb-4">
-                    <h2 className="text-lg md:text-xl font-bold text-slate-800 dark:text-slate-100 mb-1">
+                <div className="mb-6">
+                    <h2 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">
                         {getGreeting()}
                     </h2>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        {t('stats.today.summary', { sessions: todaySessions.length, periods: totalPeriods })}
-                    </p>
+                    <div className="inline-flex items-center px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm font-bold rounded-lg">
+                        <span>{t('stats.today.summary', { sessions: todaySessions.length, periods: totalPeriods })}</span>
+                    </div>
                 </div>
             )}
 
@@ -480,19 +533,49 @@ const TodayView: React.FC<TodayViewProps> = ({
                 )}
 
                 {displayState === 'BEFORE_SEMESTER' && (
-                    <EmptyStateCard
-                        type="beforeSemester"
-                        date={semesterBounds?.start ? formatDateVN(semesterBounds.start).full : ''}
-                        t={t}
-                    />
+                    <>
+                        {/* Greeting even if before semester */}
+                        <div className="mb-4">
+                            <h2 className="text-lg md:text-xl font-bold text-slate-800 dark:text-slate-100 mb-1">
+                                {getGreeting()}
+                            </h2>
+                        </div>
+
+                        <EmptyStateCard
+                            type="beforeSemester"
+                            date={semesterBounds?.start ? formatDateVN(semesterBounds.start).full : ''}
+                            t={t}
+                        />
+
+                        {/* Show First Teaching Day */}
+                        {nextTeaching && (
+                            <NextTeachingSection
+                                nextTeaching={nextTeaching}
+                                abbreviations={abbreviations}
+                                overrides={overrides}
+                                onSwitchTab={onSwitchTab}
+                                setCurrentWeekIndex={setCurrentWeekIndex}
+                                isCompact={false}
+                                isBeforeSemester={true} // Distinction flag
+                                t={t}
+                            />
+                        )}
+                    </>
                 )}
 
                 {displayState === 'AFTER_SEMESTER' && (
-                    <EmptyStateCard
-                        type="afterSemester"
-                        date={semesterBounds?.end ? formatDateVN(semesterBounds.end).full : ''}
-                        t={t}
-                    />
+                    <>
+                        <div className="mb-4">
+                            <h2 className="text-lg md:text-xl font-bold text-slate-800 dark:text-slate-100 mb-1">
+                                {getGreeting()}
+                            </h2>
+                        </div>
+                        <EmptyStateCard
+                            type="afterSemester"
+                            date={semesterBounds?.end ? formatDateVN(semesterBounds.end).full : ''}
+                            t={t}
+                        />
+                    </>
                 )}
 
                 {displayState === 'NO_SESSIONS' && (
@@ -502,7 +585,11 @@ const TodayView: React.FC<TodayViewProps> = ({
                                 {getGreeting()}
                             </h2>
                         </div>
-                        <EmptyStateCard type="noSessions" t={t} />
+                        <EmptyStateCard
+                            type="noSessions"
+                            t={t}
+                            onAction={handleAction} // Pass action handler
+                        />
                         {nextTeaching && (
                             <NextTeachingSection
                                 nextTeaching={nextTeaching}

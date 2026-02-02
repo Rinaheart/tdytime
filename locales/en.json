@@ -158,16 +158,17 @@
                 "live": "In Progress",
                 "completed": "Completed"
             },
-            "next": "Next Teaching",
+            "next": "Next Teaching Day",
+            "firstOfSemester": "First Teaching Day",
             "nextHeader": "{{day}}, {{date}} — {{count}} sessions",
             "emptyStates": {
                 "noData": "No schedule data available.",
-                "noDataHint": "Please upload your semester schedule to view details.",
-                "beforeSemester": "Semester has not started!",
-                "beforeSemesterHint": "Semester starts on {{date}}.",
+                "noDataHint": "Please upload a schedule file to view details.",
+                "beforeSemester": "Semester hasn't started!",
+                "beforeSemesterHint": "The semester starts on {{date}}.",
                 "afterSemester": "Semester has ended!",
-                "afterSemesterHint": "Semester ended on {{date}}.",
-                "noSessions": "No classes today!"
+                "afterSemesterHint": "The semester ended on {{date}}.",
+                "noSessions": ""
             },
             "progressDay": "Today",
             "progressWeek": "This Week",
@@ -294,7 +295,18 @@
         "evening": "Evening",
         "note": "Note: Theory (LT) periods are 45 minutes each. Practice/Integrated (TH) periods are 60 minutes each.",
         "changelog": "Changelog",
-        "changes": [
+        "history": [
+            {
+                "version": "v0.7.0",
+                "date": "2026-02-02",
+                "title": "Daily Focus",
+                "description": "Optimized Today tab for daily actionable tasks.",
+                "features": [
+                    "Smart Sorting: Live > Pending > Completed.",
+                    "Clean UI: Removed visual noise, added quick text links.",
+                    "Performance: Instant PWA load < 1s, system fonts."
+                ]
+            },
             {
                 "version": "v0.6.0",
                 "date": "2026-02-02",
