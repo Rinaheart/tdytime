@@ -14,11 +14,11 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['pwa-192x192.png', 'pwa-512x512.png'],
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
         manifest: {
-          name: 'Phân tích Lịch giảng',
-          short_name: 'TimeTable',
-          description: 'Công cụ phân tích và quản lý lịch giảng dạy.',
+          name: 'TdyTime - Phân tích Lịch giảng',
+          short_name: 'TdyTime',
+          description: 'Công cụ phân tích và quản lý lịch giảng dạy thông minh cho giảng viên.',
           theme_color: '#ffffff',
           background_color: '#ffffff',
           display: 'standalone',
@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
               src: 'pwa-192x192.png',
               sizes: '192x192',
               type: 'image/png',
-              purpose: 'any'
+              purpose: 'any maskable'
             },
             {
               src: 'pwa-512x512.png',

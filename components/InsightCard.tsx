@@ -13,7 +13,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, sta
     const isWarning = statusColor?.includes('orange') || statusColor?.includes('rose');
 
     return (
-        <div className={`bg-white dark:bg-slate-950/20 p-2 md:p-4 rounded-2xl border ${isWarning ? 'border-orange-500/50 ring-4 ring-orange-500/5' : 'border-slate-200/60 dark:border-slate-800/60'} shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col items-center text-center justify-center min-h-[85px] md:min-h-[110px]`}>
+        <div className={`bg-white dark:bg-slate-950/20 p-2 md:p-4 rounded-2xl border transition-all duration-300 ${isWarning ? 'border-orange-500/50 ring-4 ring-orange-500/5 shadow-orange-500/10' : 'border-blue-500/30 ring-4 ring-blue-500/5 shadow-blue-500/10'} shadow-sm relative overflow-hidden group hover:shadow-md flex flex-col items-center text-center justify-center min-h-[85px] md:min-h-[110px]`}>
             {/* Subtle Gradient Accent */}
             <div className={`absolute top-0 right-0 w-16 h-16 md:w-24 md:h-24 blur-3xl -mr-8 -mt-8 md:-mr-12 md:-mt-12 rounded-full opacity-10 transition-colors group-hover:opacity-20 ${isWarning ? 'bg-orange-500' : 'bg-blue-500'}`}></div>
 

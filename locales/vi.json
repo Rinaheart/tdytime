@@ -85,9 +85,9 @@
             "export": "Xuất file"
         },
         "errors": {
-            "noData": "⚠️ File không có dữ liệu!",
-            "invalidStructure": "⚠️ Cấu trúc không khớp!",
-            "invalidFormat": "❌ Lỗi định dạng! Hệ thống chỉ hỗ trợ file .HTML hoặc .JSON."
+            "noData": "⚠️ File không có dữ liệu hợp lệ.",
+            "invalidStructure": "⚠️ Cấu trúc file không đúng định dạng UMS.",
+            "invalidFormat": "⚠️ Định dạng không hỗ trợ. Chỉ nhận file .HTML hoặc .JSON."
         }
     },
     "filter": {
@@ -275,14 +275,14 @@
             "resetButton": "Reset Ứng dụng"
         },
         "toast": {
-            "abbreviationsSaved": "Đã lưu tên viết tắt thành công!",
-            "abbreviationsSuggested": "Đã tạo đề xuất tên viết tắt!",
+            "abbreviationsSaved": "Đã lưu tên viết tắt.",
+            "abbreviationsSuggested": "Đã tạo gợi ý tên viết tắt.",
             "abbreviationsReset": "Đã xóa tất cả tên viết tắt! (Bấm Lưu để áp dụng)",
-            "courseTypeSaved": "Đã lưu tùy chỉnh giảng dạy thành công!",
-            "thresholdsSaved": "Đã lưu ngưỡng cảnh báo thành công!",
+            "courseTypeSaved": "Đã lưu tùy chỉnh loại tiết giảng.",
+            "thresholdsSaved": "Đã cập nhật cài đặt cảnh báo.",
             "thresholdsReset": "Đã khôi phục mặc định (Hãy bấm Lưu để áp dụng)",
-            "csvExported": "Đã xuất CSV thành công!",
-            "jsonExported": "Đã xuất Backup JSON thành công!"
+            "csvExported": "Xuất file CSV thành công.",
+            "jsonExported": "Sao lưu file JSON thành công."
         }
     },
     "about": {
@@ -298,13 +298,15 @@
         "history": [
             {
                 "version": "v0.7.0",
-                "date": "02/02/2026",
-                "title": "Daily Focus",
-                "description": "Tối ưu hóa tab Hôm nay cho giảng viên.",
-                "features": [
-                    "Sắp xếp thông minh: Đang dạy > Sắp dạy > Đã dạy.",
-                    "Giao diện tinh gọn: Bỏ nút bấm thừa, thêm liên kết nhanh.",
-                    "Hiệu suất: PWA tải nhanh dưới 1s, font hệ thống."
+                "date": "03/02/2026",
+                "changes": [
+                    "Performance Monitoring: Tích hợp Vercel Speed Insights theo dõi Core Web Vitals thời gian thực.",
+                    "Thematic Branding: Đồng bộ hóa hệ thống viền (Blue Border) cho các thẻ InsightCard theo nhận diện theme.",
+                    "Build Optimization: Chuẩn hóa quy trình đóng gói và đồng bộ hóa mã nguồn GitHub sạch.",
+                    "Daily Focus Engine: Tối ưu hóa trải nghiệm bảng tin dành riêng cho Giảng viên.",
+                    "Visual Hierarchy: Tái cấu trúc mức độ ưu tiên hiển thị (Đang dạy > Sắp dạy > Hoàn thành).",
+                    "Premium Interaction: Bỏ các thành phần dư thừa, chuyển đổi sang các liên kết văn bản tinh tế.",
+                    "Ultra Core: Nâng cấp PWA đạt tốc độ tải dưới 1s và sử dụng hệ thống font chữ tối ưu."
                 ]
             },
             {
@@ -408,23 +410,23 @@
         ]
     },
     "success": {
-        "loadedPast": "Tải lịch thành công! Dữ liệu kỳ trước (Kết thúc {{date}}).",
-        "loadedFuture": "Đã tải lịch mới! Học kỳ bắt đầu ngày {{date}}.",
-        "loadedCurrent": "Tải lịch giảng thành công. Đang chuyển đến tuần hiện tại.",
-        "loaded": "Tải lịch thành công!"
+        "loadedPast": "Đã tải dữ liệu lịch cũ. (Kết thúc: {{date}})",
+        "loadedFuture": "Đã tải lịch mới! Học kỳ bắt đầu: {{date}}",
+        "loadedCurrent": "Tải dữ liệu thành công! Đang chuyển đến tuần hiện tại.",
+        "loaded": "Tải dữ liệu thành công!"
     },
     "error": {
-        "noData": "⚠️ File không có dữ liệu!",
-        "invalidStructure": "⚠️ Cấu trúc không khớp!",
-        "demoNotFound": "❌ Không tìm thấy dữ liệu mẫu cho mã: {{code}}",
-        "loadDemoError": "❌ Lỗi khi tải dữ liệu demo.",
+        "noData": "⚠️ File không có dữ liệu hợp lệ.",
+        "invalidStructure": "⚠️ Cấu trúc file không đúng định dạng UMS.",
+        "demoNotFound": "⚠️ Không tìm thấy dữ liệu mẫu (Mã: {{code}}).",
+        "loadDemoError": "⚠️ Gặp lỗi khi tải dữ liệu mẫu.",
         "processing": "Đang xử lý dữ liệu..."
     },
     "pwa": {
-        "offlineReady": "Sẵn sàng dùng Offline",
-        "offlineReadyDesc": "Ứng dụng đã được lưu vào bộ nhớ đệm và sẵn sàng hoạt động ngoại tuyến.",
-        "updateReady": "Có bản cập nhật mới",
-        "updateReadyDesc": "Bấm nút Tải lại để cập nhật phiên bản mới nhất.",
+        "offlineReady": "Sẵn sàng hoạt động ngoại tuyến",
+        "offlineReadyDesc": "Ứng dụng đã được lưu cache để dùng khi không có mạng.",
+        "updateReady": "Đã có phiên bản mới",
+        "updateReadyDesc": "Vui lòng tải lại trang để cập nhật ngay.",
         "reloadButton": "Tải lại & Cập nhật"
     }
 }

@@ -1,0 +1,22 @@
+{
+    "headers": [
+        {
+            "source": "/(fonts|images|icons|pwa-).*",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/(.*).(js|css|json|woff2|png|svg|ico)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        }
+    ]
+}

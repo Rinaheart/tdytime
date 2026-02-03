@@ -85,9 +85,9 @@
             "export": "Export"
         },
         "errors": {
-            "noData": "⚠️ File contains no data!",
-            "invalidStructure": "⚠️ Invalid structure!",
-            "invalidFormat": "❌ Format error! Only .HTML or .JSON files are supported."
+            "noData": "⚠️ File contains no valid data.",
+            "invalidStructure": "⚠️ Invalid file structure (UMS format required).",
+            "invalidFormat": "⚠️ Unsupported format. Only .HTML or .JSON files allowed."
         }
     },
     "filter": {
@@ -275,14 +275,14 @@
             "resetButton": "Clear Data & Reload"
         },
         "toast": {
-            "abbreviationsSaved": "Abbreviations saved successfully!",
-            "abbreviationsSuggested": "Abbreviations suggested!",
-            "abbreviationsReset": "All abbreviations cleared! (Click Save to apply)",
-            "courseTypeSaved": "Course type customization saved successfully!",
-            "thresholdsSaved": "Warning thresholds saved successfully!",
-            "thresholdsReset": "Reset to defaults (Click Save to apply)",
-            "csvExported": "CSV exported successfully!",
-            "jsonExported": "Backup JSON exported successfully!"
+            "abbreviationsSaved": "Abbreviations saved.",
+            "abbreviationsSuggested": "Abbreviations suggested.",
+            "abbreviationsReset": "Abbreviations cleared. (Click Save to apply)",
+            "courseTypeSaved": "Course type customization saved.",
+            "thresholdsSaved": "Warning thresholds updated.",
+            "thresholdsReset": "Reset to defaults. (Click Save to apply)",
+            "csvExported": "CSV exported successfully.",
+            "jsonExported": "Backup JSON saved successfully."
         }
     },
     "about": {
@@ -298,13 +298,15 @@
         "history": [
             {
                 "version": "v0.7.0",
-                "date": "2026-02-02",
-                "title": "Daily Focus",
-                "description": "Optimized Today tab for daily actionable tasks.",
-                "features": [
-                    "Smart Sorting: Live > Pending > Completed.",
-                    "Clean UI: Removed visual noise, added quick text links.",
-                    "Performance: Instant PWA load < 1s, system fonts."
+                "date": "2026-02-03",
+                "changes": [
+                    "Performance Monitoring: Integrated Vercel Speed Insights for real-time Core Web Vitals tracking.",
+                    "Thematic Branding: Synchronized Blue Border system for InsightCards with theme identity.",
+                    "Build Optimization: Standardized build process and synchronized clean GitHub source code.",
+                    "Daily Focus Engine: Optimized the Today tab experience specifically for faculty members.",
+                    "Visual Hierarchy: Restructured display priority (Live > Upcoming > Completed).",
+                    "Premium Interaction: Removed redundant elements in favor of subtle text-based shortcuts.",
+                    "Ultra Core: Enhanced PWA to achieve sub-1s load times and optimized system font stack."
                 ]
             },
             {
@@ -408,23 +410,23 @@
         ]
     },
     "success": {
-        "loadedPast": "Schedule loaded successfully! Past semester data (Ended {{date}}).",
-        "loadedFuture": "New schedule loaded! Semester starts on {{date}}.",
-        "loadedCurrent": "Schedule loaded successfully. Navigating to current week.",
-        "loaded": "Schedule loaded successfully!"
+        "loadedPast": "Past schedule data loaded. (Ended: {{date}})",
+        "loadedFuture": "New schedule loaded! Semester starts: {{date}}",
+        "loadedCurrent": "Data loaded successfully! Navigating to current week.",
+        "loaded": "Data loaded successfully!"
     },
     "error": {
-        "noData": "⚠️ File has no data!",
-        "invalidStructure": "⚠️ Data structure mismatch!",
-        "demoNotFound": "❌ Demo data not found for code: {{code}}",
-        "loadDemoError": "❌ Error loading demo data.",
+        "noData": "⚠️ File contains no valid data.",
+        "invalidStructure": "⚠️ Invalid file structure (UMS format required).",
+        "demoNotFound": "⚠️ Demo data not found (Code: {{code}}).",
+        "loadDemoError": "⚠️ Error loading demo data.",
         "processing": "Processing data..."
     },
     "pwa": {
         "offlineReady": "Ready for Offline Use",
-        "offlineReadyDesc": "The app is cached and ready to work offline.",
-        "updateReady": "New Update Available",
-        "updateReadyDesc": "Click Reload to update to the latest version.",
+        "offlineReadyDesc": "App cached for offline access.",
+        "updateReady": "New Version Available",
+        "updateReadyDesc": "Please reload to update immediately.",
         "reloadButton": "Reload & Update"
     }
 }

@@ -11,7 +11,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
   const { t } = useTranslation();
 
   // Get changelog from translations
-  const changeLog = t('about.changes', { returnObjects: true }) as Array<{ version: string, date: string, changes: string[] }>;
+  const changeLog = t('about.history', { returnObjects: true }) as Array<{ version: string, date: string, changes: string[], title?: string, description?: string }>;
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-24 px-4 sm:px-0">
@@ -22,6 +22,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
             <img
               src="/pwa-192x192.png"
               alt="TdyTime Logo"
+              fetchpriority="high"
               className="w-16 h-16 md:w-20 md:h-20 rounded-[1.5rem] shadow-2xl relative z-10 border-4 border-white dark:border-slate-800"
             />
           </div>
@@ -97,7 +98,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
                 <span className="text-[9px] text-slate-400 font-bold uppercase">{log.date}</span>
               </div>
               <ul className="space-y-1">
-                {log.changes.map((change, i) => (
+                {Array.isArray(log.changes) && log.changes.map((change, i) => (
                   <li key={i} className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-blue-500/30 mt-1.5 shrink-0"></span>
                     {change}

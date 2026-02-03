@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Font Display Optimization */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: local('Inter'), local('Inter-Regular');
+}
 
 body {
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

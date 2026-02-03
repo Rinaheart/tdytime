@@ -76,6 +76,7 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                     <img
                         src="/pwa-192x192.png"
                         alt="TdyTime Logo"
+                        fetchpriority="high"
                         className="w-20 h-20 md:w-24 md:h-24 rounded-[2rem] shadow-2xl relative z-10 border-4 border-white dark:border-slate-800"
                     />
                 </div>
