@@ -80,11 +80,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, onReset, coll
         <div className="p-2 border-t border-slate-200 dark:border-slate-800">
           <button
             onClick={onReset}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors ${collapsed ? 'lg:justify-center' : ''}`}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors ${collapsed ? 'lg:justify-center' : ''}`}
             title={collapsed ? t('nav.loadData') : ''}
           >
             <LogOut size={20} className="flex-shrink-0" />
-            <span className={`${collapsed ? 'lg:hidden' : 'block'}`}>{t('nav.loadData')}</span>
+            <span className={`${collapsed ? 'lg:hidden' : ''}`}>{t('nav.loadData')}</span>
           </button>
         </div>
       </aside>

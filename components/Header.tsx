@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
 
         <div className="flex flex-row items-center gap-2 md:gap-3">
           <h1 className="text-sm md:text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight">{getTitle()}</h1>
-          <span className="inline-block text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold opacity-60">v{version}</span>
+          <span className="inline-block text-[10px] text-slate-600 dark:text-slate-400 font-mono font-bold opacity-60">v{version}</span>
         </div>
       </div>
 

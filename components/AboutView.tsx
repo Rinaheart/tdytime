@@ -30,7 +30,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
             <h2 className="text-3xl md:text-4xl font-black text-slate-800 dark:text-slate-100 tracking-tighter">
               TdyTime
             </h2>
-            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-black rounded-full border border-blue-200 dark:border-blue-800">
+            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-black rounded-full border border-blue-200 dark:border-blue-800">
               v{version}
             </span>
           </div>
@@ -54,7 +54,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-3 bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-            <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest border-l-2 border-blue-600 pl-2">{t('about.morning')}</h4>
+            <h4 className="text-[10px] font-black text-blue-700 uppercase tracking-widest border-l-2 border-blue-600 pl-2">{t('about.morning')}</h4>
             <ul className="text-[11px] space-y-1.5 text-slate-600 dark:text-slate-400 font-semibold">
               <li className="flex justify-between"><span>{t('weekly.period', { number: 1 })}:</span> <span>07:00 - 07:45</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 2 })}:</span> <span>07:55 - 08:40</span></li>
@@ -63,8 +63,8 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
             </ul>
           </div>
           <div className="space-y-3 bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-            <h4 className="text-[10px] font-black text-sky-600 uppercase tracking-widest border-l-2 border-sky-600 pl-2">{t('about.afternoon')}</h4>
-            <ul className="text-[11px] space-y-1.5 text-slate-500 dark:text-slate-400 font-semibold">
+            <h4 className="text-[10px] font-black text-sky-700 uppercase tracking-widest border-l-2 border-sky-600 pl-2">{t('about.afternoon')}</h4>
+            <ul className="text-[11px] space-y-1.5 text-slate-600 dark:text-slate-400 font-semibold">
               <li className="flex justify-between"><span>{t('weekly.period', { number: 6 })}:</span> <span>13:30 - 14:15</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 7 })}:</span> <span>14:25 - 15:10</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 8 })}:</span> <span>15:20 - 16:05</span></li>
@@ -72,15 +72,15 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
             </ul>
           </div>
           <div className="space-y-3 bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-            <h4 className="text-[10px] font-black text-indigo-600 uppercase tracking-widest border-l-2 border-indigo-600 pl-2">{t('about.evening')}</h4>
-            <ul className="text-[11px] space-y-1.5 text-slate-500 dark:text-slate-400 font-semibold">
+            <h4 className="text-[10px] font-black text-indigo-700 uppercase tracking-widest border-l-2 border-indigo-600 pl-2">{t('about.evening')}</h4>
+            <ul className="text-[11px] space-y-1.5 text-slate-600 dark:text-slate-400 font-semibold">
               <li className="flex justify-between"><span>{t('weekly.period', { number: 11 })}:</span> <span>17:10 - 17:55</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 12 })}:</span> <span>18:00 - 18:45</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 13 })}:</span> <span>18:50 - 19:35</span></li>
             </ul>
           </div>
         </div>
-        <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 text-[10px] italic text-slate-400">
+        <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 text-[10px] italic text-slate-500 dark:text-slate-400">
           {t('about.note')}
         </div>
       </div>
