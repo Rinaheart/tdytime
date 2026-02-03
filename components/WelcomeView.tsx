@@ -114,7 +114,7 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                     `}>
                         <CloudUpload size={32} strokeWidth={2.5} />
                     </div>
-                    <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-2">{isDragging ? t('app.dropToUpload', { defaultValue: 'Thả để tải lên' }) : t('app.uploadTitle', { defaultValue: 'Tải tệp lịch' })}</h3>
+                    <div className="text-lg font-black text-slate-800 dark:text-slate-100 mb-2">{isDragging ? t('app.dropToUpload', { defaultValue: 'Thả để tải lên' }) : t('app.uploadTitle', { defaultValue: 'Tải tệp lịch' })}</div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{t('app.uploadDesc', { defaultValue: 'Hỗ trợ .html hoặc .json' })}</p>
                 </label>
 
@@ -131,7 +131,7 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                             <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                 <FileText size={32} strokeWidth={2.5} />
                             </div>
-                            <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-2">{t('app.pasteTitle', { defaultValue: 'Dán mã HTML' })}</h3>
+                            <div className="text-lg font-black text-slate-800 dark:text-slate-100 mb-2">{t('app.pasteTitle', { defaultValue: 'Dán mã HTML' })}</div>
                             <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{t('app.pasteDesc', { defaultValue: 'Dán trực tiếp từ trang web' })}</p>
                         </button>
                     ) : (
@@ -194,13 +194,13 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                                             <h5 className="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors uppercase">
                                                 {teacherName}
                                             </h5>
-                                            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold">
+                                            <p className="text-[10px] text-slate-600 dark:text-slate-400 font-bold">
                                                 HK{item.data.metadata.semester} • {item.data.metadata.academicYear}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono hidden sm:inline">
+                                        <span className="text-[10px] text-slate-600 dark:text-slate-400 font-mono hidden sm:inline">
                                             {(() => {
                                                 const d = new Date(item.savedAt);
                                                 const day = String(d.getDate()).padStart(2, '0');
@@ -228,7 +228,7 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
 
             {/* 4. Footer */}
             <div className="mt-auto pt-16 pb-8 text-center opacity-40 hover:opacity-100 transition-opacity">
-                <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                <p className="text-[10px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest">
                     © 2026 TdyTime | Designed by Antigravity AI
                 </p>
             </div>

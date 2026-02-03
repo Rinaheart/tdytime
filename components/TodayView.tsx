@@ -139,13 +139,13 @@ const SessionCard: React.FC<{
                 </div>
 
                 {/* Line 2: Class Info */}
-                <div className={`text-xs mb-1 truncate ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                <div className={`text-xs mb-1 truncate ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-600 dark:text-slate-400'}`}>
                     {session.className} <span className="opacity-50">·</span> ({session.group})
                 </div>
 
                 {/* Line 3: Period & Status */}
                 <div className="flex items-center gap-2 text-[11px]">
-                    <span className={`font-medium ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                    <span className={`font-medium ${status === 'COMPLETED' ? 'text-slate-400' : 'text-slate-600 dark:text-slate-500'}`}>
                         {t('common.periodLabel')} {session.timeSlot}
                     </span>
                     <span className="text-slate-300 dark:text-slate-700">|</span>
@@ -250,7 +250,7 @@ const NextTeachingSection: React.FC<{
                     className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 cursor-pointer hover:border-blue-300 dark:hover:border-blue-700"
                 >
                     <div className="flex items-center justify-between mb-2">
-                        <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                        <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
                             {t(`days.${nextTeaching.dayIdx}`)}, {dateInfo.full}
                         </span>
                         <span className="text-[10px] font-bold text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">
@@ -297,7 +297,7 @@ const NextTeachingSection: React.FC<{
             </div>
 
             {/* Sessions List */}
-            <div className="divide-y divide-slate-100 dark:divide-slate-800">
+            <div className="divide-y divide-slate-200 dark:divide-slate-800">
                 {nextTeaching.sessions.map((s, idx) => {
                     const { startTimeStr } = getTimeStrings(s);
                     const displayName = abbreviations[s.courseName] || s.courseName;
@@ -493,13 +493,13 @@ const TodayView: React.FC<TodayViewProps> = ({
                 <div className="flex items-stretch justify-between h-[88px]"> {/* Fixed height for consistency */}
                     {/* LEFT: Day / Date / Year - Tight Stack */}
                     <div className="flex flex-col justify-between py-1">
-                        <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none">
+                        <span className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-widest leading-none">
                             {t(`days.${dayOfWeekIdx}`)}
                         </span>
                         <h1 className="text-5xl font-bold text-slate-900 dark:text-white tracking-tighter leading-none -ml-0.5">
                             {dateInfo.day}<span className="text-slate-300 dark:text-slate-700 font-light mx-1">/</span>{dateInfo.month}
                         </h1>
-                        <span className="text-sm font-medium text-slate-400 dark:text-slate-500 leading-none">
+                        <span className="text-sm font-medium text-slate-500 dark:text-slate-500 leading-none">
                             {dateInfo.year}
                         </span>
                     </div>

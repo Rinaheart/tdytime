@@ -301,7 +301,7 @@
                 "date": "03/02/2026",
                 "changes": [
                     "PageSpeed 90+: Tối ưu hóa hiệu năng đạt chuẩn Core Web Vitals (LCP < 2.5s).",
-                    "Accessibility Verified: Hỗ trợ zoom, đồng bộ ngôn ngữ tự động và cải thiện điều hướng.",
+                    "Accessibility Verified: Đạt chuẩn tương phản màu sắc (WCAG AA) và hỗ trợ điều hướng ARIA toàn diện.",
                     "Smart Cache: Cơ chế lưu trữ đệm thông minh giúp ứng dụng tải tức thì.",
                     "PWA Pro: Nâng cấp biểu tượng maskable và hiệu chuẩn manifest cho trải nghiệm App native."
                 ]

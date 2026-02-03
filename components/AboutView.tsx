@@ -35,16 +35,16 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
             </span>
           </div>
         </div>
-        <p className="text-slate-500 max-w-lg mx-auto leading-relaxed text-sm">
+        <p className="text-slate-600 max-w-lg mx-auto leading-relaxed text-sm">
           {t('about.description')}
         </p>
-        <p className="text-xs font-bold text-slate-400">
+        <p className="text-xs font-bold text-slate-500">
           {t('about.copyright')}
         </p>
         <div className="flex justify-center gap-3 pt-2">
-          <a href="mailto:tdyphan@gmail.com" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 transition-colors"><Mail size={18} /></a>
-          <a href="https://github.com/tdyphan" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 transition-colors"><Github size={18} /></a>
-          <a href="https://tdyphan.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 transition-colors"><Globe size={18} /></a>
+          <a href="mailto:tdyphan@gmail.com" aria-label="Email tdyphan@gmail.com" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 transition-colors"><Mail size={18} /></a>
+          <a href="https://github.com/tdyphan" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 transition-colors"><Github size={18} /></a>
+          <a href="https://tdyphan.com" target="_blank" rel="noopener noreferrer" aria-label="Website tdyphan.com" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 transition-colors"><Globe size={18} /></a>
         </div>
       </div>
 
@@ -55,7 +55,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-3 bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
             <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest border-l-2 border-blue-600 pl-2">{t('about.morning')}</h4>
-            <ul className="text-[11px] space-y-1.5 text-slate-500 dark:text-slate-400 font-semibold">
+            <ul className="text-[11px] space-y-1.5 text-slate-600 dark:text-slate-400 font-semibold">
               <li className="flex justify-between"><span>{t('weekly.period', { number: 1 })}:</span> <span>07:00 - 07:45</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 2 })}:</span> <span>07:55 - 08:40</span></li>
               <li className="flex justify-between"><span>{t('weekly.period', { number: 3 })}:</span> <span>08:50 - 09:35</span></li>
@@ -95,11 +95,11 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
               <div className="absolute -left-[4.5px] top-0 w-2 h-2 rounded-full bg-blue-500 shadow-sm"></div>
               <div className="mb-2 flex items-center gap-2">
                 <span className="font-bold text-xs text-slate-800 dark:text-white">{log.version}</span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase">{log.date}</span>
+                <span className="text-[9px] text-slate-500 font-bold uppercase">{log.date}</span>
               </div>
               <ul className="space-y-1">
                 {Array.isArray(log.changes) && log.changes.map((change, i) => (
-                  <li key={i} className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed flex items-start gap-2">
+                  <li key={i} className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-blue-500/30 mt-1.5 shrink-0"></span>
                     {change}
                   </li>
@@ -111,7 +111,7 @@ const AboutView: React.FC<AboutViewProps> = ({ version }) => {
       </div>
 
       <div className="text-center pt-8">
-        <p className="text-[10px] font-medium text-slate-400 tracking-[0.2em]">{t('about.copyright')}</p>
+        <p className="text-[10px] font-medium text-slate-500 tracking-[0.2em]">{t('about.copyright')}</p>
       </div>
     </div>
   );

@@ -48,6 +48,7 @@ const Header: React.FC<HeaderProps> = ({
         {/* Desktop only sidebar toggle */}
         <button
           onClick={onToggleSidebar}
+          aria-label="Toggle Sidebar"
           className="hidden lg:flex p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-all active:scale-90"
         >
           <Menu size={20} />
@@ -55,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
 
         <div className="flex flex-row items-center gap-2 md:gap-3">
           <h1 className="text-sm md:text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight">{getTitle()}</h1>
-          <span className="inline-block text-[10px] text-slate-400 font-mono font-bold opacity-60">v{version}</span>
+          <span className="inline-block text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold opacity-60">v{version}</span>
         </div>
       </div>
 

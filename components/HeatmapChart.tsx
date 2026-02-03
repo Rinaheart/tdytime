@@ -33,7 +33,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({ data }) => {
                     {/* Y-Axis Labels (Days) */}
                     <div className="flex flex-col gap-1 mr-2 pt-6">
                         {dayLabels.map((label, i) => (
-                            <div key={i} className="h-4 text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center justify-end leading-none">
+                            <div key={i} className="h-4 text-[10px] font-bold text-slate-600 dark:text-slate-400 flex items-center justify-end leading-none">
                                 {label}
                             </div>
                         ))}
@@ -44,7 +44,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({ data }) => {
                         {/* X-Axis Labels (Weeks) - Render every 2 or 5 weeks to avoid clutter */}
                         <div className="flex gap-1 h-5 mb-1">
                             {Array.from({ length: weekCount }).map((_, i) => (
-                                <div key={i} className="w-4 text-[9px] text-slate-500 dark:text-slate-400 text-center flex-shrink-0">
+                                <div key={i} className="w-4 text-[9px] text-slate-600 dark:text-slate-400 text-center flex-shrink-0">
                                     {(i + 1) % 5 === 0 || i === 0 ? i + 1 : ''}
                                 </div>
                             ))}
@@ -77,7 +77,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({ data }) => {
                 </div>
 
                 {/* Legend */}
-                <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-500 justify-center">
+                <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-600 dark:text-slate-400 justify-center">
                     <span>{t('stats.heatmap.less')}</span>
                     <div className="flex gap-1">
                         <div className="w-3 h-3 bg-slate-100 dark:bg-slate-800/50 rounded-sm"></div>
