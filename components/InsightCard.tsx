@@ -23,8 +23,8 @@ const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, sta
                 </div>
 
                 <div className="w-full">
-                    <h4 className="text-[8px] md:text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-0.5 leading-none truncate w-full">{title}</h4>
-                    <p className={`text-[10px] md:text-xs font-black tracking-tight ${isWarning ? 'text-orange-600 dark:text-orange-400' : 'text-slate-800 dark:text-slate-100'} truncate w-full`}>
+                    <h4 className="text-[8px] md:text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1 leading-normal truncate w-full py-0.5">{title}</h4>
+                    <p className={`text-[10px] md:text-xs font-black tracking-tight ${isWarning ? 'text-orange-600 dark:text-orange-400' : 'text-slate-800 dark:text-slate-100'} truncate w-full leading-normal py-0.5`}>
                         {value}
                     </p>
                 </div>

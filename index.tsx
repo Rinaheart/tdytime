@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import './i18n'; // Initialize i18n
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 
 
@@ -16,5 +17,6 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    <SpeedInsights />
   </React.StrictMode>
 );
