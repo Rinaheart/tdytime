@@ -298,15 +298,12 @@
         "history": [
             {
                 "version": "v0.7.0",
-                "date": "2026-02-03",
+                "date": "03/02/2026",
                 "changes": [
-                    "Performance Monitoring: Integrated Vercel Speed Insights for real-time Core Web Vitals tracking.",
-                    "Thematic Branding: Synchronized Blue Border system for InsightCards with theme identity.",
-                    "Build Optimization: Standardized build process and synchronized clean GitHub source code.",
-                    "Daily Focus Engine: Optimized the Today tab experience specifically for faculty members.",
-                    "Visual Hierarchy: Restructured display priority (Live > Upcoming > Completed).",
-                    "Premium Interaction: Removed redundant elements in favor of subtle text-based shortcuts.",
-                    "Ultra Core: Enhanced PWA to achieve sub-1s load times and optimized system font stack."
+                    "PageSpeed 90+: Optimized performance to meet Core Web Vitals standards (LCP < 2.5s).",
+                    "Accessibility Verified: Added zoom support, automatic language sync, and improved navigation.",
+                    "Smart Cache: Intelligent caching mechanism for instant app loading.",
+                    "PWA Pro: Upgraded with maskable icons and manifest calibration for a native app experience."
                 ]
             },
             {

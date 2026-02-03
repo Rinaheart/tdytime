@@ -300,13 +300,10 @@
                 "version": "v0.7.0",
                 "date": "03/02/2026",
                 "changes": [
-                    "Performance Monitoring: Tích hợp Vercel Speed Insights theo dõi Core Web Vitals thời gian thực.",
-                    "Thematic Branding: Đồng bộ hóa hệ thống viền (Blue Border) cho các thẻ InsightCard theo nhận diện theme.",
-                    "Build Optimization: Chuẩn hóa quy trình đóng gói và đồng bộ hóa mã nguồn GitHub sạch.",
-                    "Daily Focus Engine: Tối ưu hóa trải nghiệm bảng tin dành riêng cho Giảng viên.",
-                    "Visual Hierarchy: Tái cấu trúc mức độ ưu tiên hiển thị (Đang dạy > Sắp dạy > Hoàn thành).",
-                    "Premium Interaction: Bỏ các thành phần dư thừa, chuyển đổi sang các liên kết văn bản tinh tế.",
-                    "Ultra Core: Nâng cấp PWA đạt tốc độ tải dưới 1s và sử dụng hệ thống font chữ tối ưu."
+                    "PageSpeed 90+: Tối ưu hóa hiệu năng đạt chuẩn Core Web Vitals (LCP < 2.5s).",
+                    "Accessibility Verified: Hỗ trợ zoom, đồng bộ ngôn ngữ tự động và cải thiện điều hướng.",
+                    "Smart Cache: Cơ chế lưu trữ đệm thông minh giúp ứng dụng tải tức thì.",
+                    "PWA Pro: Nâng cấp biểu tượng maskable và hiệu chuẩn manifest cho trải nghiệm App native."
                 ]
             },
             {
