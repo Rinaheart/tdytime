@@ -92,6 +92,7 @@ const AbbreviationsCard: React.FC<AbbreviationsCardProps> = ({
                                 <td className="px-4 py-3">
                                     <input
                                         type="text"
+                                        aria-label={t('settings.abbreviations.shortName') + ' ' + name}
                                         value={tempAbbreviations[name] || ''}
                                         onChange={(e) => setTempAbbreviations({ ...tempAbbreviations, [name]: e.target.value })}
                                         placeholder={t('settings.abbreviations.placeholder')}

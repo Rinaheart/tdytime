@@ -272,6 +272,7 @@
             "title": "Danger Zone",
             "description": "Destructive actions and system resets.",
             "confirmReset": "Are you sure you want to delete all data and reload?",
+            "confirmButton": "Confirm Reset?",
             "resetButton": "Clear Data & Reload"
         },
         "toast": {

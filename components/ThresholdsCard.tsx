@@ -49,12 +49,12 @@ const ThresholdsCard: React.FC<ThresholdsCardProps> = ({
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-[9px] text-slate-400 uppercase font-bold mb-1">{t('settings.thresholds.warning')}</label>
-                            <input type="number" value={tempThresholds.daily.warning} onChange={e => setTempThresholds({ ...tempThresholds, daily: { ...tempThresholds.daily, warning: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
+                            <label htmlFor="daily-warning" className="block text-[9px] text-slate-500 uppercase font-bold mb-1">{t('settings.thresholds.warning')}</label>
+                            <input id="daily-warning" type="number" value={tempThresholds.daily.warning} onChange={e => setTempThresholds({ ...tempThresholds, daily: { ...tempThresholds.daily, warning: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
                         </div>
                         <div>
-                            <label className="block text-[9px] text-slate-400 uppercase font-bold mb-1">{t('settings.thresholds.danger')}</label>
-                            <input type="number" value={tempThresholds.daily.danger} onChange={e => setTempThresholds({ ...tempThresholds, daily: { ...tempThresholds.daily, danger: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
+                            <label htmlFor="daily-danger" className="block text-[9px] text-slate-500 uppercase font-bold mb-1">{t('settings.thresholds.danger')}</label>
+                            <input id="daily-danger" type="number" value={tempThresholds.daily.danger} onChange={e => setTempThresholds({ ...tempThresholds, daily: { ...tempThresholds.daily, danger: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
                         </div>
                     </div>
                 </div>
@@ -65,12 +65,12 @@ const ThresholdsCard: React.FC<ThresholdsCardProps> = ({
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-[9px] text-slate-400 uppercase font-bold mb-1">{t('settings.thresholds.warning')}</label>
-                            <input type="number" value={tempThresholds.weekly.warning} onChange={e => setTempThresholds({ ...tempThresholds, weekly: { ...tempThresholds.weekly, warning: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
+                            <label htmlFor="weekly-warning" className="block text-[9px] text-slate-500 uppercase font-bold mb-1">{t('settings.thresholds.warning')}</label>
+                            <input id="weekly-warning" type="number" value={tempThresholds.weekly.warning} onChange={e => setTempThresholds({ ...tempThresholds, weekly: { ...tempThresholds.weekly, warning: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
                         </div>
                         <div>
-                            <label className="block text-[9px] text-slate-400 uppercase font-bold mb-1">{t('settings.thresholds.danger')}</label>
-                            <input type="number" value={tempThresholds.weekly.danger} onChange={e => setTempThresholds({ ...tempThresholds, weekly: { ...tempThresholds.weekly, danger: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
+                            <label htmlFor="weekly-danger" className="block text-[9px] text-slate-500 uppercase font-bold mb-1">{t('settings.thresholds.danger')}</label>
+                            <input id="weekly-danger" type="number" value={tempThresholds.weekly.danger} onChange={e => setTempThresholds({ ...tempThresholds, weekly: { ...tempThresholds.weekly, danger: Number(e.target.value) } })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm" />
                         </div>
                     </div>
                 </div>

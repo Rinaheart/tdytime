@@ -272,6 +272,7 @@
             "title": "Vùng nguy hiểm",
             "description": "Xóa toàn bộ dữ liệu và đưa ứng dụng về mặc định.",
             "confirmReset": "Bạn có chắc chắn muốn xóa tất cả và reset không?",
+            "confirmButton": "Xác nhận xóa?",
             "resetButton": "Reset Ứng dụng"
         },
         "toast": {

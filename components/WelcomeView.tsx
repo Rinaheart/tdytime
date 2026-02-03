@@ -210,6 +210,7 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                                             })()}
                                         </span>
                                         <button
+                                            aria-label={t('common.deleteHistory', { defaultValue: 'Delete history' })}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 onDeleteHistory(item.id);
