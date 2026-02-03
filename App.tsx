@@ -133,19 +133,26 @@ const App: React.FC = () => {
     }
   };
 
-  if (showSuccess) return <SuccessScreen message={toastMessage?.text || ''} />;
+  if (showSuccess) return (
+    <main className="min-h-dvh bg-white dark:bg-slate-950">
+      <SuccessScreen message={toastMessage?.text || ''} />
+    </main>
+  );
 
   const renderContent = () => {
     if (!data || isUploading) {
       return (
-        <WelcomeView
-          onFileUpload={handleFileUpload}
-          historyList={historyList}
-          onLoadHistory={loadHistoryItem}
-          onDeleteHistory={deleteHistoryItem}
-          version={APP_VERSION}
-          isProcessing={isProcessing}
-        />
+        <main className="min-h-dvh bg-white dark:bg-slate-950">
+          <WelcomeView
+            onFileUpload={handleFileUpload}
+            historyList={historyList}
+            onLoadHistory={loadHistoryItem}
+            onDeleteHistory={deleteHistoryItem}
+            version={APP_VERSION}
+            isProcessing={isProcessing}
+          />
+          <ReloadPrompt />
+        </main>
       );
     }
 
