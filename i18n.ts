@@ -1,15 +1,11 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import viTranslation from './locales/vi.json';
-import enTranslation from './locales/en.json';
-
 import { APP_VERSION } from './constants';
 
-const resources = {
-    vi: { translation: viTranslation },
-    en: { translation: enTranslation }
-};
+import vi from './locales/vi.json';
+import en from './locales/en.json';
 
+// Default language detection
 let defaultLanguage = 'vi';
 try {
     defaultLanguage = localStorage.getItem('language') || 'vi';
@@ -17,21 +13,28 @@ try {
     console.warn('LocalStorage not accessible, falling back to "vi"');
 }
 
+// Initialize directly with resources
 i18n
     .use(initReactI18next)
     .init({
-        resources,
+        resources: {
+            vi: { translation: vi },
+            en: { translation: en }
+        },
         lng: defaultLanguage,
         fallbackLng: 'vi',
         interpolation: {
-            escapeValue: false, // React already escapes
+            escapeValue: false,
             defaultVariables: {
                 version: APP_VERSION
             }
+        },
+        react: {
+            useSuspense: false // We have resources loaded immediately
         }
     });
 
-// Update document lang attribute on change
+// Handle meta lang update
 i18n.on('languageChanged', (lng) => {
     document.documentElement.lang = lng;
 });

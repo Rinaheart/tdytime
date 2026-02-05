@@ -50,4 +50,4 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
     );
 };
 
-export default BottomNav;
+export default React.memo(BottomNav);

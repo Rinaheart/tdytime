@@ -2,9 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-    Moon,
-    Sun,
-    Languages,
     Settings,
     Info,
     LogOut,
@@ -15,8 +12,6 @@ import { TabType, Metadata } from '../types';
 
 interface UserMenuProps {
     metadata: Metadata;
-    darkMode: boolean;
-    onToggleDarkMode: () => void;
     onTabChange: (tab: TabType) => void;
     onReset: () => void;
     version: string;
@@ -24,8 +19,6 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({
     metadata,
-    darkMode,
-    onToggleDarkMode,
     onTabChange,
     onReset,
     version
@@ -44,11 +37,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const toggleLanguage = () => {
-        const newLang = i18n.language === 'vi' ? 'en' : 'vi';
-        i18n.changeLanguage(newLang);
-        localStorage.setItem('language', newLang);
-    };
+
+
 
     const getAvatarChar = () => {
         if (!metadata.teacher) return 'U';
@@ -76,38 +66,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
                     {/* Quick Actions */}
                     <div className="px-2 space-y-1">
-                        <button
-                            onClick={() => { toggleLanguage(); setIsOpen(false); }}
-                            className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 flex items-center justify-center">
-                                    <Languages size={16} />
-                                </div>
-                                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{t('common.switchLanguage')}</span>
-                            </div>
-                            <span className="text-[10px] font-black text-slate-400 uppercase bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">{i18n.language}</span>
-                        </button>
-
-                        <button
-                            onClick={() => { onToggleDarkMode(); setIsOpen(false); }}
-                            className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center">
-                                    {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-                                </div>
-                                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                                    {i18n.language === 'vi'
-                                        ? (darkMode ? 'Nền sáng' : 'Nền tối')
-                                        : (darkMode ? 'Light Mode' : 'Dark Mode')
-                                    }
-                                </span>
-                            </div>
-                        </button>
-
-                        <div className="h-px bg-slate-100 dark:bg-slate-800/60 my-1 mx-2" />
-
                         <button
                             onClick={() => { onTabChange(TabType.SETTINGS); setIsOpen(false); }}
                             className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
@@ -152,4 +110,4 @@ const UserMenu: React.FC<UserMenuProps> = ({
     );
 };
 
-export default UserMenu;
+export default React.memo(UserMenu);

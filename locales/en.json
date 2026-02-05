@@ -298,6 +298,42 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v0.9.0",
+                "date": "05/02/2026",
+                "changes": [
+                    "Lightning Fast Performance: Comprehensive optimization achieving instant load times (~176ms) and absolute performance scores.",
+                    "Smart Bundle Split: Intelligent separation of heavy libraries (Charts) from the main thread, ensuring a smooth experience from the first touch.",
+                    "Dynamic Layout Loading: On-demand interface loading mechanism (Lazy Loading) saves data and accelerates display speed."
+                ]
+            },
+            {
+                "version": "v0.8.2",
+                "date": "04/02/2026",
+                "changes": [
+                    "Header UI Evolution: Integrated a minimalist Dark Mode toggle directly into the Header for faster access and as a clear visual update indicator.",
+                    "Hard Refresh Signal: Structural Header changes to force mobile browsers to recognize the update and bypass persistent PWA caching."
+                ]
+            },
+            {
+                "version": "v0.8.1",
+                "date": "04/02/2026",
+                "changes": [
+                    "PWA Self-Healing: Forced cache refresh mechanism to resolve the persistent greeting issue on mobile devices.",
+                    "Timezone Reactive: Optimized system timezone detection for instant Morning/Afternoon/Evening updates."
+                ]
+            },
+            {
+                "version": "v0.8.0",
+                "date": "04/02/2026",
+                "changes": [
+                    "Smart Countdown: Visual countdown system for upcoming semesters with 2-digit formatting and color-coded dynamic titles.",
+                    "Today View Optimized: Unified LIVE/Pending card designs and consolidated completed session lists for a cleaner layout.",
+                    "Multi-Teacher Footer: New 'Footer Strip' design for teacher names, automatically visible when filters are cleared for multi-faculty view.",
+                    "Minimalist UI Refinement: Shortened week date ranges with arrow symbols (→) and optimized mobile padding for better focus.",
+                    "Scroll & Layout Fix: Removed non-functional scroll indicators and resolved redundant vertical scrolling issues on the Today tab."
+                ]
+            },
+            {
                 "version": "v0.7.0",
                 "date": "03/02/2026",
                 "changes": [

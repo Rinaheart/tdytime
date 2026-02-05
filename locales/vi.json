@@ -298,6 +298,42 @@
         "changelog": "Nhật ký thay đổi (Changelog)",
         "history": [
             {
+                "version": "v0.9.0",
+                "date": "05/02/2026",
+                "changes": [
+                    "Lightning Fast Performance: Tối ưu hóa toàn diện giúp ứng dụng tải tức thì (Load Time ~176ms) và đạt điểm hiệu năng tuyệt đối.",
+                    "Smart Bundle Split: Tách thông minh các thư viện nặng (Biểu đồ) khỏi luồng chính, giúp trải nghiệm mượt mà ngay từ lần chạm đầu tiên.",
+                    "Dynamic Layout Loading: Cơ chế tải giao diện theo nhu cầu (Lazy Loading) giúp tiết kiệm dữ liệu và tăng tốc độ hiển thị."
+                ]
+            },
+            {
+                "version": "v0.8.2",
+                "date": "04/02/2026",
+                "changes": [
+                    "Header UI Evolution: Đưa nút chuyển Dark Mode lên Header với phong cách tối giản (Minimalist icon), giúp thao tác nhanh và là chỉ báo trực quan cho việc cập nhật bản mới.",
+                    "Hard Refresh Signal: Thay đổi cấu trúc Header để ép trình duyệt di động nhận diện sự thay đổi giao diện, giúp thoát khỏi tình trạng kẹt Cache cũ."
+                ]
+            },
+            {
+                "version": "v0.8.1",
+                "date": "04/02/2026",
+                "changes": [
+                    "PWA Self-Healing: Cơ chế ép buộc làm mới Cache để xử lý triệt để lỗi lời chào bị kẹt trên thiết bị di động.",
+                    "Timezone Reactive: Tối ưu hóa việc nhận diện múi giờ hệ thống giúp lời chào nhảy đúng Sáng/Chiều/Tối tức thì."
+                ]
+            },
+            {
+                "version": "v0.8.0",
+                "date": "04/02/2026",
+                "changes": [
+                    "Smart Countdown: Hệ thống đếm ngược học kỳ mới trực quan với số đếm 2 chữ số và tiêu đề đổi màu theo tiến độ thời gian.",
+                    "Today View Optimized: Đồng nhất thiết kế thẻ bài giảng LIVE/Pending và thu gọn danh sách đã hoàn thành một cách tinh tế.",
+                    "Multi-Teacher Footer: Tự động hiển thị tên GV trên dải màu Footer Strip khi tắt bộ lọc, hỗ trợ theo dõi lịch dạy đa giảng viên.",
+                    "Minimalist UI Refinement: Rút gọn định dạng ngày tuần với ký tự mũi tên (→) và tối ưu hóa không gian hiển thị (pb-7/pb-10).",
+                    "Scroll & Layout Fix: Loại bỏ các thanh chỉ báo cuộn không hoạt động và xử lý triệt để lỗi cuộn dư thừa trên tab Hôm nay."
+                ]
+            },
+            {
                 "version": "v0.7.0",
                 "date": "03/02/2026",
                 "changes": [

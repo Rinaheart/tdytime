@@ -114,6 +114,12 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
   // Wrapper for getDayDateString to use week.dateRange
   const getDayDateString = (dayIndex: number) => getDateString(week.dateRange, dayIndex);
 
+  const formatDateRange = (range: string) => {
+    const dates = range.match(/\d{2}\/\d{2}\/\d{4}/g);
+    if (dates && dates.length >= 2) return `${dates[0]} → ${dates[1]}`;
+    return range;
+  };
+
   const isDayToday = (dayIdx: number) => {
     const dayDate = getDayDateString(dayIdx);
     const today = new Date();
@@ -198,9 +204,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
             <SessionCard
               key={`${session.courseCode}-${session.timeSlot}-${sidx}`}
               session={session}
-              isVertical={isVertical}
-              isHorizontal={!isVertical}
-              isCurrent={isCurrent}
+              variant="weekly"
               overrides={overrides}
               abbreviations={abbreviations}
               showTeacher={!filters.teacher}
@@ -235,7 +239,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
               </span>
             )}
           </div>
-          <p className="text-xs font-bold text-slate-400 font-mono">{week.dateRange}</p>
+          <p className="text-xs font-bold text-slate-500 dark:text-slate-400 font-mono">{formatDateRange(week.dateRange)}</p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap justify-end">
@@ -277,10 +281,10 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
           </button>
 
           <div className="flex bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-11">
-            <button onClick={onPrev} disabled={isFirst} className="px-4 h-full hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30 border-r border-slate-200 dark:border-slate-800 transition-colors">
+            <button onClick={onPrev} disabled={isFirst} aria-label={t('common.prevWeek', { defaultValue: 'Previous Week' })} className="px-4 h-full hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30 border-r border-slate-200 dark:border-slate-800 transition-colors">
               <ChevronLeft size={20} />
             </button>
-            <button onClick={onNext} disabled={isLast} className="px-4 h-full hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30 transition-colors">
+            <button onClick={onNext} disabled={isLast} aria-label={t('common.nextWeek', { defaultValue: 'Next Week' })} className="px-4 h-full hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30 transition-colors">
               <ChevronRight size={20} />
             </button>
           </div>
@@ -326,7 +330,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
                               <p className={`text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`}>
                                 {(t(`days.${idx}`))}
                               </p>
-                              <p className={`text-xs font-mono font-bold ${isToday ? 'text-white' : 'text-slate-800 dark:text-slate-300'}`}>
+                              <p className={`text-xs font-mono font-bold ${isToday ? 'text-white' : 'text-slate-600 dark:text-slate-400'}`}>
                                 {getDayDateString(idx)}
                               </p>
                             </div>
@@ -352,7 +356,7 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
                           return (
                             <td key={`${day}-${shift.key}`} className={`p-2 border border-slate-100 dark:border-slate-800 align-top min-h-[160px] transition-colors ${isToday ? 'bg-blue-50/40 dark:bg-blue-900/10 border-x-blue-200/50 dark:border-x-blue-800/50' : ''}`}>
                               <div className="h-full">
-                                {renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
+                                {week.days[day] && renderSessionCell(week.days[day][shift.key as keyof DaySchedule], dayIdx)}
                               </div>
                             </td>
                           );
@@ -364,16 +368,15 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
               </div>
             </div>
           </div>
-          {/* Scroll Progress Bar for Mobile */}
-          <div className="mt-4 h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden md:hidden">
-            <div className="h-full bg-blue-600 w-1/3 rounded-full animate-[shimmer_2s_infinite_linear]"></div>
-          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {DAYS_OF_WEEK.map((day, idx) => {
             const dayData = week.days[day];
-            const hasAny = [...dayData.morning, ...dayData.afternoon, ...dayData.evening].some(filterSession);
+            if (!dayData) return null; // Skip days with no data in vertical view
+            const sessions = [...dayData.morning, ...dayData.afternoon, ...dayData.evening];
+            if (sessions.length === 0) return null;
+            const hasAny = sessions.some(filterSession);
             const isToday = isDayToday(idx);
 
             if (!hasAny && (filters.search || filters.className || filters.room || filters.teacher)) return null;
@@ -405,8 +408,9 @@ const WeeklyView: React.FC<WeeklyViewProps> = ({
             )
           })}
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 

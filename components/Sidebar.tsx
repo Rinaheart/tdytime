@@ -92,4 +92,4 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, onReset, coll
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

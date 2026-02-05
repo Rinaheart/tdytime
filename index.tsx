@@ -17,6 +17,6 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
-    <SpeedInsights />
+    {import.meta.env.PROD && <SpeedInsights />}
   </React.StrictMode>
 );

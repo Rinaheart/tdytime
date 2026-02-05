@@ -2,7 +2,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabType, Metadata } from '../types';
-import { Menu } from 'lucide-react';
+import { Menu, Sun, Moon } from 'lucide-react';
 import UserMenu from './UserMenu';
 
 interface HeaderProps {
@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({
   collapsed,
   onToggleSidebar
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const getTitle = () => {
     switch (activeTab) {
@@ -60,11 +60,35 @@ const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 md:gap-4">
+        {/* Minimalist Dark Mode Toggle */}
+        <button
+          onClick={onToggleDarkMode}
+          className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95"
+          aria-label="Toggle Dark Mode"
+        >
+          {darkMode ? (
+            <Sun size={18} strokeWidth={2} className="text-amber-400" />
+          ) : (
+            <Moon size={18} strokeWidth={2} />
+          )}
+        </button>
+
+        {/* Language Switcher */}
+        <button
+          onClick={() => {
+            const newLang = i18n.language === 'vi' ? 'en' : 'vi';
+            i18n.changeLanguage(newLang);
+            localStorage.setItem('language', newLang);
+          }}
+          className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 flex items-center gap-1.5"
+          aria-label="Switch Language"
+        >
+          <span className="text-xs font-black uppercase">{i18n.language}</span>
+        </button>
+
         <UserMenu
           metadata={metadata}
-          darkMode={darkMode}
-          onToggleDarkMode={onToggleDarkMode}
           onTabChange={onTabChange}
           onReset={onReset}
           version={version}
@@ -74,4 +98,4 @@ const Header: React.FC<HeaderProps> = ({
   );
 };
 
-export default Header;
+export default React.memo(Header);

@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-export const APP_VERSION = '0.7.0';
+export const APP_VERSION = '0.9.0';
 
 
 export const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CloudUpload, FileText, History, Trash2, ArrowRight } from 'lucide-react';
 import { HistoryItem } from '../services/historyService';
@@ -12,6 +12,102 @@ interface WelcomeViewProps {
     isProcessing: boolean;
 }
 
+const HistoryCard = React.memo(({ item, onLoad, onDelete }: {
+    item: HistoryItem;
+    onLoad: (item: HistoryItem) => void;
+    onDelete: (id: string) => void;
+}) => {
+    const { t } = useTranslation();
+    const { teacherName, avatarChar, dateStr } = useMemo(() => {
+        const name = item.data.metadata.teacher.trim();
+        const names = name.split(' ');
+        const avatar = names[names.length - 1].charAt(0).toUpperCase();
+
+        const d = new Date(item.savedAt);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+
+        return { teacherName: name, avatarChar: avatar, dateStr: `${day}/${month}/${year}` };
+    }, [item]);
+
+    return (
+        <div
+            onClick={() => onLoad(item)}
+            className="group bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-slate-100 dark:border-slate-800 p-4 rounded-2xl flex items-center justify-between hover:bg-white dark:hover:bg-slate-900 hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-900 transition-all cursor-pointer"
+        >
+            <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/10">
+                    {avatarChar}
+                </div>
+                <div>
+                    <h5 className="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors uppercase">
+                        {teacherName}
+                    </h5>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-400 font-bold">
+                        HK{item.data.metadata.semester} • {item.data.metadata.academicYear}
+                    </p>
+                </div>
+            </div>
+            <div className="flex items-center gap-4">
+                <span className="text-[10px] text-slate-600 dark:text-slate-400 font-mono hidden sm:inline">
+                    {dateStr}
+                </span>
+                <button
+                    aria-label={t('common.deleteHistory', { defaultValue: 'Delete history' })}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(item.id);
+                    }}
+                    className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                >
+                    <Trash2 size={16} />
+                </button>
+            </div>
+        </div>
+    );
+});
+
+const PasteInput = React.memo(({ onCancel, onSubmit, isProcessing }: {
+    onCancel: () => void;
+    onSubmit: (content: string) => void;
+    isProcessing: boolean;
+}) => {
+    const { t } = useTranslation();
+    const [pastedContent, setPastedContent] = useState('');
+
+    return (
+        <div className="flex-1 flex flex-col animate-in fade-in duration-300">
+            <textarea
+                autoFocus
+                value={pastedContent}
+                onChange={(e) => setPastedContent(e.target.value)}
+                placeholder={t('app.pastePlaceholder', { defaultValue: 'Dán nội dung HTML tại đây...' })}
+                className="flex-1 bg-slate-50 dark:bg-slate-800 rounded-2xl p-4 text-sm font-mono border-0 focus:ring-0 resize-none mb-4 custom-scrollbar"
+            />
+            <div className="flex gap-3">
+                <button
+                    onClick={onCancel}
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                    {t('common.cancel')}
+                </button>
+                <button
+                    onClick={() => onSubmit(pastedContent)}
+                    disabled={!pastedContent.trim() || isProcessing}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                >
+                    {isProcessing ? t('common.processing') : (
+                        <>
+                            {t('common.save')} <ArrowRight size={14} />
+                        </>
+                    )}
+                </button>
+            </div>
+        </div>
+    );
+});
+
 const WelcomeView: React.FC<WelcomeViewProps> = ({
     onFileUpload,
     historyList,
@@ -22,7 +118,7 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
 }) => {
     const { t } = useTranslation();
     const [pasteMode, setPasteMode] = useState(false);
-    const [pastedContent, setPastedContent] = useState('');
+    const [isDragging, setIsDragging] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -35,14 +131,6 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
         };
         reader.readAsText(file);
     };
-
-    const handlePasteSubmit = () => {
-        if (pastedContent.trim()) {
-            onFileUpload(pastedContent);
-        }
-    };
-
-    const [isDragging, setIsDragging] = useState(false);
 
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
@@ -135,34 +223,11 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                             <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{t('app.pasteDesc', { defaultValue: 'Dán trực tiếp từ trang web' })}</p>
                         </button>
                     ) : (
-                        <div className="flex-1 flex flex-col animate-in fade-in duration-300">
-                            <textarea
-                                autoFocus
-                                value={pastedContent}
-                                onChange={(e) => setPastedContent(e.target.value)}
-                                placeholder={t('app.pastePlaceholder', { defaultValue: 'Dán nội dung HTML tại đây...' })}
-                                className="flex-1 bg-slate-50 dark:bg-slate-800 rounded-2xl p-4 text-sm font-mono border-0 focus:ring-0 resize-none mb-4 custom-scrollbar"
-                            />
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => setPasteMode(false)}
-                                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                                >
-                                    {t('common.cancel')}
-                                </button>
-                                <button
-                                    onClick={handlePasteSubmit}
-                                    disabled={!pastedContent.trim() || isProcessing}
-                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all disabled:opacity-50"
-                                >
-                                    {isProcessing ? t('common.processing') : (
-                                        <>
-                                            {t('common.save')} <ArrowRight size={14} />
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
+                        <PasteInput
+                            onCancel={() => setPasteMode(false)}
+                            onSubmit={onFileUpload}
+                            isProcessing={isProcessing}
+                        />
                     )}
                 </div>
             </div>
@@ -175,54 +240,14 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
                         <h4 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">{t('app.recentHistory', { defaultValue: 'Dữ liệu gần đây' })}</h4>
                     </div>
                     <div className="space-y-3">
-                        {historyList.slice(0, 5).map((item) => {
-                            const teacherName = item.data.metadata.teacher.trim();
-                            const names = teacherName.split(' ');
-                            const avatarChar = names[names.length - 1].charAt(0).toUpperCase();
-
-                            return (
-                                <div
-                                    key={item.id}
-                                    onClick={() => onLoadHistory(item)}
-                                    className="group bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-slate-100 dark:border-slate-800 p-4 rounded-2xl flex items-center justify-between hover:bg-white dark:hover:bg-slate-900 hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-900 transition-all cursor-pointer"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/10">
-                                            {avatarChar}
-                                        </div>
-                                        <div>
-                                            <h5 className="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors uppercase">
-                                                {teacherName}
-                                            </h5>
-                                            <p className="text-[10px] text-slate-600 dark:text-slate-400 font-bold">
-                                                HK{item.data.metadata.semester} • {item.data.metadata.academicYear}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <span className="text-[10px] text-slate-600 dark:text-slate-400 font-mono hidden sm:inline">
-                                            {(() => {
-                                                const d = new Date(item.savedAt);
-                                                const day = String(d.getDate()).padStart(2, '0');
-                                                const month = String(d.getMonth() + 1).padStart(2, '0');
-                                                const year = d.getFullYear();
-                                                return `${day}/${month}/${year}`;
-                                            })()}
-                                        </span>
-                                        <button
-                                            aria-label={t('common.deleteHistory', { defaultValue: 'Delete history' })}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onDeleteHistory(item.id);
-                                            }}
-                                            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                        {historyList.slice(0, 5).map((item) => (
+                            <HistoryCard
+                                key={item.id}
+                                item={item}
+                                onLoad={onLoadHistory}
+                                onDelete={onDeleteHistory}
+                            />
+                        ))}
                     </div>
                 </div>
             )}
@@ -237,4 +262,4 @@ const WelcomeView: React.FC<WelcomeViewProps> = ({
     );
 };
 
-export default WelcomeView;
+export default React.memo(WelcomeView);

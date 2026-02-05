@@ -78,7 +78,11 @@ export const useSchedule = () => {
     useEffect(() => {
         if (data) {
             const updatedData = { ...data, overrides, abbreviations };
-            setMetrics(calculateMetrics(updatedData));
+            // DEFER: Metrics calculation can be heavy
+            const timer = setTimeout(() => {
+                setMetrics(calculateMetrics(updatedData));
+            }, 50);
+            return () => clearTimeout(timer);
         }
     }, [overrides, abbreviations, data]);
 
@@ -115,7 +119,6 @@ export const useSchedule = () => {
         setData(parsedData);
         setOverrides(parsedData.overrides || {});
         setAbbreviations(parsedData.abbreviations || {});
-        setMetrics(calculateMetrics(parsedData));
         setError(null);
 
         // Save to LocalStorage (last session)

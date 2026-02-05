@@ -2,7 +2,7 @@
 import { ScheduleData } from '../types';
 
 const STORAGE_KEY = 'timetable_history_v1';
-const MAX_ITEMS = 5;
+const MAX_ITEMS = 10;
 
 export interface HistoryMetadata {
     id: string;
