@@ -15,14 +15,14 @@ export const PWAUpdateHandler: React.FC = () => {
     const [checkStatus, setCheckStatus] = useState<'none' | 'up-to-date'>('none');
 
     const sw = useRegisterSW({
-        onRegistered(r) {
+        onRegistered(r: ServiceWorkerRegistration | undefined) {
             console.log('SW Registered:', r);
             // Periodic check for updates (every hour)
             r && setInterval(() => {
                 r.update();
             }, 60 * 60 * 1000);
         },
-        onRegisterError(error) {
+        onRegisterError(error: any) {
             console.log('SW registration error', error);
         },
     });
@@ -30,13 +30,13 @@ export const PWAUpdateHandler: React.FC = () => {
     const [offlineReady, setOfflineReady] = Array.isArray(sw.offlineReady)
         ? sw.offlineReady
         : [sw.offlineReady, () => { }];
-    const [needUpdate, setNeedUpdate] = Array.isArray(sw.needUpdate)
-        ? sw.needUpdate
-        : [sw.needUpdate, () => { }];
+    const [needUpdate, setNeedUpdate] = Array.isArray(sw.needRefresh)
+        ? sw.needRefresh
+        : [sw.needRefresh, () => { }];
     const { updateServiceWorker } = sw;
 
     useEffect(() => {
-        const handleInstallPrompt = (e: any) => {
+        const handleInstallPrompt = (e: Event) => {
             e.preventDefault();
             setInstallPrompt(e);
         };
