@@ -1,107 +1,154 @@
 <div align="center">
-  <img src="public/favicon.svg" alt="TdyTime Logo" width="96" height="96">
 
-  # TdyTime <sup><small>v1.0.0</small></sup>
+<img src="public/favicon.svg" alt="TdyTime Logo" width="110" height="110" />
 
-  Your Today, Your Time  
-  _Tiện ích quản lý lịch giảng dạy dành cho Giảng viên KTYH – Trường ĐHYD, Đại học Huế_
+# TdyTime <sup><small>v1.0.0</small></sup>
 
-  [🚀 Trải nghiệm ngay](https://tdytime.vercel.app)
-</div>
+### Your Today, Your Time
 
----
+<sub>Công cụ quản lý và phân tích lịch giảng dạy dành cho Giảng viên KTYH – Trường ĐHYD, Đại học Huế</sub>
+
+<br>
+
+[![🚀 Trải nghiệm ngay](https://img.shields.io/badge/Trải_nghiệm-TdyTime-2563eb?style=for-the-badge)](https://tdytime.vercel.app)
+
+<br>
+
+![Version](https://img.shields.io/badge/version-1.0.0-2563eb?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-Ready-10b981?style=flat-square)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square)
----
 
-## 📖 Giới thiệu
-
-**TdyTime** là ứng dụng Web PWA giúp chuyển lịch giảng dạy phức tạp thành các buổi dạy hằng ngày rõ ràng, dễ theo dõi.
-
-Tiêu chí: **Nhanh – Gọn – Ổn định – Offline tốt**
+</div>
 
 ---
 
-## ✨ Tính năng
+## 🚀 Vì sao nên dùng TdyTime?
 
-### 📱 Cài đặt như App thật
-- Thêm vào màn hình chính
-- Splash screen đầy đủ
-- Trải nghiệm gần như native
+Lịch giảng dạy thường:
+- Rối
+- Khó theo dõi theo từng ngày
+- Khó tính tổng số tiết và khối lượng công việc
 
-### 📊 Phân tích tự động
-- Tính số tiết dạy
-- Phân bổ ca dạy
+**TdyTime biến lịch phức tạp thành danh sách công việc rõ ràng theo ngày.**
+
+Nhanh. Gọn. Ổn định. Hoạt động tốt kể cả khi offline.
+
+---
+
+## ✨ Trải nghiệm chính
+
+### 📱 Cài đặt như ứng dụng thật
+- Thêm vào màn hình chính (iOS / Android / Desktop)
+- Mở ở chế độ standalone
+- Có splash screen đầy đủ
+
+### 📊 Phân tích lịch giảng tự động
+- Tính tổng số tiết dạy
+- Phân bổ ca (sáng / chiều / tối)
 - Thống kê khối lượng công việc
+
+### 📶 Hoạt động ngoại tuyến
+- Cache thông minh
+- Dùng được khi không có Internet
 
 ### 🔄 Cập nhật thông minh
 - Tự kiểm tra phiên bản mới
-- Nâng cấp mượt mà
+- Cập nhật mượt, không gián đoạn
 
-### 📶 Hoạt động ngoại tuyến
-- Cache tối ưu
-- Dùng được khi mất mạng
-
-### 🌐 Đa ngôn ngữ
+### 🌐 Song ngữ
 - Tiếng Việt / English
+- Chuyển đổi nhanh trong ứng dụng
 
-### 🎨 Giao diện hiện đại
-- Dark Mode
-- Thiết kế tối giản, dễ nhìn
-
----
-
-## 🚀 Truy cập
-
-👉 **https://tdytime.vercel.app**
+### 🎨 Giao diện cao cấp
+- Thiết kế tối giản, dễ đọc
+- Tối ưu mobile-first
+- Hỗ trợ Dark Mode
 
 ---
 
-## 🛠️ Tech Stack
+## 🌐 Truy cập ứng dụng
 
-### Core
-- React 19
-- TypeScript
-- Zustand
+<div align="center">
 
-### UI
-- Tailwind CSS 4
-- Lucide Icons
+## 👉 https://tdytime.vercel.app
+
+</div>
+
+---
+
+## 🛠️ Công nghệ sử dụng
+
+### Cốt lõi
+- React 19  
+- TypeScript  
+- Zustand  
+
+### Giao diện
+- Tailwind CSS 4  
+- Lucide Icons  
 
 ### PWA
-- Vite PWA Plugin
+- Vite PWA Plugin  
 
 ---
 
-## 📱 Cài đặt PWA
+## 📱 Hướng dẫn cài đặt PWA
 
-### iOS (Safari)
-1. Mở web bằng Safari  
-2. Share → Add to Home Screen  
+### Trên iPhone / iPad (Safari)
+1. Mở website bằng Safari  
+2. Nhấn **Share**  
+3. Chọn **Add to Home Screen**  
 
-### Android (Chrome)
-1. Menu 3 chấm  
-2. Add to Home screen  
+### Trên Android (Chrome)
+1. Nhấn menu **⋮**  
+2. Chọn **Add to Home screen**  
 
-### Desktop (Chrome/Edge)
-1. Nhấn icon Install trên thanh địa chỉ  
+### Trên Desktop (Chrome / Edge)
+1. Nhấn biểu tượng **Install** trên thanh địa chỉ  
 
 ---
 
-## 📸 Screenshots
+## 📸 Hình ảnh giao diện
 
-_Đang cập nhật_
+<div align="center">
+  <sub>Đang cập nhật hình ảnh thực tế của ứng dụng...</sub>
+</div>
 
 ---
 
 ## 🤝 Đóng góp
 
-Rất mong nhận được phản hồi và góp ý.
+Rất mong nhận được phản hồi và góp ý để cải thiện ứng dụng.
 
-📄 License
+Nếu muốn đóng góp trực tiếp:
 
-MIT
+```bash
+git checkout -b feature/YourFeature
+git commit -m "Add YourFeature"
+git push origin feature/YourFeature
+```
 
-<div align="center"> <br> <p> <img src="public/favicon.svg" alt="TdyTime Logo" width="30" height="30"> </p> <p> Made with ❤️ by <b>TdyPhan</b> </p> <p> <sub>© 2026 TdyTime.</sub> </p> </div> 
+Sau đó tạo Pull Request.
 
+---
+
+## 📄 Giấy phép
+
+MIT License
+
+---
+
+<div align="center">
+
+<br>
+
+<img src="public/favicon.svg" alt="TdyTime Logo" width="32" height="32" />
+
+<br>
+
+Made with ❤️ by <b>TdyPhan</b>  
+
+<sub>© 2026 TdyTime. All rights reserved.</sub>
+
+</div>
