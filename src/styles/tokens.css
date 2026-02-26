@@ -1,0 +1,37 @@
+/* ============================================
+ * Design Tokens — TdyTime v2
+ * Single source of truth for colors, spacing, shadows
+ * ============================================ */
+
+:root {
+  /* Typography */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+  --font-num: 'Montserrat', sans-serif;
+
+  /* Brand Colors */
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+
+  /* Session Time Colors */
+  --color-morning: #3b82f6;
+  --color-afternoon: #f97316;
+  --color-evening: #9333ea;
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.15);
+}

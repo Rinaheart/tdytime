@@ -1,0 +1,61 @@
+/**
+ * InsightCard — Compact alert card showing a single insight metric.
+ * Consistent with app's white-card design system.
+ */
+
+import React from 'react';
+import { LucideIcon } from 'lucide-react';
+
+interface InsightCardProps {
+    icon: LucideIcon;
+    title: string;
+    value: string;
+    statusColor?: string;
+}
+
+const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, statusColor }) => {
+    const isWarning = statusColor?.includes('orange') || statusColor?.includes('rose') || statusColor?.includes('amber');
+
+    return (
+        <div className={`bg-white dark:bg-slate-900 p-2 md:p-3 rounded-2xl border transition-all duration-300
+            ${statusColor
+                ? statusColor
+                : isWarning
+                    ? 'border-amber-300 dark:border-amber-800/60'
+                    : 'border-blue-400 dark:border-blue-800/60'
+            } shadow-sm relative overflow-hidden group hover:shadow-md flex flex-col items-center justify-center text-center h-full min-w-[75px] md:min-w-[95px] space-y-1.5`}
+        >
+            {/* Row 1: Icon */}
+            <div className={`w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center shrink-0
+                ${isWarning
+                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
+                    : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                }`}
+            >
+                <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" strokeWidth={2.5} />
+            </div>
+
+            {/* Row 2: Title */}
+            <h4 className="text-[9px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-tight w-full break-words">
+                {title}
+            </h4>
+
+            {/* Row 3: Value */}
+            <p className={`text-[10px] md:text-xs font-black tracking-tight leading-tight w-full
+                ${isWarning
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-slate-800 dark:text-slate-100'
+                }`}
+            >
+                {value}
+            </p>
+
+            {/* Subtle accent line */}
+            {isWarning && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400 opacity-60" />
+            )}
+        </div>
+    );
+};
+
+export default React.memo(InsightCard);

@@ -1,34 +1,57 @@
-# ⚡ TdyTime
-> **"Your Timetable, Your Time"** – Trợ lý thông minh giúp bạn làm chủ thời gian biểu mỗi ngày.
+<div align="center">
+  <img src="public/favicon.svg" alt="TdyTime Logo" width="80" height="80">
+  
+  <h1 style="margin-bottom: 0;">TdyTime <sub style="font-size: 0.5em; opacity: 0.5;">v1.0.0</sub></h1>
+  <p style="color: #2563eb; font-size: 0.9em; margin-top: 4px;"><b>Your Today, Your Time</b></p>
 
-[![Version](https://img.shields.io/badge/version-0.6.0-blue.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
-[![Status](https://img.shields.io/badge/status-active-success.svg?style=for-the-badge)](https://github.com/tdyphan/tdytime)
+  <p style="max-width: 400px; color: #64748b; font-size: 0.85em; line-height: 1.6;">
+    Tiện ích trực quan hóa và quản lý lịch trình giảng dạy thông minh. <br>
+    Thiết kế đặc biệt cho GV Khoa KTYH - Trường ĐHYD, ĐH Huế.
+  </p>
+
+  <p>
+    <a href="https://tdytime.vercel.app"><b>Trải nghiệm ngay →</b></a>
+  </p>
+
+  <p>
+    <img src="https://img.shields.io/badge/version-v1.0.0-blue.svg" alt="Version">
+    <img src="https://img.shields.io/badge/PWA-Ready-orange.svg" alt="PWA">
+    <img src="https://img.shields.io/badge/UI-Modern-61DAFB.svg" alt="UI">
+  </p>
+</div>
+
+---
+
+**TdyTime** là một ứng dụng Web (PWA) chuyên nghiệp được thiết kế để biến những lịch giảng dạy phức tạp thành các nhiệm vụ hàng ngày gọn gàng và dễ theo dõi. Với tiêu chí nhanh, gọn và hoạt động ổn định kể cả khi không có mạng.
+
+## ⚡ Các Tính Năng Chính
+
+- 📱 **Trải nghiệm như App thật**: Hỗ trợ cài đặt trực tiếp lên màn hình điện thoại/máy tính (PWA) với màn hình khởi động chuyên nghiệp.
+- 🔄 **Hệ thống cập nhật thông minh**: Tính năng kiểm tra cập nhật chủ động (v1.0.0) giúp bạn luôn sử dụng bản mới nhất.
+- 📶 **Hoạt động ngoại tuyến**: Hoạt động hoàn hảo ngay cả khi không có internet nhờ công nghệ bộ nhớ đệm tiên tiến.
+- 📊 **Phân tích chỉ số**: Tự động tính toán số tiết dạy, phân bổ ca dạy, và thống kê khối lượng công việc.
+- 🌐 **Đa ngôn ngữ**: Chuyển đổi linh hoạt giữa Tiếng Việt và Tiếng Anh.
+- 🎨 **Giao diện Cao cấp**: Thiết kế hiện đại với hỗ trợ chế độ Sáng/Tối (Dark Mode) thông minh.
 
 ---
 
-## 🌟 TdyTime là gì?
-Bạn đã bao giờ mệt mỏi khi phải nhìn vào những file thời khóa biểu `.html` lộn xộn từ hệ thống UMS? 
+## 🚀 Truy cập nhanh
 
-**TdyTime** sinh ra để giải quyết vấn đề đó. Chỉ với một thao tác tải tệp, toàn bộ lịch trình của bạn sẽ được chuyển đổi ngay lập tức thành một **Dashboard hiện đại, trực quan và đầy cảm hứng.**
+Ứng dụng hiện đang được triển khai chính thức tại:
 
-## 🚀 Những điểm "chạm" ấn tượng
-*   **🎯 Nhìn là thấy**: Theo dõi lịch dạy theo Ngày, Tuần, Tháng với thanh tiến độ thời gian thực.
-*   **🧠 Cá nhân hóa**: Tự động nhận diện giảng viên và lọc lịch cá nhân hóa 100%.
-*   **📱 Trải nghiệm "vuốt"**: Thiết kế tối ưu cho di động với hệ thống Tab Bar và cử chỉ điều hướng mượt mà.
-*   **📊 Phân tích thông minh**: Bản đồ nhiệt (Heatmap) và các biểu đồ xu hướng giúp bạn nắm bắt khối lượng công việc trong nháy mắt.
-*   **⚡ Tiện ích nhanh**: Xuất lịch sang Google Calendar, hỗ trợ PWA (truy cập ngoại tuyến như App thật).
-*   **🔒 Bảo mật tuyệt đối**: Dữ liệu được xử lý 100% tại máy của bạn. Không lưu trữ, không rò rỉ.
-
-## 🛠 Công nghệ sành điệu
-*   **Core**: React 19 + TypeScript (Tốc độ & Sự tin cậy).
-*   **Style**: Tailwind CSS v4 (Hiệu ứng kính mờ & Grid hiện đại).
-*   **Engine**: Phân tích dữ liệu thông minh hỗ trợ bởi Google AI Studio.
-
-## 🏁 Sẵn sàng bắt đầu?
-1.  `npm install` – Cài đặt phụ thuộc.
-2.  `npm run dev` – Khởi động cảm hứng.
-3.  Tải file `.html` của bạn và tận hưởng!
+### [👉 tdytime.vercel.app](https://tdytime.vercel.app)
 
 ---
-**Sáng tạo bởi TdyPhan**  
-*Cập nhật: 02/02/2026 (Phiên bản v0.6.0 - Premium Special)*
+
+## 🛠️ Công Nghệ
+
+- **Vibe Coding**: Với sự hỗ trợ đắc lực từ **Google Antigravity**
+- **Cốt lõi**: React 19, TypeScript, Zustand
+- **Giao diện**: Tailwind CSS 4, Lucide Icons
+- **PWA**: Vite PWA Plugin
+
+---
+
+<div align="center">
+  <p>Made with ❤️ by TdyPhan</p>
+</div>
