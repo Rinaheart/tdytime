@@ -10,7 +10,6 @@
 </div>
 
 ---
-![Version](https://img.shields.io/badge/version-1.0.0-2563eb?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-Ready-10b981?style=flat-square)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square)
