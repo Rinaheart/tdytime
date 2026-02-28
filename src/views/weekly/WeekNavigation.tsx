@@ -65,7 +65,7 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
                 <p className="text-xs font-bold text-slate-500 dark:text-slate-400 font-num">{formatDateRange(weekDateRange)}</p>
             </div>
 
-            <div className="flex items-center gap-2 flex-wrap justify-end">
+            <div className="flex items-center gap-2 flex-wrap justify-end w-full md:w-auto self-end md:self-auto">
                 <button
                     onClick={() => data && jumpToCurrentWeek(data)}
                     className={`flex items-center gap-2 h-11 px-4 rounded-xl text-xs font-bold transition-all shadow-sm ${isCurrent

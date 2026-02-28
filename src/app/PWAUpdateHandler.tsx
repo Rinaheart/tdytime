@@ -8,11 +8,30 @@ import { useRegisterSW } from 'virtual:pwa-register/react';
 import { useTranslation } from 'react-i18next';
 import { RefreshCw, Download, Check, X } from 'lucide-react';
 
+const INSTALL_PROMPT_DISMISS_KEY = 'tdytime_install_prompt_dismissed';
+const DISMISS_DURATION = 24 * 60 * 60 * 1000; // 24 hours in ms
+
 export const PWAUpdateHandler: React.FC = () => {
     const { t } = useTranslation();
     const [installPrompt, setInstallPrompt] = useState<any>(null);
     const [isChecking, setIsChecking] = useState(false);
     const [checkStatus, setCheckStatus] = useState<'none' | 'up-to-date'>('none');
+    const [isDismissed, setIsDismissed] = useState(true);
+
+    // Check dismiss status on mount
+    useEffect(() => {
+        const lastDismissed = localStorage.getItem(INSTALL_PROMPT_DISMISS_KEY);
+        if (lastDismissed) {
+            const timePassed = Date.now() - parseInt(lastDismissed, 10);
+            if (timePassed < DISMISS_DURATION) {
+                setIsDismissed(true);
+            } else {
+                setIsDismissed(false);
+            }
+        } else {
+            setIsDismissed(false);
+        }
+    }, []);
 
     const sw = useRegisterSW({
         onRegistered(r: ServiceWorkerRegistration | undefined) {
@@ -62,6 +81,11 @@ export const PWAUpdateHandler: React.FC = () => {
         }
     };
 
+    const handleDismissInstall = () => {
+        localStorage.setItem(INSTALL_PROMPT_DISMISS_KEY, Date.now().toString());
+        setIsDismissed(true);
+    };
+
     // Expose check function to window for SettingsView to trigger
     useEffect(() => {
         (window as any).checkPWAUpdate = async () => {
@@ -92,25 +116,35 @@ export const PWAUpdateHandler: React.FC = () => {
 
     return (
         <>
-            {/* Install Prompt Banner (Bottom Left) */}
-            {installPrompt && (
-                <div className="fixed bottom-24 left-4 right-4 md:right-auto md:max-w-sm z-[100] animate-in slide-in-from-bottom-10 fade-in duration-500">
-                    <div className="bg-white dark:bg-slate-900 border border-blue-100 dark:border-blue-900/30 rounded-2xl shadow-2xl p-4 flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
-                            <Download size={24} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">
-                                {t('pwa.install_title')}
-                            </h4>
-                            <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2">
-                                {t('pwa.install_desc')}
-                            </p>
+            {/* Install Prompt Banner (Bottom Left/Center) */}
+            {installPrompt && !isDismissed && (
+                <div className="fixed bottom-24 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-full md:max-w-sm z-[100] animate-in slide-in-from-bottom-10 fade-in duration-500">
+                    <div className="bg-white dark:bg-slate-900 border-2 border-[#0358D5] rounded-2xl shadow-2xl p-4 flex flex-col gap-3 relative mx-auto max-w-[calc(100vw-2rem)] md:max-w-none">
+                        <button
+                            onClick={handleDismissInstall}
+                            className="absolute top-2 right-2 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors flex items-center justify-center"
+                            aria-label="Close"
+                        >
+                            <X size={14} />
+                        </button>
+                        <div className="flex items-start gap-3 w-full pr-6 justify-center md:justify-start">
+                            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center text-blue-600 shrink-0 mt-0.5">
+                                <Download size={20} />
+                            </div>
+                            <div className="flex-1 min-w-0 text-left">
+                                <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-tight">
+                                    {t('pwa.install_title')}
+                                </h4>
+                                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-snug">
+                                    {t('pwa.install_desc')}
+                                </p>
+                            </div>
                         </div>
                         <button
                             onClick={handleInstall}
-                            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-sm"
+                            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors shadow-sm shadow-blue-500/20 flex justify-center items-center gap-2"
                         >
+                            <Download size={15} strokeWidth={2.5} />
                             {t('pwa.install_button')}
                         </button>
                     </div>

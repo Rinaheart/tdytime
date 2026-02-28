@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Clock, MapPin } from 'lucide-react';
+import { Clock, MapPin, FileText, Beaker, FlaskConical } from 'lucide-react';
 import { Badge } from '@/ui/primitives';
 import type { CourseSession } from '@/core/schedule/schedule.types';
 import { CourseType } from '@/core/schedule/schedule.types';
@@ -67,7 +67,8 @@ const WeeklyCard: React.FC<{ session: CourseSession; displayName: string; curren
                     <span className="shrink-0 opacity-70">({session.group})</span>
                 </div>
                 <Badge variant={currentType === CourseType.LT ? 'theory' : 'practice'}>
-                    [{currentType}]
+                    {currentType === CourseType.LT ? <FileText size={10} className="mr-0.5" /> : <FlaskConical size={10} />}
+                    {currentType}
                 </Badge>
             </div>
 
@@ -140,7 +141,8 @@ const TodayCard: React.FC<{ session: CourseSession; displayName: string; current
                 <span className="text-slate-300 dark:text-slate-700">•</span>
                 <span>{session.className}</span>
                 <span className="text-slate-300 dark:text-slate-700">•</span>
-                <span className={`font-semibold ${currentType === CourseType.LT ? 'text-blue-500' : 'text-emerald-500'}`}>
+                <span className={`font-semibold flex items-center gap-1.5 ${currentType === CourseType.LT ? 'text-blue-500' : 'text-orange-500'}`}>
+                    {currentType === CourseType.LT ? <FileText size={14} /> : <Beaker size={14} />}
                     {currentType}
                 </span>
             </div>

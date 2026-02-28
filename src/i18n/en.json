@@ -530,7 +530,7 @@
         "checking": "Checking...",
         "up_to_date": "App is up to date",
         "install_title": "Install TdyTime",
-        "install_desc": "Install the app for faster access and offline capabilities.",
-        "install_button": "Install App"
+        "install_desc": "Add the app to your home screen to access your teaching schedule offline.",
+        "install_button": "Install"
     }
 }

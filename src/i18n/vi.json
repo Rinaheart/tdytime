@@ -527,7 +527,7 @@
         "checking": "Đang kiểm tra...",
         "up_to_date": "Đã là bản mới nhất",
         "install_title": "Cài đặt TdyTime",
-        "install_desc": "Cài đặt ứng dụng để truy cập nhanh chóng và làm việc ngoại tuyến.",
-        "install_button": "Cài đặt ứng dụng"
+        "install_desc": "Thêm ứng dụng vào màn hình chính và theo dõi lịch giảng offline (không cần internet).",
+        "install_button": "Cài đặt"
     }
 }
