@@ -6,6 +6,8 @@
 import React, { lazy, Suspense } from 'react';
 import { createHashRouter, Navigate } from 'react-router-dom';
 import { useScheduleStore } from '@/core/stores';
+import { SessionCardSkeleton } from '@/ui/primitives';
+
 // Lazy-loaded layout & views
 const AppLayout = lazy(() => import('./layout/AppLayout'));
 const WelcomeView = lazy(() => import('@/views/welcome/WelcomeView'));
