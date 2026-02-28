@@ -14,9 +14,21 @@ import './styles/global.css';
 
 import App from './app/App';
 
+/**
+ * Deferred SpeedInsights to avoid blocking initial render
+ */
+const DeferredSpeedInsights = () => {
+    const [mounted, setMounted] = React.useState(false);
+    React.useEffect(() => {
+        const timer = setTimeout(() => setMounted(true), 2000);
+        return () => clearTimeout(timer);
+    }, []);
+    return mounted ? <SpeedInsights /> : null;
+};
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <App />
-        <SpeedInsights />
+        <DeferredSpeedInsights />
     </React.StrictMode>,
 );

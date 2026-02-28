@@ -6,11 +6,8 @@
 import React, { lazy, Suspense } from 'react';
 import { createHashRouter, Navigate } from 'react-router-dom';
 import { useScheduleStore } from '@/core/stores';
-import AppLayout from './layout/AppLayout';
-
-import { SessionCardSkeleton } from '@/ui/primitives';
-
-// Lazy-loaded views
+// Lazy-loaded layout & views
+const AppLayout = lazy(() => import('./layout/AppLayout'));
 const WelcomeView = lazy(() => import('@/views/welcome/WelcomeView'));
 const TodayView = lazy(() => import('@/views/today/TodayView'));
 const WeeklyView = lazy(() => import('@/views/weekly/WeeklyView'));
@@ -46,7 +43,9 @@ export const router = createHashRouter([
     {
         element: (
             <RequireData>
-                <AppLayout />
+                <Suspense fallback={<LoadingFallback />}>
+                    <AppLayout />
+                </Suspense>
             </RequireData>
         ),
         children: [
