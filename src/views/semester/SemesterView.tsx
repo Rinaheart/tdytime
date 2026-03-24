@@ -151,18 +151,18 @@ const SemesterView: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2 flex-wrap justify-end w-full md:w-auto self-end md:self-auto">
-                    <button onClick={scrollToCurrentWeek} className="flex items-center gap-2 h-11 px-4 bg-blue-600 text-white rounded-xl text-xs font-bold transition-all hover:bg-blue-700 shadow-sm shadow-blue-500/20 active:scale-95">
+                    <button onClick={scrollToCurrentWeek} className="flex items-center gap-2 h-11 px-4 bg-accent-600 text-white rounded-xl text-xs font-bold transition-all hover:bg-accent-700 shadow-sm shadow-accent-500/20 active:scale-95">
                         <Zap size={16} className="fill-current" />
                         <span className="hidden sm:inline">{t('common.current')}</span>
                     </button>
                     <button onClick={() => setViewMode((v) => (v === 'vertical' ? 'horizontal' : 'vertical'))} className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 active:scale-95 transition-all shadow-sm">
-                        {viewMode === 'vertical' ? <LayoutTemplate size={16} className="text-blue-500" /> : <Columns size={16} className="text-blue-500" />}
-                        <span className="hidden sm:inline">{viewMode === 'vertical' ? t('common.horizontalList') : t('common.verticalList')}</span>
+                        {viewMode === 'vertical' ? <Columns size={16} className="text-accent-500" /> : <LayoutTemplate size={16} className="text-accent-500" />}
+                        <span className="hidden sm:inline">{viewMode === 'vertical' ? t('common.verticalList') : t('common.horizontalList')}</span>
                     </button>
                     <button onClick={() => setIsFilterOpen((v) => !v)} className={`flex items-center gap-2 h-11 px-4 border rounded-xl text-xs font-bold transition-all shadow-sm relative ${isFilterOpen ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'}`}>
                         <Search size={16} className={isFilterOpen ? 'text-white' : 'text-indigo-500'} />
                         <span className="hidden sm:inline">{t('common.filter')}</span>
-                        {hasActiveFilters && !isFilterOpen && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-blue-500 border-2 border-white dark:border-slate-900 rounded-full" />}
+                        {hasActiveFilters && !isFilterOpen && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent-500 border-2 border-white dark:border-slate-900 rounded-full" />}
                     </button>
                     <button onClick={toggleAllWeeks} className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 active:scale-95 transition-all shadow-sm">
                         {isAllExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}

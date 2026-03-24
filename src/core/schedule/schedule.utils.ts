@@ -10,6 +10,28 @@ import { CourseSession } from './schedule.types';
 export const DATE_REGEX_SINGLE = /(\d{2})\/(\d{2})\/(\d{4})/;
 export const DATE_REGEX_GLOBAL = /(\d{2})\/(\d{2})\/(\d{4})/g;
 
+/** Regex for detecting Practical (TH) courses from group code */
+export const COURSE_TYPE_TH_REGEX = /-TH\./i;
+
+/** Normalize teacher name for comparison */
+export const normalizeTeacherName = (name: string) => {
+    if (!name) return '';
+    return name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '')
+        .trim();
+};
+
+/** Check if a session belongs to the main teacher */
+export const isMainTeacher = (tName: string, mainTeacherName: string) => {
+    if (!tName || tName === 'Chưa rõ' || tName === 'Unknown') return true;
+    const main = normalizeTeacherName(mainTeacherName);
+    const target = normalizeTeacherName(tName);
+    return target.includes(main) || main.includes(target);
+};
+
 /**
  * Get date string for a specific day within a week's date range.
  * @param weekDateRange - e.g. "01/02/2026 - 07/02/2026"
@@ -93,11 +115,8 @@ export const isPastWeek = (dateRange: string, now: Date): boolean => {
     if (!matches || matches.length < 2) return false;
 
     const [de, me, ye] = matches[1].split('/').map(Number);
-    const end = new Date(ye, me - 1, de);
-    const check = new Date(now);
-    check.setHours(23, 59, 59, 999);
-
-    return check > end;
+    const end = new Date(ye, me - 1, de, 23, 59, 59, 999);
+    return now > end;
 };
 
 /** Filter state for session search/filter UI */

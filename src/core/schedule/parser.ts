@@ -13,6 +13,7 @@ import {
     DaySchedule,
     AggregatedCourse,
 } from './schedule.types';
+import { COURSE_TYPE_TH_REGEX } from './schedule.utils';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -27,12 +28,12 @@ export const parseScheduleHTML = (html: string): ScheduleData | null => {
     // Validate essential structure
     const weekCells = doc.querySelectorAll('.hitec-td-tkbTuan');
     if (weekCells.length === 0) {
-        throw new Error('error.parseWeekNotFound');
+        throw new Error('upload.errors.parseWeekNotFound');
     }
 
     const table = doc.querySelector('table.table-bordered');
     if (!table) {
-        throw new Error('error.parseTableNotFound');
+        throw new Error('upload.errors.parseTableNotFound');
     }
 
     // Extract metadata
@@ -85,7 +86,7 @@ export const parseScheduleHTML = (html: string): ScheduleData | null => {
     }
 
     if (weeks.length === 0) {
-        throw new Error('error.parseNoWeeks');
+        throw new Error('upload.errors.noData');
     }
 
     return {
@@ -137,7 +138,7 @@ const processSlotRow = (
 
             // SMART DEFAULTS: Auto-detect TH based on groupCode containing '-TH.'
             // If it contains '-TH.', it's Practical (TH), otherwise Theory (LT).
-            const isPractice = /-TH\./i.test(groupCode);
+            const isPractice = COURSE_TYPE_TH_REGEX.test(groupCode);
             const type = isPractice ? CourseType.TH : CourseType.LT;
 
             const timeSlot = `${periodStart}-${periodEnd}`;
@@ -217,7 +218,7 @@ export const sanitizeScheduleData = (data: ScheduleData): ScheduleData => {
             const sessions = [...dayParts.morning, ...dayParts.afternoon, ...dayParts.evening];
             sessions.forEach(session => {
                 // Re-apply the deterministic rule
-                const isPractice = /-TH\./i.test(session.courseCode);
+                const isPractice = COURSE_TYPE_TH_REGEX.test(session.courseCode);
                 session.type = isPractice ? CourseType.TH : CourseType.LT;
             });
         });

@@ -57,7 +57,7 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
                         {weekLabel}
                     </h3>
                     {isCurrent && (
-                        <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
+                        <span className="px-2 py-0.5 rounded-full bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 text-[8px] font-black uppercase tracking-widest animate-pulse">
                             {t('weekly.currentWeek')}
                         </span>
                     )}
@@ -70,7 +70,7 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
                     onClick={() => data && jumpToCurrentWeek(data)}
                     className={`flex items-center gap-2 h-11 px-4 rounded-xl text-xs font-bold transition-all shadow-sm ${isCurrent
                         ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-default'
-                        : 'bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 active:scale-95 shadow-blue-500/20'
+                        : 'bg-accent-600 dark:bg-accent-500 text-white hover:bg-accent-700 active:scale-95 shadow-accent-500/20'
                         }`}
                 >
                     <Zap size={16} className="fill-current" />
@@ -81,8 +81,8 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
                     onClick={onToggleViewMode}
                     className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 active:scale-95 transition-all shadow-sm"
                 >
-                    {viewMode === 'vertical' ? <LayoutTemplate size={16} className="text-blue-500" /> : <Columns size={16} className="text-blue-500" />}
-                    <span className="hidden sm:inline">{viewMode === 'vertical' ? t('common.horizontalList') : t('common.verticalList')}</span>
+                    {viewMode === 'vertical' ? <Columns size={16} className="text-accent-500" /> : <LayoutTemplate size={16} className="text-accent-500" />}
+                    <span className="hidden sm:inline">{viewMode === 'vertical' ? t('common.verticalList') : t('common.horizontalList')}</span>
                 </button>
 
                 <button
@@ -92,7 +92,7 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
                     <Search size={16} className={isFilterOpen ? 'text-white' : 'text-indigo-500'} />
                     <span className="hidden sm:inline">{t('common.filter')}</span>
                     {hasActiveFilters && !isFilterOpen && (
-                        <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-blue-500 border-2 border-white dark:border-slate-900 rounded-full" />
+                        <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent-500 border-2 border-white dark:border-slate-900 rounded-full" />
                     )}
                 </button>
 

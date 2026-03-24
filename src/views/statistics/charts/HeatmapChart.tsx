@@ -16,9 +16,9 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({ data }) => {
 
     const getColorClass = (count: number) => {
         if (count === 0) return 'bg-slate-100 dark:bg-slate-800/50';
-        if (count <= 3) return 'bg-blue-200 dark:bg-blue-900/60';
-        if (count <= 6) return 'bg-blue-400 dark:bg-blue-700';
-        if (count <= 9) return 'bg-blue-600 dark:bg-blue-500';
+        if (count <= 3) return 'bg-accent-200 dark:bg-accent-900/60';
+        if (count <= 6) return 'bg-accent-400 dark:bg-accent-700';
+        if (count <= 9) return 'bg-accent-600 dark:bg-accent-500';
         return 'bg-indigo-800 dark:bg-indigo-400';
     };
 
@@ -55,7 +55,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({ data }) => {
                 <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-600 dark:text-slate-400 justify-center">
                     <span>{t('stats.heatmap.less')}</span>
                     <div className="flex gap-1">
-                        {['bg-slate-100 dark:bg-slate-800/50', 'bg-blue-200 dark:bg-blue-900/60', 'bg-blue-400 dark:bg-blue-700', 'bg-blue-600 dark:bg-blue-500', 'bg-indigo-800 dark:bg-indigo-400'].map((c, i) => (
+                        {['bg-slate-100 dark:bg-slate-800/50', 'bg-accent-200 dark:bg-accent-900/60', 'bg-accent-400 dark:bg-accent-700', 'bg-accent-600 dark:bg-accent-500', 'bg-indigo-800 dark:bg-indigo-400'].map((c, i) => (
                             <div key={i} className={`w-3 h-3 ${c} rounded-sm`} />
                         ))}
                     </div>

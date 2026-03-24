@@ -63,7 +63,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
 
     const SortIcon = ({ field }: { field: SortField }) => {
         if (sortField !== field) return <ChevronUp size={12} className="opacity-20" />;
-        return sortOrder === 'asc' ? <ChevronUp size={12} className="text-blue-500" /> : <ChevronDown size={12} className="text-blue-500" />;
+        return sortOrder === 'asc' ? <ChevronUp size={12} className="text-accent-500" /> : <ChevronDown size={12} className="text-accent-500" />;
     };
 
     if (allCourses.length === 0) return null;
@@ -73,18 +73,18 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
             <div className="p-4 md:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h3 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                        <ListChecks size={20} className="text-blue-600" /> {t('settings.courseType.title')}
+                        <ListChecks size={20} className="text-accent-600" /> {t('settings.courseType.title')}
                     </h3>
                     <p className="text-xs text-slate-500 mt-1">{t('settings.courseType.description')}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button onClick={() => { setTempOverrides({}); onSuccess(t('settings.toast.thresholdsReset')); }} className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer flex items-center gap-2">
+                    <button onClick={() => { setTempOverrides({}); onSuccess(t('settings.toast.thresholdsReset')); }} className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer flex items-center gap-2">
                         <RotateCcw size={14} /> {t('settings.courseType.reset')}
                     </button>
-                    <button onClick={() => handleSetAll(CourseType.LT)} className="px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 text-[10px] font-bold rounded-lg border border-blue-200 dark:border-blue-800 hover:bg-blue-100 transition-colors cursor-pointer flex items-center gap-2">
+                    <button onClick={() => handleSetAll(CourseType.LT)} className="px-3 py-1.5 bg-accent-50 dark:bg-accent-900/20 text-accent-700 dark:text-accent-400 text-[10px] font-bold rounded-xl border border-accent-200 dark:border-accent-800 hover:bg-accent-100 transition-colors cursor-pointer flex items-center gap-2">
                         <ListChecks size={14} /> {t('settings.courseType.setAllLT')}
                     </button>
-                    <button onClick={() => handleSetAll(CourseType.TH)} className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold rounded-lg border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors cursor-pointer flex items-center gap-2">
+                    <button onClick={() => handleSetAll(CourseType.TH)} className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold rounded-xl border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors cursor-pointer flex items-center gap-2">
                         <ListChecks size={14} /> {t('settings.courseType.setAllTH')}
                     </button>
                 </div>
@@ -118,14 +118,14 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
                             const currentType = tempOverrides[c.code] || (c.types[0] || CourseType.LT);
                             const isLT = currentType === CourseType.LT;
                             return (
-                                <tr key={c.code} className={`transition-colors duration-150 ${isLT ? 'bg-blue-50/40 dark:bg-blue-900/10' : 'bg-indigo-50/40 dark:bg-indigo-900/10'}`}>
+                                <tr key={c.code} className={`transition-colors duration-150 ${isLT ? 'bg-accent-50/40 dark:bg-accent-900/10' : 'bg-indigo-50/40 dark:bg-indigo-900/10'}`}>
                                     <td className="px-4 py-3 text-center text-slate-400 font-medium">{idx + 1}</td>
-                                    <td className="px-2 py-3 font-num font-bold text-blue-600 dark:text-blue-400 text-[10px]">{c.code}</td>
+                                    <td className="px-2 py-3 font-num font-bold text-accent-600 dark:text-accent-400 text-[10px]">{c.code}</td>
                                     <td className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200">{c.name}</td>
                                     <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{c.classes.join(', ')}</td>
                                     <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{c.groups.join(', ')}</td>
                                     <td className="px-4 py-3 text-center">
-                                        <button onClick={() => setTempOverrides({ ...tempOverrides, [c.code]: CourseType.LT })} className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mx-auto ${isLT ? 'bg-blue-600 border-blue-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
+                                        <button onClick={() => setTempOverrides({ ...tempOverrides, [c.code]: CourseType.LT })} className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mx-auto ${isLT ? 'bg-accent-600 border-accent-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
                                             {isLT && <Check size={16} />}
                                         </button>
                                     </td>
@@ -142,7 +142,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
             </div>
 
             <div className="p-4 bg-slate-50 dark:bg-slate-800/50 flex justify-end border-t border-slate-100 dark:border-slate-800">
-                <button onClick={handleSave} className="px-6 h-11 bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all flex items-center gap-2">
+                <button onClick={handleSave} className="px-6 h-11 bg-accent-600 text-white text-sm font-bold rounded-xl shadow-lg hover:bg-accent-700 active:scale-95 transition-all flex items-center gap-2">
                     <Save size={18} /> {t('common.save')}
                 </button>
             </div>

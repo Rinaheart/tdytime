@@ -35,7 +35,7 @@ const TeachingStructureCard: React.FC = () => {
                     <span>{ltPercent}% / {thPercent}%</span>
                 </div>
                 <div className="h-2 w-full flex rounded-full overflow-hidden">
-                    <div className="bg-blue-600" style={{ width: `${ltPercent}%` }} />
+                    <div className="bg-accent-600" style={{ width: `${ltPercent}%` }} />
                     <div className="bg-sky-400" style={{ width: `${thPercent}%` }} />
                 </div>
             </div>
@@ -52,7 +52,7 @@ const TeachingStructureCard: React.FC = () => {
                     </ResponsiveContainer>
                 </div>
                 <div className="flex justify-center gap-3 text-[10px] font-medium text-slate-500">
-                    <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-600" /> {t('common.morning')}</div>
+                    <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-accent-600" /> {t('common.morning')}</div>
                     <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-sky-500" /> {t('common.afternoon')}</div>
                     <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-indigo-500" /> {t('common.evening')}</div>
                 </div>

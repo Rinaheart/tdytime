@@ -34,7 +34,7 @@ const TodayHeader: React.FC<TodayHeaderProps> = ({ dayOfWeekIdx, dateInfo, greet
                 </div>
             </div>
             <p className="mt-6 text-xl font-bold text-slate-800 dark:text-slate-200 tracking-tight text-balance">
-                {greeting}
+                <span>{greeting}</span>
             </p>
         </header>
     );

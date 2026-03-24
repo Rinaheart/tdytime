@@ -20,16 +20,16 @@ interface ProgressCardProps {
 const ProgressCard: React.FC<ProgressCardProps> = ({ progress, currentDate }) => {
     const { t } = useTranslation();
     const stats = [
-        { label: t('stats.today.progressDay'), val: progress.today, color: 'bg-blue-400' },
+        { label: t('stats.today.progressDay'), val: progress.today, color: 'bg-accent-400' },
         { label: t('stats.today.progressWeek'), val: progress.week, color: 'bg-indigo-400' },
         { label: t('stats.today.progressMonth'), val: progress.month, color: 'bg-violet-400' },
         { label: t('stats.today.progressSemester'), val: progress.semester, color: 'bg-fuchsia-400' },
     ];
 
     return (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-blue-600 dark:border-blue-500 ring-1 ring-blue-500/10 shadow-lg shadow-blue-500/10 transition-all duration-200 space-y-5 flex flex-col justify-between h-full relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-accent-600 dark:border-accent-500 ring-1 ring-accent-500/10 shadow-lg shadow-accent-500/10 transition-all duration-200 space-y-5 flex flex-col justify-between h-full relative overflow-hidden">
             <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                <div className="flex items-center gap-2 text-accent-600 dark:text-accent-400">
                     <TrendingUp size={14} className="shrink-0" />
                     <h3 className="text-[10px] font-black uppercase tracking-widest">{t('stats.today.progress')}</h3>
                 </div>

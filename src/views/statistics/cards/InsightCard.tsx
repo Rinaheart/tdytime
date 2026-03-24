@@ -22,14 +22,14 @@ const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, sta
                 ? statusColor
                 : isWarning
                     ? 'border-amber-300 dark:border-amber-800/60'
-                    : 'border-blue-400 dark:border-blue-800/60'
+                    : 'border-accent-400 dark:border-accent-800/60'
             } shadow-sm relative overflow-hidden group hover:shadow-md flex flex-col items-center justify-center text-center h-full min-w-[75px] md:min-w-[95px] space-y-1.5`}
         >
             {/* Row 1: Icon */}
-            <div className={`w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center shrink-0
+            <div className={`w-6 h-6 md:w-8 md:h-8 rounded-xl flex items-center justify-center shrink-0
                 ${isWarning
                     ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
-                    : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                    : 'bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400'
                 }`}
             >
                 <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" strokeWidth={2.5} />

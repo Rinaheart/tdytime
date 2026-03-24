@@ -38,7 +38,7 @@ const StatsHeader: React.FC = () => {
 
                 {/* Teacher info — left side (Occupies 2/3 and aligns with ProgressCard) */}
                 <div className="lg:col-span-2 flex items-center gap-3 p-4 md:p-5 min-w-0 pr-12 lg:pr-5 relative">
-                    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shrink-0 text-white text-sm font-black shadow-sm shadow-blue-600/20 uppercase">
+                    <div className="w-10 h-10 rounded-full bg-accent-600 flex items-center justify-center shrink-0 text-white text-sm font-black font-sans shadow-sm shadow-accent-600/20 uppercase">
                         {metadata.teacher.trim().split(' ').pop()?.charAt(0) || '?'}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -54,7 +54,7 @@ const StatsHeader: React.FC = () => {
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
                         className={`absolute top-4 right-4 p-1.5 rounded-full transition-all duration-300 flex items-center justify-center lg:hidden
-                            ${isExpanded ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 rotate-180' : 'bg-blue-50 dark:bg-blue-900/40 text-blue-600'}`}
+                            ${isExpanded ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 rotate-180' : 'bg-accent-50 dark:bg-accent-900/40 text-accent-600'}`}
                     >
                         <ChevronDown size={18} />
                     </button>

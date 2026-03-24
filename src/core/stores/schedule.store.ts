@@ -31,8 +31,12 @@ interface ScheduleState {
     // UI state
     error: string | null;
     isProcessing: boolean;
+    isInitialized: boolean;
     toastMessage: { text: string; id: number } | null;
     historyList: HistoryItem[];
+
+    // Mock/Demo testing state
+    mockState: { startTimeLocal: number; startTimeMock: number; multiplier: number } | null;
 
     // Actions
     processLoadedData: (data: ScheduleData, t: (key: string, opts?: Record<string, unknown>) => string, lang: string) => void;
@@ -43,6 +47,7 @@ interface ScheduleState {
     setOverrides: (overrides: Record<string, CourseType>) => void;
     setAbbreviations: (abbreviations: Record<string, string>) => void;
     setError: (error: string | null) => void;
+    setMockState: (state: { startTimeLocal: number; startTimeMock: number; multiplier: number } | null) => void;
     loadHistoryItem: (item: HistoryItem, t: (key: string, opts?: Record<string, unknown>) => string) => void;
     deleteHistoryItem: (id: string) => void;
     goToUpload: () => void;
@@ -59,8 +64,10 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
     abbreviations: {},
     error: null,
     isProcessing: false,
+    isInitialized: false,
     toastMessage: null,
     historyList: [],
+    mockState: null,
 
     initFromStorage: () => {
         const historyList = historyService.getAll();
@@ -77,10 +84,14 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
                     currentWeekIndex: findCurrentWeekIndex(sanitized),
                     overrides: sanitized.overrides || {},
                     abbreviations: sanitized.abbreviations || {},
+                    isInitialized: true,
                 });
             } catch (e) {
                 console.error('Failed to load saved data:', e);
+                set({ isInitialized: true });
             }
+        } else {
+            set({ isInitialized: true });
         }
     },
 
@@ -128,6 +139,7 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
             currentWeekIndex: targetWeekIdx,
             toastMessage: { text: message, id: Date.now() },
             isProcessing: false,
+            isInitialized: true,
             historyList: historyService.getAll(),
         });
     },
@@ -171,13 +183,17 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
 
     setThresholds: (thresholds) => set({ thresholds }),
 
+    setMockState: (state) => {
+        set({ mockState: state });
+    },
+
     setOverrides: (overrides) => {
         const { data, abbreviations } = get();
         set({ overrides });
         if (data) {
             const updatedData = { ...data, overrides, abbreviations };
             localStorage.setItem('last_schedule_data', JSON.stringify(updatedData));
-            setTimeout(() => set({ metrics: calculateMetrics(updatedData) }), 50);
+            set({ data: updatedData, metrics: calculateMetrics(updatedData) });
         }
     },
 
@@ -187,7 +203,7 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
         if (data) {
             const updatedData = { ...data, overrides, abbreviations };
             localStorage.setItem('last_schedule_data', JSON.stringify(updatedData));
-            setTimeout(() => set({ metrics: calculateMetrics(updatedData) }), 50);
+            set({ data: updatedData, metrics: calculateMetrics(updatedData) });
         }
     },
 
@@ -228,6 +244,7 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
             error: null,
             isProcessing: false,
             toastMessage: null,
+            mockState: null,
         });
     },
 
@@ -248,6 +265,7 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
             isProcessing: false,
             toastMessage: null,
             historyList: [],
+            mockState: null,
         });
     },
 }));

@@ -9,7 +9,21 @@
   --font-body: 'Be Vietnam Pro', sans-serif;
   --font-num: 'Montserrat', sans-serif;
 
-  /* Brand Colors */
+  /* ── Accent Theme System (RGB channels for Tailwind opacity) ── */
+  /* Default: Modern Blue */
+  --accent-50: 239 246 255;   /* blue-50 */
+  --accent-100: 219 234 254;  /* blue-100 */
+  --accent-200: 191 219 254;  /* blue-200 */
+  --accent-300: 147 197 253;  /* blue-300 */
+  --accent-400: 96 165 250;   /* blue-400 */
+  --accent-500: 59 130 246;   /* blue-500 */
+  --accent-600: 37 99 235;    /* blue-600 */
+  --accent-700: 29 78 216;    /* blue-700 */
+  --accent-800: 30 64 175;    /* blue-800 */
+  --accent-900: 30 58 138;    /* blue-900 */
+  --accent-950: 23 37 84;     /* blue-950 */
+
+  /* Brand Colors (legacy compat) */
   --color-primary: #2563eb;
   --color-primary-light: #3b82f6;
   --color-primary-dark: #1d4ed8;
@@ -35,3 +49,50 @@
   --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
   --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
+
+/* ── Specific Theme Overrides ── */
+
+/* Modern Blue (Default) */
+[data-accent="blueTheme"] {
+  --accent-50: 239 246 255;
+  --accent-100: 219 234 254;
+  --accent-200: 191 219 254;
+  --accent-300: 147 197 253;
+  --accent-400: 96 165 250;
+  --accent-500: 59 130 246;
+  --accent-600: 37 99 235;
+  --accent-700: 29 78 216;
+  --accent-800: 30 64 175;
+  --accent-900: 30 58 138;
+  --accent-950: 23 37 84;
+}
+
+/* Playful Pink */
+[data-accent="pinkTheme"] {
+  --accent-50: 253 242 248;   /* pink-50 */
+  --accent-100: 252 231 243;  /* pink-100 */
+  --accent-200: 251 207 232;  /* pink-200 */
+  --accent-300: 249 168 212;  /* pink-300 */
+  --accent-400: 244 114 182;  /* pink-400 */
+  --accent-500: 236 72 153;   /* pink-500 */
+  --accent-600: 219 39 119;   /* pink-600 */
+  --accent-700: 190 24 93;    /* pink-700 */
+  --accent-800: 157 23 77;    /* pink-800 */
+  --accent-900: 131 24 67;    /* pink-900 */
+  --accent-950: 80 7 36;      /* pink-950 */
+}
+
+/* Emerald Green */
+[data-accent="greenTheme"] {
+  --accent-50: 236 253 245;   /* emerald-50 */
+  --accent-100: 209 250 229;  /* emerald-100 */
+  --accent-200: 167 243 208;  /* emerald-200 */
+  --accent-300: 110 231 183;  /* emerald-300 */
+  --accent-400: 52 211 153;   /* emerald-400 */
+  --accent-500: 16 185 129;   /* emerald-500 */
+  --accent-600: 5 150 105;    /* emerald-600 */
+  --accent-700: 4 120 87;     /* emerald-700 */
+  --accent-800: 6 95 70;      /* emerald-800 */
+  --accent-900: 6 78 59;      /* emerald-900 */
+  --accent-950: 2 44 34;      /* emerald-950 */
+}

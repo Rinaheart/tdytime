@@ -17,7 +17,7 @@ const WeeklyTrendChart: React.FC<WeeklyTrendChartProps> = ({ data, color }) => {
     return (
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
             <h4 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                <TrendingUp size={16} className="text-blue-600" /> {t('stats.trend.weekly')}
+                <TrendingUp size={16} className="text-accent-600" /> {t('stats.trend.weekly')}
             </h4>
             <div className="h-40">
                 <ResponsiveContainer width="100%" height="100%">

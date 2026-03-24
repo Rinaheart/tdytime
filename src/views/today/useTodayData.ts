@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useScheduleStore } from '@/core/stores';
 import type { CourseSession } from '@/core/schedule/schedule.types';
 import { DAYS_OF_WEEK, getPeriodTimes } from '@/core/constants';
-import { parseDateFromRange, isCurrentWeek, getCurrentWeekRange } from '@/core/schedule/schedule.utils';
+import { parseDateFromRange, isCurrentWeek, getCurrentWeekRange, isMainTeacher } from '@/core/schedule/schedule.utils';
 
 export type DisplayState = 'NO_DATA' | 'BEFORE_SEMESTER' | 'AFTER_SEMESTER' | 'NO_SESSIONS' | 'HAS_SESSIONS';
 type SessionStatus = 'PENDING' | 'LIVE' | 'COMPLETED';
@@ -38,7 +38,7 @@ const getSessionStatus = (session: CourseSession, now: Date): SessionStatus => {
     const startMin = startPeriod.start[0] * 60 + startPeriod.start[1];
     const endMin = endPeriod.end[0] * 60 + endPeriod.end[1];
     if (currentMin < startMin) return 'PENDING';
-    if (currentMin <= endMin) return 'LIVE';
+    if (currentMin < endMin) return 'LIVE';
     return 'COMPLETED';
 };
 
@@ -65,12 +65,40 @@ const formatDateVN = (date: Date) => {
 export const useTodayData = () => {
     const { t } = useTranslation();
     const data = useScheduleStore((s) => s.data);
+    const mockState = useScheduleStore((s) => s.mockState);
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 60000);
-        return () => clearInterval(timer);
-    }, []);
+        const updateTime = () => {
+            if (mockState) {
+                const elapsedReal = Date.now() - mockState.startTimeLocal;
+                setCurrentTime(new Date(mockState.startTimeMock + elapsedReal * mockState.multiplier));
+            } else {
+                setCurrentTime(new Date());
+            }
+        };
+
+        updateTime();
+
+        const delay = (mockState && mockState.multiplier > 1) ? 1000 : 60000;
+        const timer = setInterval(updateTime, delay);
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                updateTime();
+            }
+        };
+        const handleFocus = () => updateTime();
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('focus', handleFocus);
+
+        return () => {
+            clearInterval(timer);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, [mockState]);
 
     const now = currentTime;
     const currentJsDay = now.getDay();
@@ -81,13 +109,7 @@ export const useTodayData = () => {
     const weeks = data?.weeks || [];
     const teacherName = data?.metadata?.teacher || '';
 
-    const isMainTeacher = (tName: string) => {
-        if (!tName || tName === 'Chưa rõ' || tName === 'Unknown') return true;
-        const normalize = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '').trim();
-        const main = normalize(teacherName);
-        const target = normalize(tName);
-        return target.includes(main) || main.includes(target);
-    };
+    const checkIsMain = (tName: string) => isMainTeacher(tName, teacherName);
 
     const semesterBounds = useMemo(() => {
         if (weeks.length === 0) return null;
@@ -139,7 +161,7 @@ export const useTodayData = () => {
                 const dayData = week.days[dName];
                 if (dayData) {
                     const sessions = [...dayData.morning, ...dayData.afternoon, ...dayData.evening]
-                        .filter((s) => isMainTeacher(s.teacher))
+                        .filter((s) => checkIsMain(s.teacher))
                         .sort((a, b) => parseInt(a.timeSlot.split('-')[0]) - parseInt(b.timeSlot.split('-')[0]));
                     if (sessions.length > 0) return { date: new Date(searchDate), sessions, weekIdx: wIdx, dayIdx: dIdx };
                 }

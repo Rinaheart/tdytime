@@ -16,7 +16,7 @@ interface FilterBarProps {
     uniqueClasses: string[];
 }
 
-const selectClass = 'h-10 px-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-[11px] font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none cursor-pointer flex-1';
+const selectClass = 'h-10 px-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-[11px] font-bold outline-none focus:ring-2 focus:ring-accent-500 transition-all appearance-none cursor-pointer flex-1';
 
 const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange, uniqueRooms, uniqueTeachers, uniqueClasses }) => {
     const { t } = useTranslation();
@@ -33,7 +33,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange, uniqueRooms, u
                     placeholder={t('filter.searchPlaceholder')}
                     value={filters.search}
                     onChange={(e) => onChange({ ...filters, search: e.target.value })}
-                    className="w-full pl-9 pr-4 h-10 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-xs focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    className="w-full pl-9 pr-4 h-10 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-xs focus:ring-2 focus:ring-accent-500 outline-none transition-all"
                 />
             </div>
 

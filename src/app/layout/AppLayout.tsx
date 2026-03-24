@@ -13,6 +13,7 @@ import {
 import { useUIStore, useScheduleStore } from '@/core/stores';
 import { Toast } from '@/ui/primitives';
 import { APP_VERSION } from '@/core/constants';
+import ThemePicker from '@/ui/composites/ThemePicker';
 
 
 // Navigation items
@@ -43,7 +44,7 @@ const AppLayout: React.FC = () => {
     }, [i18n]);
 
     return (
-        <div className="min-h-dvh transition-colors duration-200 bg-white dark:bg-slate-950 selection:bg-blue-100 dark:selection:bg-blue-900/30">
+        <div className="min-h-dvh transition-colors duration-200 bg-white dark:bg-slate-950 selection:bg-accent-100 dark:selection:bg-accent-900/30">
             {/* Header */}
             <header className="fixed top-0 left-0 right-0 z-40 h-12 md:h-14 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
                 <div className="flex items-center justify-between h-full px-3 md:px-6">
@@ -51,7 +52,7 @@ const AppLayout: React.FC = () => {
                     <div className="flex items-center gap-2">
                         <button
                             onClick={toggleSidebar}
-                            className="hidden lg:flex p-1.5 rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
+                            className="hidden lg:flex p-1.5 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
                             aria-label="Toggle sidebar"
                         >
                             {sidebarCollapsed ? <Menu size={18} /> : <X size={18} />}
@@ -70,21 +71,24 @@ const AppLayout: React.FC = () => {
                     <div className="flex items-center gap-1">
                         <button
                             onClick={toggleLanguage}
-                            className="w-10 h-8 flex items-center justify-center rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                            className="w-10 h-8 flex items-center justify-center rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
                             aria-label={t('common.switchLanguage')}
                         >
-                            <span className="text-[11px] font-black uppercase tracking-tight">{i18n.language}</span>
+                            <span className="text-[11px] font-black uppercase tracking-tight">
+                                {i18n.language === 'vi' ? 'EN' : 'VI'}
+                            </span>
                         </button>
                         <button
                             onClick={toggleDarkMode}
-                            className="p-2 rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
+                            className="p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
                             aria-label={t('nav.appearance')}
                         >
-                            {darkMode ? <Moon size={16} /> : <Sun size={16} />}
+                            {darkMode ? <Sun size={16} /> : <Moon size={16} />}
                         </button>
+                        <ThemePicker />
                         <button
                             onClick={handleReset}
-                            className="p-2 rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
+                            className="p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
                             aria-label={t('nav.loadData')}
                         >
                             <Upload size={16} />
@@ -108,7 +112,7 @@ const AppLayout: React.FC = () => {
                                     key={path}
                                     onClick={() => navigate(path)}
                                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${isActive
-                                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                                        ? 'bg-accent-50 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'
                                         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                                         }`}
                                 >
@@ -148,7 +152,7 @@ const AppLayout: React.FC = () => {
                                 key={path}
                                 onClick={() => navigate(path)}
                                 className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl cursor-pointer transition-all duration-150 active:scale-95 ${isActive
-                                    ? 'text-blue-600 dark:text-blue-400'
+                                    ? 'text-accent-600 dark:text-accent-400'
                                     : 'text-slate-400 dark:text-slate-500'
                                     }`}
                             >

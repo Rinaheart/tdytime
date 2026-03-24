@@ -98,7 +98,9 @@
         "errors": {
             "noData": "⚠️ File không có dữ liệu hợp lệ.",
             "invalidStructure": "⚠️ Cấu trúc file không đúng định dạng UMS.",
-            "invalidFormat": "⚠️ Định dạng không hỗ trợ. Chỉ nhận file .HTML hoặc .JSON."
+            "invalidFormat": "⚠️ Định dạng không hỗ trợ. Chỉ nhận file .HTML hoặc .JSON.",
+            "parseWeekNotFound": "⚠️ Không tìm thấy thông tin tuần trong file HTML.",
+            "parseTableNotFound": "⚠️ Không tìm thấy bảng lịch học trong file HTML."
         }
     },
     "filter": {
@@ -331,6 +333,12 @@
             "thresholdsReset": "Đã khôi phục mặc định (Hãy bấm Lưu để áp dụng)",
             "csvExported": "Xuất file CSV thành công.",
             "jsonExported": "Sao lưu file JSON thành công."
+        },
+        "themes": {
+            "title": "Bảng màu",
+            "blueTheme": "Hiện đại (Blue)",
+            "pinkTheme": "Rực rỡ (Pink)",
+            "greenTheme": "Thanh khiết (Emerald)"
         }
     },
     "about": {
@@ -344,9 +352,20 @@
         "note": "* Lưu ý: Thời gian tiết thực hành (TH) là 60 phút/tiết, lý thuyết (LT) là 45 phút/tiết. Bảng trên là thời gian chuẩn cho LT.",
         "checking": "Đang kiểm tra...",
         "upToDate": "Phiên bản mới nhất",
-        "updateAvailable": "Cập nhật ngay v0.9.1",
+        "updateAvailable": "Cập nhật ngay v1.0.1",
         "changelog": "Changelog",
         "history": [
+            {
+                "version": "v1.1.0",
+                "date": "23/03/2026",
+                "changes": [
+                    "Accent Themes: Hệ thống bảng màu phong phú (Xanh/Hồng/Lục Bảo) giúp cá nhân hóa không gian làm việc. Thay đổi ngay tại icon Palette ở Header.",
+                    "Time Bending Engine: Tích hợp bộ máy mô phỏng thời gian giúp tua nhanh hoặc giả lập thời điểm giảng dạy bất kỳ.",
+                    "Unified Empty State: Giao diện 'Nghỉ ngơi' hợp nhất cho các tuần trống lịch, tự động gợi ý ngày dạy tiếp theo.",
+                    "Lifecycle Reliability: Tối ưu cơ chế tự động đồng bộ thời gian ngay khi mở lại ứng dụng từ trạng thái ngủ (Sleep/Resume).",
+                    "UI Typography: Đồng bộ hóa phông chữ nét mảnh trên toàn bộ hệ thống thẻ thống kê và thẻ bài giảng."
+                ]
+            },
             {
                 "version": "v1.0.0",
                 "date": "26/02/2026",
@@ -522,7 +541,7 @@
         "offlineReadyDesc": "Ứng dụng đã được lưu cache để dùng khi không có mạng.",
         "updateReady": "Đã có phiên bản mới",
         "updateReadyDesc": "Vui lòng tải lại trang để cập nhật ngay.",
-        "reloadButton": "Cập nhật ngay v1.0.0",
+        "reloadButton": "Cập nhật ngay v1.1.0",
         "update_check": "Kiểm tra cập nhật",
         "checking": "Đang kiểm tra...",
         "up_to_date": "Đã là bản mới nhất",

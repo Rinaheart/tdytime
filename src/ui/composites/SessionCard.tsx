@@ -61,21 +61,21 @@ const WeeklyCard: React.FC<{ session: CourseSession; displayName: string; curren
             </h3>
 
             {/* Row 3: Class (Group) [Type] */}
-            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium flex items-center justify-between gap-2">
-                <div className="truncate flex items-center gap-1">
+            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium flex items-center justify-between gap-1">
+                <div className="min-w-0 flex items-center gap-1">
                     <span className="truncate">{session.className}</span>
                     <span className="shrink-0 opacity-70">({session.group})</span>
                 </div>
-                <Badge variant={currentType === CourseType.LT ? 'theory' : 'practice'}>
-                    {currentType === CourseType.LT ? <FileText size={10} className="mr-0.5" /> : <FlaskConical size={10} />}
+                <Badge variant={currentType === CourseType.LT ? 'theory' : 'practice'} className="shrink-0 px-1.5 py-0.5 text-[9px] shadow-sm">
+                    {currentType === CourseType.LT ? <FileText size={9} className="mr-0.5" /> : <FlaskConical size={9} className="mr-0.5" />}
                     {currentType}
                 </Badge>
             </div>
 
             {/* Optional Teacher Footer Strip */}
             {showTeacher && (
-                <div className="mt-2.5 -mx-2.5 -mb-2.5 px-2.5 py-1.5 bg-blue-50 dark:bg-blue-900/40 rounded-b-lg text-[10px] font-bold border-t border-blue-100/50 dark:border-blue-800/30">
-                    <span className="text-slate-900 dark:text-blue-100">{session.teacher}</span>
+                <div className="mt-2.5 -mx-2.5 -mb-2.5 px-2.5 py-1.5 bg-accent-50 dark:bg-accent-900/40 rounded-b-lg text-[10px] font-bold border-t border-accent-100/50 dark:border-accent-800/30">
+                    <span className="text-slate-900 dark:text-accent-100">{session.teacher}</span>
                 </div>
             )}
         </div>
@@ -108,8 +108,8 @@ const TodayCard: React.FC<{ session: CourseSession; displayName: string; current
 }) => {
     const { startTime, endTime } = getTimeStrings(session);
     return (
-        <div className={`relative rounded-xl p-5 transition-all duration-200 ${isLive
-            ? 'bg-white dark:bg-slate-900 border border-blue-500 dark:border-blue-500 ring-2 ring-blue-500/20 shadow-sm hover:shadow-lg'
+        <div className={`relative rounded-2xl p-5 transition-all duration-200 ${isLive
+            ? 'bg-white dark:bg-slate-900 border border-accent-500 dark:border-accent-500 ring-2 ring-accent-500/20 shadow-sm hover:shadow-lg'
             : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600'
             }`}>
             {/* Live Indicator */}
@@ -141,7 +141,7 @@ const TodayCard: React.FC<{ session: CourseSession; displayName: string; current
                 <span className="text-slate-300 dark:text-slate-700">•</span>
                 <span>{session.className}</span>
                 <span className="text-slate-300 dark:text-slate-700">•</span>
-                <span className={`font-semibold flex items-center gap-1.5 ${currentType === CourseType.LT ? 'text-blue-500' : 'text-orange-500'}`}>
+                <span className={`font-semibold flex items-center gap-1.5 ${currentType === CourseType.LT ? 'text-accent-500' : 'text-orange-500'}`}>
                     {currentType === CourseType.LT ? <FileText size={14} /> : <Beaker size={14} />}
                     {currentType}
                 </span>
@@ -149,8 +149,8 @@ const TodayCard: React.FC<{ session: CourseSession; displayName: string; current
 
             {/* Optional Teacher Footer Strip */}
             {showTeacher && (
-                <div className="mt-5 -mx-5 -mb-5 px-5 py-3 bg-blue-50 dark:bg-blue-900/20 rounded-b-xl border-t border-blue-100 dark:border-blue-800/50 text-[13px] font-black">
-                    <span className="text-slate-900 dark:text-blue-50">{session.teacher}</span>
+                <div className="mt-5 -mx-5 -mb-5 px-5 py-3 bg-accent-50 dark:bg-accent-900/20 rounded-b-2xl border-t border-accent-100 dark:border-accent-800/50 text-[13px] font-black">
+                    <span className="text-slate-900 dark:text-accent-50">{session.teacher}</span>
                 </div>
             )}
         </div>

@@ -52,8 +52,8 @@ const NextTeachingSection: React.FC<NextTeachingSectionProps> = ({ nextTeaching,
     return (
         <div className="px-2 mt-8">
             <div className="flex items-center gap-2 mb-4">
-                <Play size={12} fill="currentColor" className={showHighlight ? 'text-blue-600 dark:text-blue-500' : 'text-slate-400'} />
-                <h2 className={`text-[12px] font-black uppercase tracking-wider ${showHighlight ? 'text-blue-600 dark:text-blue-500' : 'text-slate-700 dark:text-slate-300'}`}>
+                <Play size={12} fill="currentColor" className={showHighlight ? 'text-accent-600 dark:text-accent-500' : 'text-slate-400'} />
+                <h2 className={`text-[12px] font-black uppercase tracking-wider ${showHighlight ? 'text-accent-600 dark:text-accent-500' : 'text-slate-700 dark:text-slate-300'}`}>
                     {isBeforeSemester ? t('stats.today.firstOfSemester') : t('stats.today.next')}
                 </h2>
             </div>
@@ -61,16 +61,16 @@ const NextTeachingSection: React.FC<NextTeachingSectionProps> = ({ nextTeaching,
             <button
                 onClick={handleClick}
                 className={`w-full text-left rounded-2xl p-5 border-2 transition-all group ${showHighlight
-                    ? 'bg-white dark:bg-slate-900 border-blue-600 dark:border-blue-500 shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/10'
+                    ? 'bg-white dark:bg-slate-900 border-accent-600 dark:border-accent-500 shadow-lg shadow-accent-500/10 ring-1 ring-accent-500/10'
                     : 'bg-slate-50/50 dark:bg-slate-900/40 border-slate-400 dark:border-slate-500'
                     } hover:bg-slate-100 dark:hover:bg-slate-800/50`}
             >
                 <div className="flex items-start justify-between">
                     <div>
-                        <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-1">{dayName}, {dateStr}</p>
+                        <p className="text-sm font-semibold text-accent-600 dark:text-accent-400 mb-1">{dayName}, {dateStr}</p>
                         <p className="text-lg font-bold text-slate-800 dark:text-slate-200">{t('stats.today.sessionsCount', { count: nextTeaching.sessions.length })}</p>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center group-hover:bg-blue-500 group-hover:border-blue-500 group-hover:text-white transition-all text-slate-400 dark:text-slate-500">
+                    <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center group-hover:bg-accent-500 group-hover:border-accent-500 group-hover:text-white transition-all text-slate-400 dark:text-slate-500">
                         <ChevronRight size={18} />
                     </div>
                 </div>

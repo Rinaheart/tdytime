@@ -98,7 +98,9 @@
         "errors": {
             "noData": "⚠️ File contains no valid data.",
             "invalidStructure": "⚠️ Invalid file structure (UMS format required).",
-            "invalidFormat": "⚠️ Unsupported format. Only .HTML or .JSON files allowed."
+            "invalidFormat": "⚠️ Unsupported format. Only .HTML or .JSON files allowed.",
+            "parseWeekNotFound": "⚠️ Could not find week information in the HTML file.",
+            "parseTableNotFound": "⚠️ Could not find the schedule table in the HTML file."
         }
     },
     "filter": {
@@ -331,6 +333,12 @@
             "thresholdsReset": "Reset to defaults. (Click Save to apply)",
             "csvExported": "CSV exported successfully.",
             "jsonExported": "Backup JSON saved successfully."
+        },
+        "themes": {
+            "title": "Color Palette",
+            "blueTheme": "Modern (Blue)",
+            "pinkTheme": "Playful (Pink)",
+            "greenTheme": "Emerald (Green)"
         }
     },
     "about": {
@@ -344,9 +352,20 @@
         "note": "Note: Theory (LT) periods are 45 minutes each. Practice/Integrated (TH) periods are 60 minutes each.",
         "checking": "Checking...",
         "upToDate": "Up to date",
-        "updateAvailable": "Update to v0.9.1 Now",
+        "updateAvailable": "Update to v1.0.1 Now",
         "changelog": "Changelog",
         "history": [
+            {
+                "version": "v1.1.0",
+                "date": "2026-03-23",
+                "changes": [
+                    "Accent Themes: Personalized workspace with multiple color palettes (Blue/Pink/Emerald). Switch instantly via the Palette icon in the Header.",
+                    "Time Bending Engine: Integrated time simulation engine allowing fast-forward or simulating any teaching moment.",
+                    "Unified Empty State: A unified 'Coffee Break' interface for empty weeks, naturally suggesting the next teaching day.",
+                    "Lifecycle Reliability: Optimized auto-sync mechanism for immediate time recalibration when resuming from sleep mode.",
+                    "UI Typography: Synchronized weight and typography across all statistics cards and session cards."
+                ]
+            },
             {
                 "version": "v1.0.0",
                 "date": "2026-02-26",
@@ -525,7 +544,7 @@
         "offlineReadyDesc": "App cached for offline access.",
         "updateReady": "New Version Available",
         "updateReadyDesc": "Please reload to update immediately.",
-        "reloadButton": "Update Now (v1.0.0)",
+        "reloadButton": "Update Now (v1.1.0)",
         "update_check": "Check for Updates",
         "checking": "Checking...",
         "up_to_date": "App is up to date",

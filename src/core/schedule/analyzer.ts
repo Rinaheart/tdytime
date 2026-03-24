@@ -6,6 +6,7 @@
 
 import { ScheduleData, Metrics, CourseType, DaySchedule, CourseSession, TranslationItem } from './schedule.types';
 import { DAYS_OF_WEEK } from '../constants';
+import { normalizeTeacherName, isMainTeacher } from './schedule.utils';
 
 /**
  * Calculate all analytics metrics from a parsed schedule.
@@ -30,25 +31,12 @@ export const calculateMetrics = (data: ScheduleData): Metrics => {
 
     const warnings: string[] = [];
 
-    // Normalize: remove accents, lowercase, strip academic titles
-    const normalizeName = (name: string) =>
-        name
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '')
-            .trim();
-
-    const mainTeacherName = normalizeName(data.metadata.teacher);
+    const mainTeacherName = normalizeTeacherName(data.metadata.teacher);
 
     DAYS_OF_WEEK.forEach((d) => (hoursByDay[d] = 0));
 
-    // Check if a session belongs to the main teacher
-    const isMainTeacher = (t: string) => {
-        if (!t || t === 'Chưa rõ' || t === 'Unknown') return true;
-        const normT = normalizeName(t);
-        return normT.includes(mainTeacherName) || mainTeacherName.includes(normT);
-    };
+    // Internal helper for localized check if needed, or just use shared one
+    const checkIsMain = (t: string) => isMainTeacher(t, data.metadata.teacher);
 
     // Check if two time slots overlap
     const isTimeOverlap = (slot1: string, slot2: string) => {
@@ -128,7 +116,7 @@ export const calculateMetrics = (data: ScheduleData): Metrics => {
             const processPart = (part: CourseSession[], shift: 'morning' | 'afternoon' | 'evening') => {
                 part.forEach((s) => {
                     // Co-teacher → track separately, skip main stats
-                    if (!isMainTeacher(s.teacher)) {
+                    if (!checkIsMain(s.teacher)) {
                         if (!coTeacherMap.has(s.teacher)) {
                             coTeacherMap.set(s.teacher, { periods: 0, details: new Map() });
                         }

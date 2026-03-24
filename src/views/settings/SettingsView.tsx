@@ -48,20 +48,20 @@ const SettingsView: React.FC = () => {
                 <h1 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight flex items-baseline gap-1.5">
                     TdyTime <span className="text-slate-400 font-num text-[10px] font-medium">v{APP_VERSION}</span>
                 </h1>
-                <p className="text-xs text-blue-600 dark:text-blue-400 mt-0.5 font-medium tracking-wide">
+                <p className="text-xs text-accent-600 dark:text-accent-400 mt-0.5 font-medium tracking-wide">
                     {t('app.tagline')}
                 </p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-3 max-w-xs mx-auto leading-relaxed">
                     {t('about.description')}
                 </p>
                 <div className="flex justify-center gap-2 mt-3">
-                    <a href="mailto:tdyphan@gmail.com" aria-label="Email" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors text-slate-500 dark:text-slate-400 hover:text-blue-600">
+                    <a href="mailto:tdyphan@gmail.com" aria-label="Email" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-accent-100 dark:hover:bg-accent-900/20 transition-colors text-slate-500 dark:text-slate-400 hover:text-accent-600">
                         <Mail size={16} />
                     </a>
-                    <a href="https://github.com/tdyphan" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors text-slate-500 dark:text-slate-400 hover:text-blue-600">
+                    <a href="https://github.com/tdyphan" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-accent-100 dark:hover:bg-accent-900/20 transition-colors text-slate-500 dark:text-slate-400 hover:text-accent-600">
                         <Github size={16} />
                     </a>
-                    <a href="https://tdyphan.com" target="_blank" rel="noopener noreferrer" aria-label="Website" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors text-slate-500 dark:text-slate-400 hover:text-blue-600">
+                    <a href="https://tdyphan.com" target="_blank" rel="noopener noreferrer" aria-label="Website" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-accent-100 dark:hover:bg-accent-900/20 transition-colors text-slate-500 dark:text-slate-400 hover:text-accent-600">
                         <Globe size={16} />
                     </a>
                 </div>
@@ -71,7 +71,7 @@ const SettingsView: React.FC = () => {
             <div className="flex justify-center -mt-4">
                 <button
                     onClick={() => (window as any).checkPWAUpdate?.()}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/10 text-blue-600 dark:text-blue-400 rounded-lg text-[11px] font-bold hover:bg-blue-100 dark:hover:bg-blue-900/20 active:scale-95 transition-all border border-blue-100/50 dark:border-blue-900/20"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-50 dark:bg-accent-900/10 text-accent-600 dark:text-accent-400 rounded-xl text-[11px] font-bold hover:bg-accent-100 dark:hover:bg-accent-900/20 active:scale-95 transition-all border border-accent-100/50 dark:border-accent-900/20"
                 >
                     <RefreshCw size={12} strokeWidth={2.5} />
                     {t('pwa.update_check')}
@@ -88,7 +88,7 @@ const SettingsView: React.FC = () => {
                     className="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:shadow-md active:scale-[0.98] transition-all cursor-pointer group"
                 >
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-500 group-hover:text-blue-600 transition-colors">
+                        <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-xl text-slate-500 group-hover:text-accent-600 transition-colors">
                             <Settings2 size={20} />
                         </div>
                         <div className="text-left">

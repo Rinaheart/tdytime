@@ -43,7 +43,7 @@ const CoTeachersTable: React.FC = () => {
                     <div key={i} className="p-4 flex flex-col gap-2">
                         <div className="flex justify-between items-center">
                             <span className="text-sm font-bold text-slate-800 dark:text-slate-100">{ct.name}</span>
-                            <span className="text-sm font-black text-blue-600 dark:text-blue-400">
+                            <span className="text-sm font-black text-accent-600 dark:text-accent-400">
                                 {ct.periods}
                             </span>
                         </div>
@@ -115,7 +115,7 @@ const CoTeachersTable: React.FC = () => {
                                     </div>
                                 </td>
                                 <td className="pl-4 pr-6 py-4 text-right align-top">
-                                    <span className="font-black text-blue-600 dark:text-blue-400 text-sm tabular-nums">
+                                    <span className="font-black text-accent-600 dark:text-accent-400 text-sm tabular-nums">
                                         {ct.periods}
                                     </span>
                                 </td>

@@ -14,7 +14,7 @@ interface ThresholdsCardProps {
     onSuccess: (msg: string) => void;
 }
 
-const inputClass = 'w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none font-bold text-sm';
+const inputClass = 'w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none font-bold text-sm';
 
 const ThresholdsCard: React.FC<ThresholdsCardProps> = ({ onSuccess }) => {
     const { t } = useTranslation();
@@ -48,7 +48,7 @@ const ThresholdsCard: React.FC<ThresholdsCardProps> = ({ onSuccess }) => {
                 {/* Daily */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-300">
-                        <Shield size={16} className="text-blue-500" /> {t('settings.thresholds.daily')}
+                        <Shield size={16} className="text-accent-500" /> {t('settings.thresholds.daily')}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>

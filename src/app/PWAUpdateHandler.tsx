@@ -128,7 +128,7 @@ export const PWAUpdateHandler: React.FC = () => {
                             <X size={14} />
                         </button>
                         <div className="flex items-start gap-3 w-full pr-6 justify-center md:justify-start">
-                            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center text-blue-600 shrink-0 mt-0.5">
+                            <div className="w-10 h-10 bg-accent-50 dark:bg-accent-900/20 rounded-xl flex items-center justify-center text-accent-600 shrink-0 mt-0.5">
                                 <Download size={20} />
                             </div>
                             <div className="flex-1 min-w-0 text-left">
@@ -142,7 +142,7 @@ export const PWAUpdateHandler: React.FC = () => {
                         </div>
                         <button
                             onClick={handleInstall}
-                            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors shadow-sm shadow-blue-500/20 flex justify-center items-center gap-2"
+                            className="w-full py-2.5 bg-accent-600 hover:bg-accent-700 text-white text-xs font-bold rounded-xl transition-colors shadow-sm shadow-accent-500/20 flex justify-center items-center gap-2"
                         >
                             <Download size={15} strokeWidth={2.5} />
                             {t('pwa.install_button')}
@@ -154,12 +154,12 @@ export const PWAUpdateHandler: React.FC = () => {
             {/* Update / Offline Notification (Top Right) */}
             {(offlineReady || needUpdate) && (
                 <div className="fixed top-20 right-4 z-[110] animate-in slide-in-from-right-10 fade-in duration-300">
-                    <div className="bg-slate-800 dark:bg-white text-white dark:text-slate-900 p-4 rounded-xl shadow-2xl min-w-[280px]">
+                    <div className="bg-slate-800 dark:bg-white text-white dark:text-slate-900 p-4 rounded-2xl shadow-2xl min-w-[280px]">
                         <div className="flex justify-between items-start mb-2">
                             <h4 className="text-xs font-bold uppercase tracking-wider opacity-70">
                                 {needUpdate ? t('pwa.updateReady') : t('pwa.offlineReady')}
                             </h4>
-                            <button onClick={close} className="p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-lg">
+                            <button onClick={close} className="p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-xl">
                                 <X size={14} />
                             </button>
                         </div>
@@ -169,7 +169,7 @@ export const PWAUpdateHandler: React.FC = () => {
                         {needUpdate && (
                             <button
                                 onClick={handleUpdate}
-                                className="w-full flex items-center justify-center gap-2 py-2 bg-blue-500 text-white rounded-lg text-xs font-bold hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/20"
+                                className="w-full flex items-center justify-center gap-2 py-2 bg-accent-500 text-white rounded-xl text-xs font-bold hover:bg-accent-600 transition-colors shadow-lg shadow-accent-500/20"
                             >
                                 <RefreshCw size={14} />
                                 {t('pwa.reloadButton')}

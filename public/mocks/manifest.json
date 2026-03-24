@@ -1,0 +1,36 @@
+{
+  "scenarios": [
+    {
+      "id": "mock-realtime",
+      "title": "Bình thường (Realtime)",
+      "description": "Quay về thời gian thực của máy tính. Không giả lập.",
+      "file": null,
+      "mockTime": null,
+      "multiplier": 1
+    },
+    {
+      "id": "mock-fastforward-boundary",
+      "title": "Tua nhanh: Chuyển giao Tiết học",
+      "description": "Bắt đầu lúc 06:59 sáng T2 (có lớp 07:00). Tua nhanh 1 giây = 1 phút để test UI chuyển từ Sắp diễn ra ➝ Đang dạy.",
+      "file": "scenario-1-base.html",
+      "mockTime": "2026-03-23T06:59:00",
+      "multiplier": 60
+    },
+    {
+      "id": "mock-pwa-resume",
+      "title": "Thức dậy PWA (Tua thời gian)",
+      "description": "Bắt đầu lúc 08:00 (Đang dạy). Tua nhanh 1 giây = 5 phút để test progress bar cập nhật liên tục.",
+      "file": "scenario-1-base.html",
+      "mockTime": "2026-03-23T08:00:00",
+      "multiplier": 300
+    },
+    {
+      "id": "mock-empty-week",
+      "title": "Tuần giữa HK trống lịch",
+      "description": "Tuần từ 23/03 không có lịch, tuần 30/03 mới có lịch.",
+      "file": "scenario-2-empty.html",
+      "mockTime": "2026-03-23T08:00:00",
+      "multiplier": 1
+    }
+  ]
+}

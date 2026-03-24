@@ -13,7 +13,7 @@ import { StatsHeader, ProgressCard, InsightCard, TeachingStructureCard, TopSubje
 import { HeatmapChart, WeeklyTrendChart, DailyBarChart } from './charts';
 import { LayoutGrid } from 'lucide-react';
 
-const COLORS = { primary: '#2563eb', secondary: '#0ea5e9' };
+const COLORS = { primary: 'var(--color-accent-600)', secondary: 'var(--color-accent-400)' };
 
 const StatisticsView: React.FC = () => {
     const { t } = useTranslation();
@@ -21,10 +21,39 @@ const StatisticsView: React.FC = () => {
     const metrics = useScheduleStore((s) => s.metrics);
 
     const [currentTime, setCurrentTime] = useState(new Date());
+    const mockState = useScheduleStore((s) => s.mockState);
+
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 60000);
-        return () => clearInterval(timer);
-    }, []);
+        const updateTime = () => {
+            if (mockState) {
+                const elapsedReal = Date.now() - mockState.startTimeLocal;
+                setCurrentTime(new Date(mockState.startTimeMock + elapsedReal * mockState.multiplier));
+            } else {
+                setCurrentTime(new Date());
+            }
+        };
+
+        updateTime();
+
+        const delay = (mockState && mockState.multiplier > 1) ? 1000 : 60000;
+        const timer = setInterval(updateTime, delay);
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                updateTime();
+            }
+        };
+        const handleFocus = () => updateTime();
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('focus', handleFocus);
+
+        return () => {
+            clearInterval(timer);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, [mockState]);
     const now = currentTime;
 
     if (!data || !metrics) return null;
@@ -51,7 +80,7 @@ const StatisticsView: React.FC = () => {
             const endP = parseInt(s.timeSlot.split('-')[1] || s.timeSlot.split('-')[0]);
             const times = getPeriodTimes(s.type);
             const pData = times[endP];
-            return pData ? (pData.end[0] * 60 + pData.end[1]) < currentTotalMin : false;
+            return pData ? (pData.end[0] * 60 + pData.end[1]) <= currentTotalMin : false;
         };
 
         let todayT = 0, todayD = 0, weekT = 0, weekD = 0, monthT = 0, monthD = 0, semT = 0, semD = 0;
@@ -100,7 +129,7 @@ const StatisticsView: React.FC = () => {
 
     const getStatusBorder = (condition: boolean) => condition
         ? 'border-amber-300 dark:border-amber-800/60'
-        : 'border-blue-400 dark:border-blue-800/60';
+        : 'border-accent-400 dark:border-accent-800/60';
 
     return (
         <div className="space-y-6 pt-1 pb-6 animate-in fade-in duration-300 font-sans">
@@ -126,7 +155,7 @@ const StatisticsView: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
                 <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col h-full min-h-[340px]">
                     <h3 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <LayoutGrid size={16} className="text-blue-600" /> {t('stats.heatmapTitle')}
+                        <LayoutGrid size={16} className="text-accent-600" /> {t('stats.heatmapTitle')}
                     </h3>
                     <div className="flex-1 flex items-center justify-center w-full overflow-hidden">
                         <HeatmapChart data={metrics.heatmapData} />

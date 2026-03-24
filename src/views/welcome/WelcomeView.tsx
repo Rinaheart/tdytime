@@ -10,6 +10,7 @@ import { Upload, FileText, History, Trash2, ArrowRight, ArrowLeft, Moon, Sun, Ch
 import { useScheduleStore, useUIStore } from '@/core/stores';
 import type { HistoryItem } from '@/core/schedule';
 import { APP_VERSION } from '@/core/constants';
+import ThemePicker from '@/ui/composites/ThemePicker';
 
 // ============================================
 // Sub-components
@@ -51,24 +52,24 @@ const HistoryCard = React.memo(({ item, isActive, onLoad, onDelete }: {
             onClick={() => onLoad(item)}
             className={`group p-4 rounded-2xl flex items-center justify-between transition-all duration-300 cursor-pointer border shadow-sm
                 ${isActive
-                    ? 'bg-white dark:bg-slate-900 border-blue-500 dark:border-blue-400 shadow-blue-500/5'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:shadow-md hover:border-blue-200 dark:hover:border-blue-900'
+                    ? 'bg-white dark:bg-slate-900 border-accent-500 dark:border-accent-400 shadow-accent-500/5'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:shadow-md hover:border-accent-200 dark:hover:border-accent-900'
                 }`}
         >
             <div className="flex items-center gap-4">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-xs shadow-md uppercase transition-all
-                    ${isActive ? 'bg-blue-600 text-white shadow-blue-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
+                    ${isActive ? 'bg-accent-600 text-white shadow-accent-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
                     {avatarChar}
                 </div>
                 <div className="min-w-0">
-                    <p className={`text-sm font-semibold truncate transition-colors ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-700 dark:text-slate-200'}`}>
+                    <p className={`text-sm font-semibold truncate transition-colors ${isActive ? 'text-accent-600 dark:text-accent-400' : 'text-slate-700 dark:text-slate-200'}`}>
                         {teacherName}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
-                        <p className={`text-[10px] font-bold whitespace-nowrap uppercase tracking-tighter ${isActive ? 'text-blue-500/70 dark:text-blue-400/70' : 'text-slate-400 dark:text-slate-500'}`}>
+                        <p className={`text-[10px] font-bold whitespace-nowrap uppercase tracking-tighter ${isActive ? 'text-accent-500/70 dark:text-accent-400/70' : 'text-slate-400 dark:text-slate-500'}`}>
                             {item.data.metadata.academicYear} • HK{item.data.metadata.semester}
                         </p>
-                        <span className={`text-[10px] font-num ${isActive ? 'text-blue-300 dark:text-blue-700' : 'text-slate-300 dark:text-slate-600'}`}>
+                        <span className={`text-[10px] font-num ${isActive ? 'text-accent-300 dark:text-accent-700' : 'text-slate-300 dark:text-slate-600'}`}>
                             {dateLabel}
                         </span>
                     </div>
@@ -82,14 +83,14 @@ const HistoryCard = React.memo(({ item, isActive, onLoad, onDelete }: {
                         </span>
                         <button
                             onClick={(e) => { e.stopPropagation(); setIsConfirming(false); }}
-                            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 rounded-lg transition-colors"
+                            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 rounded-xl transition-colors"
                             aria-label={t('common.cancel')}
                         >
                             <X size={14} />
                         </button>
                         <button
                             onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
-                            className="p-1.5 text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-lg shadow-red-500/20 transition-all active:scale-90"
+                            className="p-1.5 text-white bg-red-500 hover:bg-red-600 rounded-xl shadow-lg shadow-red-500/20 transition-all active:scale-90"
                             aria-label={t('settings.dangerZone.confirmButton')}
                         >
                             <Check size={14} strokeWidth={3} />
@@ -101,9 +102,9 @@ const HistoryCard = React.memo(({ item, isActive, onLoad, onDelete }: {
                             e.stopPropagation();
                             setIsConfirming(true);
                         }}
-                        className={`p-2 rounded-lg transition-all
+                        className={`p-2 rounded-xl transition-all
                             ${isActive
-                                ? 'text-blue-300 dark:text-blue-700 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
+                                ? 'text-accent-300 dark:text-accent-700 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
                                 : 'text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'}`}
                         aria-label={t('settings.dangerZone.title')}
                     >
@@ -131,7 +132,7 @@ const PasteInput = React.memo(({ onCancel, onSubmit, isProcessing }: {
                 value={pastedContent}
                 onChange={(e) => setPastedContent(e.target.value)}
                 placeholder={t('app.pastePlaceholder')}
-                className="w-full h-[35vh] min-h-[180px] max-h-[450px] p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl text-sm text-slate-700 dark:text-slate-300 resize-none focus-visible:ring-2 focus-visible:ring-blue-500 outline-none font-mono shadow-inner custom-scrollbar"
+                className="w-full h-[35vh] min-h-[180px] max-h-[450px] p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl text-sm text-slate-700 dark:text-slate-300 resize-none focus-visible:ring-2 focus-visible:ring-accent-500 outline-none font-mono shadow-inner custom-scrollbar"
             />
             <div className="flex gap-2 mt-4">
                 <button onClick={onCancel} className="px-5 py-2.5 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
@@ -140,7 +141,7 @@ const PasteInput = React.memo(({ onCancel, onSubmit, isProcessing }: {
                 <button
                     onClick={() => pastedContent.trim() && onSubmit(pastedContent)}
                     disabled={isProcessing || !pastedContent.trim()}
-                    className="flex-1 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-colors transition-transform shadow-lg shadow-blue-500/20 active:scale-[0.98]"
+                    className="flex-1 px-5 py-2.5 bg-accent-600 hover:bg-accent-700 disabled:opacity-50 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-colors transition-transform shadow-lg shadow-accent-500/20 active:scale-[0.98]"
                 >
                     {isProcessing ? (
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -175,6 +176,16 @@ const WelcomeView: React.FC = () => {
 
     const [isDragging, setIsDragging] = useState(false);
     const [showPaste, setShowPaste] = useState(false);
+    const [clicks, setClicks] = useState(0);
+
+    const handleVersionClick = useCallback(() => {
+        setClicks(c => c + 1);
+        if (clicks + 1 >= 5) {
+            navigate('/demo');
+            setClicks(0);
+        }
+        setTimeout(() => setClicks(0), 2000);
+    }, [clicks, navigate]);
 
     // Redirect if data exists AND we are not forcing an upload
     React.useEffect(() => {
@@ -264,8 +275,9 @@ const WelcomeView: React.FC = () => {
                             className="p-2 md:p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-pointer"
                             aria-label={t('nav.appearance')}
                         >
-                            {darkMode ? <Moon size={18} /> : <Sun size={18} />}
+                            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                         </button>
+                        <ThemePicker />
                     </div>
                 </div>
             </header>
@@ -276,9 +288,16 @@ const WelcomeView: React.FC = () => {
                     <img src="/favicon.svg" alt="App Logo" className="w-16 h-16 mb-4 drop-shadow-sm" />
 
                     <h1 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight flex items-baseline gap-1.5">
-                        TdyTime <span className="text-slate-400 font-num text-[10px] font-medium">v{APP_VERSION}</span>
+                        TdyTime 
+                        <span 
+                            onClick={handleVersionClick}
+                            className="text-slate-400 font-num text-[10px] font-medium cursor-pointer select-none"
+                            title="Tap 5 times for Developer Demo Mode"
+                        >
+                            v{APP_VERSION}
+                        </span>
                     </h1>
-                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-0.5 font-medium tracking-wide text-balance">
+                    <p className="text-xs text-accent-600 dark:text-accent-400 mt-0.5 font-medium tracking-wide text-balance">
                         {t('app.tagline')}
                     </p>
                 </div>
@@ -303,12 +322,12 @@ const WelcomeView: React.FC = () => {
                         onDragLeave={() => setIsDragging(false)}
                         onDrop={handleDrop}
                         className={`w-full border-2 border-dashed rounded-2xl p-8 md:p-12 text-center transition-all duration-300 cursor-pointer ${isDragging
-                            ? 'border-blue-600 bg-blue-100/50 dark:bg-blue-900/20 shadow-lg shadow-blue-500/10'
-                            : 'border-blue-400 dark:border-blue-500/50 bg-blue-50/10 dark:bg-blue-900/5 hover:border-blue-600 dark:hover:border-blue-400 hover:bg-blue-50/30 dark:hover:bg-blue-900/10 hover:shadow-md'
+                            ? 'border-accent-600 bg-accent-100/50 dark:bg-accent-900/20 shadow-lg shadow-accent-500/10'
+                            : 'border-accent-400 dark:border-accent-500/50 bg-accent-50/10 dark:bg-accent-900/5 hover:border-accent-600 dark:hover:border-accent-400 hover:bg-accent-50/30 dark:hover:bg-accent-900/10 hover:shadow-md'
                             }`}
                         onClick={() => document.getElementById('file-input')?.click()}
                     >
-                        <Upload size={40} className="mx-auto text-blue-600 mb-4 transition-transform group-hover:scale-110" />
+                        <Upload size={40} className="mx-auto text-accent-600 mb-4 transition-transform group-hover:scale-110" />
                         <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
                             {t('app.uploadTitle')}
                         </p>
@@ -329,7 +348,7 @@ const WelcomeView: React.FC = () => {
                 {!showPaste && (
                     <button
                         onClick={() => setShowPaste(true)}
-                        className="mt-3 text-xs text-blue-500 hover:text-blue-600 flex items-center gap-1 font-medium transition-colors"
+                        className="mt-3 text-xs text-accent-500 hover:text-accent-600 flex items-center gap-1 font-medium transition-colors"
                     >
                         <FileText size={12} /> {t('app.pasteTitle')}
                     </button>

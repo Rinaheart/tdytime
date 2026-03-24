@@ -39,7 +39,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
                         {t('stats.today.emptyStates.beforeSemesterPreDesc')}
                     </span>
                     <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-5xl font-black text-blue-600 dark:text-blue-500">
+                        <span className="text-5xl font-black text-accent-600 dark:text-accent-500">
                             {daysUntilStart != null ? String(daysUntilStart).padStart(2, '0') : '--'}
                         </span>
                         <span className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
@@ -48,14 +48,14 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
                     </div>
                 </div>
             ),
-            gradient: 'from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20',
+            gradient: 'from-accent-50 to-indigo-50 dark:from-accent-900/20 dark:to-indigo-900/20',
         },
         AFTER_SEMESTER: {
-            icon: <CheckCircle2 size={36} className="text-blue-500" />,
+            icon: <CheckCircle2 size={36} className="text-accent-500" />,
             title: t('stats.today.emptyStates.afterSemester'),
             desc: t('stats.today.emptyStates.afterSemesterHint'),
             action: { label: t('stats.today.afterSemester.action', { defaultValue: 'Xem thống kê' }), path: '/stats' },
-            gradient: 'from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10',
+            gradient: 'from-accent-50 to-indigo-50 dark:from-accent-900/10 dark:to-indigo-900/10',
         },
         NO_DATA: {
             icon: <Zap size={32} className="text-slate-300" />,
@@ -90,18 +90,22 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
                 )}
 
                 <h3 className={`text-base font-bold mb-0.5 ${type === 'BEFORE_SEMESTER' && daysUntilStart != null && daysUntilStart <= 10
-                    ? 'text-blue-600 dark:text-blue-400'
+                    ? 'text-accent-600 dark:text-accent-400'
                     : 'text-slate-800 dark:text-slate-200'
                     }`}>
-                    {config.title}
+                    <span>{config.title}</span>
                 </h3>
 
-                {config.desc && <div className="mb-3 text-slate-500 dark:text-slate-400 mt-1">{config.desc}</div>}
+                {config.desc && (
+                    <div className="mb-3 text-slate-500 dark:text-slate-400 mt-1">
+                        {typeof config.desc === 'string' ? <span>{config.desc}</span> : config.desc}
+                    </div>
+                )}
 
                 {config.action && (
                     <button
                         onClick={() => navigate(config.action!.path)}
-                        className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors cursor-pointer bg-white/50 dark:bg-black/20 px-3 py-1.5 rounded-lg border border-transparent hover:border-blue-100 dark:hover:border-blue-900 mt-2"
+                        className="text-xs font-bold text-accent-600 dark:text-accent-400 hover:text-accent-700 dark:hover:text-accent-300 transition-colors cursor-pointer bg-white/50 dark:bg-black/20 px-3 py-1.5 rounded-xl border border-transparent hover:border-accent-100 dark:hover:border-accent-900 mt-2"
                     >
                         {config.action.label}
                     </button>

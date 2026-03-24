@@ -33,8 +33,8 @@ const SessionList: React.FC<SessionListProps> = ({ sessions }) => {
             {/* Section Header */}
             <div className="flex flex-wrap items-center justify-between gap-y-1 mb-3">
                 <div className="flex items-center gap-2">
-                    <Play size={12} fill="currentColor" className={!isTodayFinished ? 'text-blue-600 dark:text-blue-500' : 'text-slate-400'} />
-                    <h2 className={`text-[12px] font-black uppercase tracking-wider ${!isTodayFinished ? 'text-blue-600 dark:text-blue-500' : 'text-slate-700 dark:text-slate-300'}`}>
+                    <Play size={12} fill="currentColor" className={!isTodayFinished ? 'text-accent-600 dark:text-accent-500' : 'text-slate-400'} />
+                    <h2 className={`text-[12px] font-black uppercase tracking-wider ${!isTodayFinished ? 'text-accent-600 dark:text-accent-500' : 'text-slate-700 dark:text-slate-300'}`}>
                         {isTodayFinished
                             ? t('stats.today.summaryCompleted', { sessions: sessions.length, periods: totalPeriods })
                             : t('stats.today.summaryTotal', { sessions: sessions.length, periods: totalPeriods })
@@ -43,7 +43,7 @@ const SessionList: React.FC<SessionListProps> = ({ sessions }) => {
                 </div>
                 {!isTodayFinished && (
                     <div className="flex items-center gap-2 text-xs ml-auto">
-                        {liveCount > 0 && <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-bold animate-pulse">{liveCount} LIVE</span>}
+                        {liveCount > 0 && <span className="px-2 py-0.5 rounded-full bg-accent-50 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 font-bold animate-pulse">{liveCount} LIVE</span>}
                         {pendingCount > 0 && <span className="text-slate-400 font-medium whitespace-nowrap">{t('stats.today.upcomingCount', { count: pendingCount })}</span>}
                     </div>
                 )}
