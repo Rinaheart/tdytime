@@ -33,7 +33,7 @@ const CoTeachersTable: React.FC = () => {
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
             <div className="p-4 md:p-6 border-b border-slate-100 dark:border-slate-800">
                 <h3 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                    <Users size={16} className="text-indigo-500" /> {t('stats.coTeachers.title')}
+                    <Users size={16} className="text-accent-500" /> {t('stats.coTeachers.title')}
                 </h3>
             </div>
 

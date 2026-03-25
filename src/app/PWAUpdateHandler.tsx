@@ -119,7 +119,7 @@ export const PWAUpdateHandler: React.FC = () => {
             {/* Install Prompt Banner (Bottom Left/Center) */}
             {installPrompt && !isDismissed && (
                 <div className="fixed bottom-24 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-full md:max-w-sm z-[100] animate-in slide-in-from-bottom-10 fade-in duration-500">
-                    <div className="bg-white dark:bg-slate-900 border-2 border-[#0358D5] rounded-2xl shadow-2xl p-4 flex flex-col gap-3 relative mx-auto max-w-[calc(100vw-2rem)] md:max-w-none">
+                    <div className="bg-white dark:bg-slate-900 border-[1.5px] border-accent-500 rounded-2xl shadow-2xl p-4 flex flex-col gap-3 relative mx-auto max-w-[calc(100vw-2rem)] md:max-w-none">
                         <button
                             onClick={handleDismissInstall}
                             className="absolute top-2 right-2 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors flex items-center justify-center"

@@ -127,92 +127,96 @@ const StatisticsView: React.FC = () => {
 
     const overloadDisplay = overloadWeeks > 0 ? `${overloadWeeks} ${t('common.weeks')}` : '—';
 
-    const getStatusBorder = (condition: boolean) => condition
-        ? 'border-amber-300 dark:border-amber-800/60'
-        : 'border-accent-400 dark:border-accent-800/60';
+    const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
         <div className="space-y-6 pt-1 pb-6 animate-in fade-in duration-300 font-sans">
             {/* 1. Header KPI */}
-            <StatsHeader />
+            <StatsHeader isCollapsed={isCollapsed} onToggle={() => setIsCollapsed(!isCollapsed)} />
 
             {/* 2. Progress + Insights */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch transition-all duration-500">
+                <div className={`transition-all duration-500 ${isCollapsed ? 'lg:col-span-3' : 'lg:col-span-2'}`}>
                     <ProgressCard progress={progress} currentDate={now.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })} />
                 </div>
-                <div className="lg:col-span-1">
-                    <div className="grid grid-cols-4 lg:grid-cols-2 gap-2 md:gap-4 h-full">
-                        <InsightCard icon={Activity} title={t('stats.intensity')} value={intensityStatus} statusColor={getStatusBorder(overloadWeeks > 0)} />
-                        <InsightCard icon={AlertOctagon} title={t('stats.overloadWeeks', { threshold: 25 })} value={overloadDisplay} statusColor={getStatusBorder(overloadWeeks > 0)} />
-                        <InsightCard icon={Clock} title={t('stats.eveningTeaching')} value={eveningDisplay} statusColor={getStatusBorder(eveningSessions > 0)} />
-                        <InsightCard icon={Calendar} title={t('stats.weekendTeaching')} value={weekendDisplay} statusColor={getStatusBorder(weekendSessionsCount > 0)} />
+                {!isCollapsed && (
+                    <div className="lg:col-span-1 animate-in fade-in zoom-in-95 duration-500">
+                        <div className="grid grid-cols-4 lg:grid-cols-2 gap-2 md:gap-4 h-full">
+                            <InsightCard icon={Activity} title={t('stats.intensity')} value={intensityStatus} isAlert={overloadWeeks > 0} />
+                            <InsightCard icon={AlertOctagon} title={t('stats.overloadWeeks', { threshold: 25 })} value={overloadDisplay} isAlert={overloadWeeks > 0} />
+                            <InsightCard icon={Clock} title={t('stats.eveningTeaching')} value={eveningDisplay} isAlert={eveningSessions > 0} />
+                            <InsightCard icon={Calendar} title={t('stats.weekendTeaching')} value={weekendDisplay} isAlert={weekendSessionsCount > 0} />
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
-            {/* 3. Key distributions */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col h-full min-h-[340px]">
-                    <h3 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <LayoutGrid size={16} className="text-accent-600" /> {t('stats.heatmapTitle')}
-                    </h3>
-                    <div className="flex-1 flex items-center justify-center w-full overflow-hidden">
-                        <HeatmapChart data={metrics.heatmapData} />
-                    </div>
-                </div>
-                <TeachingStructureCard />
-                <TopSubjectsCard />
-            </div>
-
-            {/* 4. Trend charts */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WeeklyTrendChart data={weeklyData} color={COLORS.primary} />
-                <DailyBarChart data={dailyData} color={COLORS.secondary} />
-            </div>
-
-            {/* 5. Infrastructure insights */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full">
-                    <h3 className="relative z-10 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <Users size={14} className="text-accent-500" /> {t('stats.topClasses')}
-                    </h3>
-                    <div className="relative z-10 grid grid-cols-2 gap-4">
-                        {metrics.classDistribution.slice(0, 6).map((c, i) => (
-                            <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
-                                <div className="flex justify-between items-center mb-1.5">
-                                    <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{c.className}</span>
-                                    <span className="text-[9px] font-black text-accent-600 dark:text-accent-400">{c.periods}</span>
-                                </div>
-                                <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-sm overflow-hidden">
-                                    <div className="h-full bg-accent-500 rounded-sm" style={{ width: `${Math.min(100, (c.periods / metrics.totalHours) * 350)}%` }} />
-                                </div>
+            {!isCollapsed && (
+                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    {/* 3. Key distributions */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+                        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col h-full min-h-[340px]">
+                            <h3 className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                <LayoutGrid size={16} className="text-accent-600" /> {t('stats.heatmapTitle')}
+                            </h3>
+                            <div className="flex-1 flex items-center justify-center w-full overflow-hidden">
+                                <HeatmapChart data={metrics.heatmapData} />
                             </div>
-                        ))}
+                        </div>
+                        <TeachingStructureCard />
+                        <TopSubjectsCard />
                     </div>
-                </div>
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full">
-                    <h3 className="relative z-10 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <MapPin size={14} className="text-accent-400" /> {t('stats.topClassrooms')}
-                    </h3>
-                    <div className="relative z-10 grid grid-cols-2 gap-4">
-                        {metrics.topRooms.slice(0, 6).map((r, i) => (
-                            <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
-                                <div className="flex justify-between items-center mb-1.5">
-                                    <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{r.room}</span>
-                                    <span className="text-[9px] font-black text-accent-500 dark:text-accent-400">{r.periods}</span>
-                                </div>
-                                <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-sm overflow-hidden">
-                                    <div className="h-full bg-accent-400 rounded-sm" style={{ width: `${Math.min(100, (r.periods / metrics.totalHours) * 350)}%` }} />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
 
-            {/* 6. Co-teachers */}
-            <CoTeachersTable />
+                    {/* 4. Trend charts */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <WeeklyTrendChart data={weeklyData} color={COLORS.primary} />
+                        <DailyBarChart data={dailyData} color={COLORS.secondary} />
+                    </div>
+
+                    {/* 5. Infrastructure insights */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full">
+                            <h3 className="relative z-10 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                <Users size={14} className="text-accent-500" /> {t('stats.topClasses')}
+                            </h3>
+                            <div className="relative z-10 grid grid-cols-2 gap-4">
+                                {metrics.classDistribution.slice(0, 6).map((c, i) => (
+                                    <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
+                                        <div className="flex justify-between items-center mb-1.5">
+                                            <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{c.className}</span>
+                                            <span className="text-[9px] font-black text-accent-600 dark:text-accent-400">{c.periods}</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-sm overflow-hidden">
+                                            <div className="h-full bg-accent-500 rounded-sm" style={{ width: `${Math.min(100, (c.periods / metrics.totalHours) * 350)}%` }} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm relative overflow-hidden group transition-all hover:shadow-md flex flex-col h-full">
+                            <h3 className="relative z-10 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                <MapPin size={14} className="text-accent-400" /> {t('stats.topClassrooms')}
+                            </h3>
+                            <div className="relative z-10 grid grid-cols-2 gap-4">
+                                {metrics.topRooms.slice(0, 6).map((r, i) => (
+                                    <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
+                                        <div className="flex justify-between items-center mb-1.5">
+                                            <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{r.room}</span>
+                                            <span className="text-[9px] font-black text-accent-500 dark:text-accent-400">{r.periods}</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-sm overflow-hidden">
+                                            <div className="h-full bg-accent-400 rounded-sm" style={{ width: `${Math.min(100, (r.periods / metrics.totalHours) * 350)}%` }} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 6. Co-teachers */}
+                    <CoTeachersTable />
+                </div>
+            )}
         </div>
     );
 };

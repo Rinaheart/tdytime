@@ -81,19 +81,19 @@
   --accent-950: 2 44 34;
 }
 
-/* 💜 Lavender Violet */
-[data-accent="themeViolet"] {
-  --accent-50: 245 243 255;
-  --accent-100: 237 233 254;
-  --accent-200: 221 214 254;
-  --accent-300: 196 181 253;
-  --accent-400: 167 139 250;
-  --accent-500: 139 92 246;
-  --accent-600: 124 58 237;
-  --accent-700: 109 40 217;
-  --accent-800: 91 33 182;
-  --accent-900: 76 29 149;
-  --accent-950: 46 16 101;
+/* 🪨 Slate Grey */
+[data-accent="themeGrey"] {
+  --accent-50: 248 250 252;
+  --accent-100: 241 245 249;
+  --accent-200: 226 232 240;
+  --accent-300: 203 213 225;
+  --accent-400: 148 163 184;
+  --accent-500: 100 116 139;
+  --accent-600: 71 85 105;
+  --accent-700: 51 65 85;
+  --accent-800: 30 41 59;
+  --accent-900: 15 23 42;
+  --accent-950: 2 6 23;
 }
 
 /* 🌸 Sakura Pink */
@@ -126,19 +126,19 @@
   --accent-950: 69 10 10;
 }
 
-/* 🍊 Ember Orange */
-[data-accent="themeOrange"] {
-  --accent-50: 255 247 237;
-  --accent-100: 255 237 213;
-  --accent-200: 254 215 170;
-  --accent-300: 253 186 116;
-  --accent-400: 251 146 60;
-  --accent-500: 249 115 22;
-  --accent-600: 234 88 12;
-  --accent-700: 194 65 12;
-  --accent-800: 154 52 18;
-  --accent-900: 124 45 18;
-  --accent-950: 67 20 7;
+/* 💜 Lavender Violet */
+[data-accent="themeViolet"] {
+  --accent-50: 245 243 255;
+  --accent-100: 237 233 254;
+  --accent-200: 221 214 254;
+  --accent-300: 196 181 253;
+  --accent-400: 167 139 250;
+  --accent-500: 139 92 246;
+  --accent-600: 124 58 237;
+  --accent-700: 109 40 217;
+  --accent-800: 91 33 182;
+  --accent-900: 76 29 149;
+  --accent-950: 46 16 101;
 }
 
 /* 🍯 Honey Yellow */

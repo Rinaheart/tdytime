@@ -159,8 +159,8 @@ const SemesterView: React.FC = () => {
                         {viewMode === 'vertical' ? <Columns size={16} className="text-accent-500" /> : <LayoutTemplate size={16} className="text-accent-500" />}
                         <span className="hidden sm:inline">{viewMode === 'vertical' ? t('common.verticalList') : t('common.horizontalList')}</span>
                     </button>
-                    <button onClick={() => setIsFilterOpen((v) => !v)} className={`flex items-center gap-2 h-11 px-4 border rounded-xl text-xs font-bold transition-all shadow-sm relative ${isFilterOpen ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'}`}>
-                        <Search size={16} className={isFilterOpen ? 'text-white' : 'text-indigo-500'} />
+                    <button onClick={() => setIsFilterOpen((v) => !v)} className={`flex items-center gap-2 h-11 px-4 border rounded-xl text-xs font-bold transition-all shadow-sm relative ${isFilterOpen ? 'bg-accent-600 border-accent-600 text-white' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'}`}>
+                        <Search size={16} className={isFilterOpen ? 'text-white' : 'text-accent-500'} />
                         <span className="hidden sm:inline">{t('common.filter')}</span>
                         {hasActiveFilters && !isFilterOpen && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent-500 border-2 border-white dark:border-slate-900 rounded-full" />}
                     </button>

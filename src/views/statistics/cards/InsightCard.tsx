@@ -10,26 +10,22 @@ interface InsightCardProps {
     icon: LucideIcon;
     title: string;
     value: string;
-    statusColor?: string;
+    isAlert?: boolean;
 }
 
-const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, statusColor }) => {
-    const isWarning = statusColor?.includes('orange') || statusColor?.includes('rose') || statusColor?.includes('amber');
-
+const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, isAlert = false }) => {
     return (
         <div className={`bg-white dark:bg-slate-900 p-2 md:p-3 rounded-2xl border transition-all duration-300
-            ${statusColor
-                ? statusColor
-                : isWarning
-                    ? 'border-amber-300 dark:border-amber-800/60'
-                    : 'border-accent-400 dark:border-accent-800/60'
+            ${isAlert
+                ? 'border-accent-400 dark:border-accent-500/60 ring-1 ring-accent-500/20 shadow-accent-500/10'
+                : 'border-slate-200 dark:border-slate-800/60'
             } shadow-sm relative overflow-hidden group hover:shadow-md flex flex-col items-center justify-center text-center h-full min-w-[75px] md:min-w-[95px] space-y-1.5`}
         >
             {/* Row 1: Icon */}
             <div className={`w-6 h-6 md:w-8 md:h-8 rounded-xl flex items-center justify-center shrink-0
-                ${isWarning
-                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
-                    : 'bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400'
+                ${isAlert
+                    ? 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'
+                    : 'bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400'
                 }`}
             >
                 <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" strokeWidth={2.5} />
@@ -42,8 +38,8 @@ const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, sta
 
             {/* Row 3: Value */}
             <p className={`text-[10px] md:text-xs font-black tracking-tight leading-tight w-full
-                ${isWarning
-                    ? 'text-amber-600 dark:text-amber-400'
+                ${isAlert
+                    ? 'text-accent-600 dark:text-accent-400'
                     : 'text-slate-800 dark:text-slate-100'
                 }`}
             >
@@ -51,8 +47,8 @@ const InsightCard: React.FC<InsightCardProps> = ({ icon: Icon, title, value, sta
             </p>
 
             {/* Subtle accent line */}
-            {isWarning && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400 opacity-60" />
+            {isAlert && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-600 opacity-60" />
             )}
         </div>
     );

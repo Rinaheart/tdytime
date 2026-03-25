@@ -24,8 +24,8 @@ export const SESSION_ACCENT_COLORS = {
 
 /** Course type badge colors */
 export const COURSE_TYPE_COLORS = {
-    LT: 'bg-blue-100 text-blue-700 border-blue-200',
-    TH: 'bg-sky-100 text-sky-700 border-sky-200',
+    LT: 'bg-accent-100 text-accent-700 border-accent-200 dark:bg-accent-900/40 dark:text-accent-300 dark:border-accent-800',
+    TH: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800/60 dark:text-slate-300 dark:border-slate-700',
 };
 
 /** Warning thresholds defaults */

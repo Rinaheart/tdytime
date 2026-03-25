@@ -49,6 +49,7 @@
         "filter": "Lọc",
         "collapseAll": "Thu gọn",
         "expandAll": "Mở rộng",
+        "oneSession": "1 BUỔI DẠY",
         "completedItem": "Đã hoàn thành"
     },
     "shifts": {
@@ -68,6 +69,7 @@
     "nav": {
         "today": "Hôm nay",
         "weekly": "Lịch tuần",
+        "completed": "Hoàn thành",
         "semester": "Học kỳ",
         "statistics": "Thống kê",
         "settings": "Cài đặt",
@@ -335,14 +337,14 @@
             "jsonExported": "Sao lưu file JSON thành công."
         },
         "themes": {
-            "title": "Bảng màu",
-            "themeBlue": "Đại dương",
-            "themeGreen": "Xanh lục",
-            "themeViolet": "Oải hương",
-            "themePink": "Anh đào",
-            "themeRed": "Đỏ mận",
-            "themeOrange": "Cam cháy",
-            "themeYellow": "Mật ong"
+            "title": "Giao diện",
+            "themeBlue": "Xanh biển",
+            "themeGreen": "Xanh ngọc",
+            "themePink": "Hồng đào",
+            "themeViolet": "Tím hoa",
+            "themeRed": "Đỏ son",
+            "themeYellow": "Vàng mật",
+            "themeGrey": "Xám sương"
         }
     },
     "about": {

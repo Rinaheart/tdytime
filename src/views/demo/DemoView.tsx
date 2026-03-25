@@ -90,12 +90,12 @@ const DemoView: React.FC = () => {
                                 className={`w-full text-left p-5 rounded-2xl border transition-all hover:scale-[1.02] active:scale-[0.98] ${
                                     isRealtime 
                                     ? 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500' 
-                                    : 'bg-white dark:bg-slate-900 border-indigo-200/50 dark:border-indigo-800/50 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md'
+                                    : 'bg-white dark:bg-slate-900 border-accent-200/50 dark:border-accent-800/50 hover:border-accent-500 dark:hover:border-accent-400 hover:shadow-md'
                                 }`}
                             >
                                 <div className="flex justify-between items-start gap-3">
                                     <div className="flex-1">
-                                        <h3 className={`font-bold mb-1 ${isRealtime ? 'text-slate-700 dark:text-slate-300' : 'text-indigo-600 dark:text-indigo-400'}`}>
+                                        <h3 className={`font-bold mb-1 ${isRealtime ? 'text-slate-700 dark:text-slate-300' : 'text-accent-600 dark:text-accent-400'}`}>
                                             {s.title}
                                         </h3>
                                         <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
@@ -108,7 +108,7 @@ const DemoView: React.FC = () => {
                                         ) : s.multiplier > 1 ? (
                                             <FastForward className="w-5 h-5 text-amber-500" />
                                         ) : (
-                                            <Calendar className="w-5 h-5 text-indigo-400" />
+                                            <Calendar className="w-5 h-5 text-accent-400" />
                                         )}
                                     </div>
                                 </div>

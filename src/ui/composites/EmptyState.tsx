@@ -48,29 +48,29 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
                     </div>
                 </div>
             ),
-            gradient: 'from-accent-50 to-indigo-50 dark:from-accent-900/20 dark:to-indigo-900/20',
+            gradient: 'from-accent-50 to-slate-50',
         },
         AFTER_SEMESTER: {
             icon: <CheckCircle2 size={36} className="text-accent-500" />,
             title: t('stats.today.emptyStates.afterSemester'),
             desc: t('stats.today.emptyStates.afterSemesterHint'),
             action: { label: t('stats.today.afterSemester.action', { defaultValue: 'Xem thống kê' }), path: '/stats' },
-            gradient: 'from-accent-50 to-indigo-50 dark:from-accent-900/10 dark:to-indigo-900/10',
+            gradient: 'from-accent-50 to-slate-50',
         },
         NO_DATA: {
             icon: <Zap size={32} className="text-slate-300" />,
             title: t('stats.today.emptyStates.noDataTitle', { defaultValue: 'Chưa có dữ liệu' }),
             desc: t('stats.today.emptyStates.noDataHint'),
             action: { label: t('nav.loadData'), path: '/' },
-            gradient: 'from-slate-50 to-gray-50 dark:from-slate-900/20 dark:to-gray-900/20',
+            gradient: 'from-slate-50 to-gray-50',
         },
         NO_SESSIONS: {
-            icon: <Coffee size={48} className="text-orange-400/80" />,
+            icon: <Coffee size={48} className="text-accent-600 dark:text-accent-400" />,
             title: isWeekEmpty
                 ? t('stats.today.emptyStates.noSchedule', { range: currentWeekRange })
                 : t('stats.today.emptyStates.dayOff'),
             desc: '',
-            gradient: 'from-orange-50 to-amber-50 dark:from-orange-900/10 dark:to-amber-900/10',
+            gradient: 'from-accent-50/50 to-slate-50/10',
         },
     };
 
@@ -78,7 +78,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
 
     return (
         <div className={variant === 'today' ? "px-2" : ""}>
-            <div className={`bg-gradient-to-br ${config.gradient} rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center min-h-[220px] transition-all`}>
+            <div className={`bg-gradient-to-br dark:bg-none dark:bg-slate-800/40 ${config.gradient} rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center min-h-[220px] transition-all`}>
                 {config.icon && (
                     type === 'NO_SESSIONS' ? (
                         <div className="mb-4 animate-bounce duration-[3000ms]">{config.icon}</div>

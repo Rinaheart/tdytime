@@ -3,12 +3,12 @@
  * Main layout wrapper with Header, Sidebar (desktop), BottomNav (mobile).
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Zap, LayoutGrid, BarChart3, Settings,
-    CalendarDays, Menu, X, Moon, Sun, Upload,
+    CalendarDays, Menu, X, Upload, Globe,
 } from 'lucide-react';
 import { useUIStore, useScheduleStore } from '@/core/stores';
 import { Toast } from '@/ui/primitives';
@@ -16,22 +16,11 @@ import { APP_VERSION } from '@/core/constants';
 import ThemePicker from '@/ui/composites/ThemePicker';
 
 
-// Navigation items
+// Navigation items for both Desktop Sidebar and Mobile BottomNav
 const NAV_ITEMS = [
+    { path: '/semester', icon: LayoutGrid, labelKey: 'nav.semester' },
+    { path: '/week', icon: CalendarDays, labelKey: 'nav.weekly' },
     { path: '/today', icon: Zap, labelKey: 'nav.today' },
-    { path: '/week', icon: CalendarDays, labelKey: 'nav.weekly' },
-    { path: '/semester', icon: LayoutGrid, labelKey: 'nav.semester' },
-    { path: '/stats', icon: BarChart3, labelKey: 'nav.statistics' },
-    { path: '/settings', icon: Settings, labelKey: 'nav.settings' },
-];
-
-/** BottomNav order: HK | Tuần | [Ngày] | TKê | Cài đặt */
-const BOTTOM_NAV_SIDE = [
-    { path: '/semester', icon: LayoutGrid, labelKey: 'nav.semester' },
-    { path: '/week', icon: CalendarDays, labelKey: 'nav.weekly' },
-];
-const BOTTOM_NAV_CENTER = { path: '/today', icon: Zap, labelKey: 'nav.today' };
-const BOTTOM_NAV_RIGHT = [
     { path: '/stats', icon: BarChart3, labelKey: 'nav.statistics' },
     { path: '/settings', icon: Settings, labelKey: 'nav.settings' },
 ];
@@ -40,8 +29,30 @@ const AppLayout: React.FC = () => {
     const { t, i18n } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
-    const { darkMode, toggleDarkMode, sidebarCollapsed, toggleSidebar } = useUIStore();
+    const { sidebarCollapsed, toggleSidebar } = useUIStore();
     const metadata = useScheduleStore((s) => s.data?.metadata);
+    const lastActiveRef = useRef<number>(Date.now());
+
+    // Smart Session Auto-Reset Logic
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                const now = Date.now();
+                const idleTime = now - lastActiveRef.current;
+                const THRESHOLD = 30 * 60 * 1000; // 30 minutes
+
+                if (idleTime > THRESHOLD && location.pathname !== '/today') {
+                    navigate('/today', { replace: true });
+                }
+                lastActiveRef.current = now;
+            } else {
+                lastActiveRef.current = Date.now();
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }, [location.pathname, navigate]);
 
     const handleReset = useCallback(() => {
         navigate('/', { state: { forceUpload: true } });
@@ -80,19 +91,11 @@ const AppLayout: React.FC = () => {
                     <div className="flex items-center gap-1">
                         <button
                             onClick={toggleLanguage}
-                            className="w-10 h-8 flex items-center justify-center rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                            className="p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors"
                             aria-label={t('common.switchLanguage')}
+                            title={i18n.language === 'vi' ? 'English' : 'Tiếng Việt'}
                         >
-                            <span className="text-[11px] font-black uppercase tracking-tight">
-                                {i18n.language === 'vi' ? 'EN' : 'VI'}
-                            </span>
-                        </button>
-                        <button
-                            onClick={toggleDarkMode}
-                            className="p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
-                            aria-label={t('nav.appearance')}
-                        >
-                            {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+                            <Globe size={18} />
                         </button>
                         <ThemePicker />
                         <button
@@ -151,83 +154,23 @@ const AppLayout: React.FC = () => {
                 </main>
             </div>
 
-            {/* Bottom Nav (mobile only) — HK | Tuần | [Ngày FAB] | TKê | Cài đặt */}
+            {/* Bottom Nav (mobile only) — San bằng 5 Tabs phẳng */}
             <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 pb-safe shadow-[0_-4px_12px_rgba(0,0,0,0.04)]">
-                <div className="flex items-center h-16 px-2">
-                    {/* Left Items */}
-                    {BOTTOM_NAV_SIDE.map(({ path, icon: Icon, labelKey }) => {
+                <div className="flex items-center h-16">
+                    {NAV_ITEMS.map(({ path, icon: Icon, labelKey }) => {
                         const isActive = location.pathname === path;
                         return (
                             <button
                                 key={path}
                                 onClick={() => navigate(path)}
-                                className={`flex-1 flex flex-col items-center h-full relative cursor-pointer active:scale-95 transition-all duration-200 ${
-                                    isActive ? 'text-accent-600 dark:text-accent-400' : 'text-slate-400 dark:text-slate-500'
-                                }`}
+                                className={`flex-1 flex flex-col items-center justify-center h-full pb-1 cursor-pointer transition-none ${isActive ? 'text-accent-600 dark:text-accent-400' : 'text-slate-400 dark:text-slate-500'}`}
                             >
-                                <div className="absolute top-[10px]">
-                                    <Icon size={22} className={isActive ? 'opacity-100' : 'opacity-80'} strokeWidth={isActive ? 2.5 : 2} />
+                                <div className="">
+                                    <Icon size={24} className={isActive ? 'opacity-100' : 'opacity-[0.65]'} strokeWidth={isActive ? 2.5 : 2} />
                                 </div>
-                                <span className={`absolute bottom-[12px] text-[11px] truncate w-full text-center px-1 tracking-tight ${isActive ? 'font-bold' : 'font-medium'}`}>
+                                <span className={`text-[10px] mt-0.5 truncate w-full text-center px-1 tracking-tight ${isActive ? 'font-bold' : 'font-medium opacity-80'}`}>
                                     {t(labelKey)}
                                 </span>
-                                {isActive && (
-                                    <div className="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-12 h-[3px] bg-accent-500 rounded-full animate-in fade-in zoom-in duration-300" />
-                                )}
-                            </button>
-                        );
-                    })}
-
-                    {/* Center: Today (Elegant FAB) */}
-                    {(() => {
-                        const isActive = location.pathname === BOTTOM_NAV_CENTER.path;
-                        const CenterIcon = BOTTOM_NAV_CENTER.icon;
-                        return (
-                            <button
-                                onClick={() => navigate(BOTTOM_NAV_CENTER.path)}
-                                className="flex-1 flex flex-col items-center h-full relative cursor-pointer active:scale-95 transition-all duration-200"
-                            >
-                                <div className="absolute top-[0px] left-1/2 -translate-x-1/2">
-                                    <div className={`w-[46px] h-[46px] rounded-full flex items-center justify-center transition-all duration-300 ring-[3px] ring-white dark:ring-slate-900 -mt-6 shadow-lg ${
-                                        isActive
-                                            ? 'bg-accent-600 shadow-accent-500/40 scale-[1.05]'
-                                            : 'bg-accent-500 shadow-accent-500/20'
-                                    }`}>
-                                        <CenterIcon size={28} className="text-white" strokeWidth={2.0} />
-                                    </div>
-                                </div>
-                                <span className={`absolute bottom-[12px] text-[11px] truncate w-full text-center px-1 tracking-tight transition-colors duration-300 ${
-                                    isActive ? 'text-accent-600 dark:text-accent-400 font-bold' : 'text-slate-400 font-medium'
-                                }`}>
-                                    {t(BOTTOM_NAV_CENTER.labelKey)}
-                                </span>
-                                {isActive && (
-                                    <div className="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-12 h-[3px] bg-accent-500 rounded-full animate-in fade-in zoom-in duration-300" />
-                                )}
-                            </button>
-                        );
-                    })()}
-
-                    {/* Right Items */}
-                    {BOTTOM_NAV_RIGHT.map(({ path, icon: Icon, labelKey }) => {
-                        const isActive = location.pathname === path;
-                        return (
-                            <button
-                                key={path}
-                                onClick={() => navigate(path)}
-                                className={`flex-1 flex flex-col items-center h-full relative cursor-pointer active:scale-95 transition-all duration-200 ${
-                                    isActive ? 'text-accent-600 dark:text-accent-400' : 'text-slate-400 dark:text-slate-500'
-                                }`}
-                            >
-                                <div className="absolute top-[10px]">
-                                    <Icon size={22} className={isActive ? 'opacity-100' : 'opacity-80'} strokeWidth={isActive ? 2.5 : 2} />
-                                </div>
-                                <span className={`absolute bottom-[12px] text-[11px] truncate w-full text-center px-1 tracking-tight ${isActive ? 'font-bold' : 'font-medium'}`}>
-                                    {t(labelKey)}
-                                </span>
-                                {isActive && (
-                                    <div className="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-12 h-[3px] bg-accent-500 rounded-full animate-in fade-in zoom-in duration-300" />
-                                )}
                             </button>
                         );
                     })}

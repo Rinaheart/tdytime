@@ -84,7 +84,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
                     <button onClick={() => handleSetAll(CourseType.LT)} className="px-3 py-1.5 bg-accent-50 dark:bg-accent-900/20 text-accent-700 dark:text-accent-400 text-[10px] font-bold rounded-xl border border-accent-200 dark:border-accent-800 hover:bg-accent-100 transition-colors cursor-pointer flex items-center gap-2">
                         <ListChecks size={14} /> {t('settings.courseType.setAllLT')}
                     </button>
-                    <button onClick={() => handleSetAll(CourseType.TH)} className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold rounded-xl border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition-colors cursor-pointer flex items-center gap-2">
+                    <button onClick={() => handleSetAll(CourseType.TH)} className="px-3 py-1.5 bg-slate-50 dark:bg-slate-800/40 text-slate-700 dark:text-slate-400 text-[10px] font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer flex items-center gap-2">
                         <ListChecks size={14} /> {t('settings.courseType.setAllTH')}
                     </button>
                 </div>
@@ -118,7 +118,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
                             const currentType = tempOverrides[c.code] || (c.types[0] || CourseType.LT);
                             const isLT = currentType === CourseType.LT;
                             return (
-                                <tr key={c.code} className={`transition-colors duration-150 ${isLT ? 'bg-accent-50/40 dark:bg-accent-900/10' : 'bg-indigo-50/40 dark:bg-indigo-900/10'}`}>
+                                <tr key={c.code} className={`transition-colors duration-150 ${isLT ? 'bg-accent-50/40 dark:bg-accent-900/10' : 'bg-slate-50/60 dark:bg-slate-800/20'}`}>
                                     <td className="px-4 py-3 text-center text-slate-400 font-medium">{idx + 1}</td>
                                     <td className="px-2 py-3 font-num font-bold text-accent-600 dark:text-accent-400 text-[10px]">{c.code}</td>
                                     <td className="px-4 py-3 font-semibold text-slate-700 dark:text-slate-200">{c.name}</td>
@@ -130,7 +130,7 @@ const CourseTypeCard: React.FC<CourseTypeCardProps> = ({ onSuccess }) => {
                                         </button>
                                     </td>
                                     <td className="px-4 py-3 text-center">
-                                        <button onClick={() => setTempOverrides({ ...tempOverrides, [c.code]: CourseType.TH })} className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mx-auto ${!isLT ? 'bg-indigo-600 border-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
+                                        <button onClick={() => setTempOverrides({ ...tempOverrides, [c.code]: CourseType.TH })} className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mx-auto ${!isLT ? 'bg-slate-600 border-slate-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
                                             {!isLT && <Check size={16} />}
                                         </button>
                                     </td>

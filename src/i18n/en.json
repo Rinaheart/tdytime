@@ -49,6 +49,7 @@
         "filter": "Filter",
         "collapseAll": "Collapse All",
         "expandAll": "Expand All",
+        "oneSession": "1 SESSION",
         "completedItem": "Completed"
     },
     "shifts": {
@@ -335,14 +336,14 @@
             "jsonExported": "Backup JSON saved successfully."
         },
         "themes": {
-            "title": "Accent Color",
-            "themeBlue": "Ocean blue",
-            "themeGreen": "Emerald green",
-            "themeViolet": "Lavender violet",
-            "themePink": "Sakura pink",
-            "themeRed": "Crimson red",
-            "themeOrange": "Ember orange",
-            "themeYellow": "Honey yellow"
+            "title": "Theme",
+            "themeBlue": "Ocean Blue",
+            "themeGreen": "Emerald Green",
+            "themePink": "Sakura Pink",
+            "themeViolet": "Lavender Purple",
+            "themeRed": "Crimson Red",
+            "themeYellow": "Honey Yellow",
+            "themeGrey": "Mist Gray"
         }
     },
     "about": {

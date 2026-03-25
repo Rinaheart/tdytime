@@ -8,12 +8,15 @@ import { useTranslation } from 'react-i18next';
 import { ChevronDown, Hash, Calendar, FastForward, AlertTriangle } from 'lucide-react';
 import { useScheduleStore } from '@/core/stores';
 
-const StatsHeader: React.FC = () => {
+interface StatsHeaderProps {
+    isCollapsed?: boolean;
+    onToggle?: () => void;
+}
+
+const StatsHeader: React.FC<StatsHeaderProps> = ({ isCollapsed = false, onToggle }) => {
     const { t } = useTranslation();
     const data = useScheduleStore((s) => s.data);
     const metrics = useScheduleStore((s) => s.metrics);
-
-    const [isExpanded, setIsExpanded] = useState(true);
 
     if (!data || !metrics) return null;
     const { metadata } = data;
@@ -50,11 +53,11 @@ const StatsHeader: React.FC = () => {
                         </p>
                     </div>
 
-                    {/* Expand/Collapse Toggle (Mobile/Tablet, hidden on Desktop via lg:hidden) */}
+                    {/* Expand/Collapse Toggle (Always visible for Privacy/Sharing) */}
                     <button
-                        onClick={() => setIsExpanded(!isExpanded)}
-                        className={`absolute top-4 right-4 p-1.5 rounded-full transition-all duration-300 flex items-center justify-center lg:hidden
-                            ${isExpanded ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 rotate-180' : 'bg-accent-50 dark:bg-accent-900/40 text-accent-600'}`}
+                        onClick={onToggle}
+                        className={`absolute top-4 right-4 p-1.5 rounded-full transition-all duration-300 flex items-center justify-center
+                            ${!isCollapsed ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 rotate-180' : 'bg-accent-50 dark:bg-accent-900/40 text-accent-600'}`}
                     >
                         <ChevronDown size={18} />
                     </button>
@@ -63,7 +66,7 @@ const StatsHeader: React.FC = () => {
                 {/* KPI strip — right side (Occupies 1/3 and aligns with InsightCards) */}
                 <div className={`lg:col-span-1 flex items-stretch transition-all duration-300 overflow-hidden 
                     lg:max-h-none lg:opacity-100 lg:border-t-0 lg:border-l border-slate-100 dark:border-slate-800
-                    ${isExpanded ? 'max-h-40 opacity-100 border-t' : 'max-h-0 opacity-0 border-t-0'}
+                    ${!isCollapsed ? 'max-h-40 opacity-100 border-t' : 'max-h-0 opacity-0 border-t-0'}
                 `}>
                     {kpis.map((kpi, i) => (
                         <div
