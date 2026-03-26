@@ -1,59 +1,110 @@
 <div align="center">
-  <img src="public/favicon.svg" alt="TdyTime Logo" width="80" height="80">
-  
-  <h1 style="margin-bottom: 0;">TdyTime <sub style="font-size: 0.5em; opacity: 0.5;">v1.1.0</sub></h1>
-  <p style="color: #2563eb; font-size: 0.9em; margin-top: 4px;"><b>Your Today, Your Time</b></p>
+  <br />
+  <img src="./public/favicon.svg" alt="TdyTime Logo" width="100">
+  <h1>TdyTime</h1>
+  <p><strong><i>Your Today, Your Time</i></strong></p>
+  <p>Phân tích và Quản lý Lịch giảng thông minh.</p>
 
-  <p style="max-width: 400px; color: #64748b; font-size: 0.85em; line-height: 1.6;">
-    Tiện ích trực quan hóa và quản lý lịch trình giảng dạy thông minh. <br>
-    Thiết kế đặc biệt cho GV Khoa KTYH - Trường ĐHYD, ĐH Huế.
-  </p>
-
-  <p>
-    <a href="https://tdytime.vercel.app"><b>Trải nghiệm ngay →</b></a> |
-    <a href="ARCHITECTURE.md"><b>Kiến trúc Hệ thống</b></a> |
-    <a href="CLAUDE.md"><b>Hướng dẫn Dev</b></a>
-  </p>
-
-  <p>
-    <img src="https://img.shields.io/badge/version-v1.1.0-blue.svg" alt="Version">
-    <img src="https://img.shields.io/badge/PWA-Ready-orange.svg" alt="PWA">
-    <img src="https://img.shields.io/badge/UI-Modern-61DAFB.svg" alt="UI">
-  </p>
+  <div>
+    <img src="https://img.shields.io/github/package-json/v/rinaheart/tdytime?style=flat-square&color=blue" alt="Version">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License">
+  </div>
+  <div style="margin-top: 5px;">
+    <img src="https://img.shields.io/badge/React-v19-blue?style=flat-square&logo=react&logoColor=61DAFB" alt="React">
+    <img src="https://img.shields.io/badge/TS-v5-blue?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
+    <img src="https://img.shields.io/badge/Tailwind-v4-blue?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+    <img src="https://img.shields.io/badge/PWA-Ready-blue?style=flat-square&logo=pwa&logoColor=white" alt="PWA">
+  </div>
 </div>
 
 ---
 
-**TdyTime** là một ứng dụng Web (PWA) chuyên nghiệp được thiết kế để biến những lịch giảng dạy phức tạp thành các nhiệm vụ hàng ngày gọn gàng và dễ theo dõi. Với tiêu chí nhanh, gọn và hoạt động ổn định kể cả khi không có mạng.
-
-## ⚡ Các Tính Năng Chính
-
-- 📱 **Trải nghiệm như App thật**: Hỗ trợ cài đặt trực tiếp lên màn hình điện thoại/máy tính (PWA) với màn hình khởi động chuyên nghiệp.
-- 🔄 **Hệ thống cập nhật thông minh**: Tính năng kiểm tra cập nhật chủ động (v1.1.0) giúp bạn luôn sử dụng bản mới nhất.
-- 📶 **Hoạt động ngoại tuyến**: Hoạt động hoàn hảo ngay cả khi không có internet nhờ công nghệ bộ nhớ đệm tiên tiến.
-- 📊 **Phân tích chỉ số**: Tự động tính toán số tiết dạy, phân bổ ca dạy, và thống kê khối lượng công việc.
-- 🌐 **Đa ngôn ngữ**: Chuyển đổi linh hoạt giữa Tiếng Việt và Tiếng Anh.
-- 🎨 **Giao diện Cao cấp**: Thiết kế hiện đại với hỗ trợ chế độ Sáng/Tối (Dark Mode) thông minh.
-
----
-
-## 🚀 Truy cập nhanh
-
-Ứng dụng hiện đang được triển khai chính thức tại:
-
-### [👉 tdytime.vercel.app](https://tdytime.vercel.app)
+<details open>
+  <summary><b>Mục lục</b></summary>
+  <ol>
+    <li><a href="#-giới-thiệu">Giới thiệu</a></li>
+    <li><a href="#-cách-dùng">Cách dùng</a></li>
+    <li><a href="#-cài-app-pwa">Cài app (PWA)</a></li>
+    <li><a href="#-lộ-trình--công-nghệ">Lộ trình & Công nghệ</a></li>
+    <li><a href="#-liên-hệ--hỗ-trợ">Liên hệ & Hỗ trợ</a></li>
+  </ol>
+</details>
 
 ---
 
-## 🛠️ Công Nghệ
+<h2 id="-giới-thiệu">🌟 Giới thiệu</h2>
 
-- **Vibe Coding**: Với sự hỗ trợ đắc lực từ **Google Antigravity**
-- **Cốt lõi**: React 19, TypeScript, Zustand
-- **Giao diện**: Tailwind CSS 4, Lucide Icons
-- **PWA**: Vite PWA Plugin
+### 💡 Vì sao tôi build TdyTime?
+
+TdyTime bắt đầu từ một câu hỏi quen thuộc: “Hôm nay dạy gì, mấy giờ, ở đâu?”.
+Ứng dụng biến dữ liệu thời khóa biểu trên web tín chỉ thành lịch trực quan, gọn gàng — xem nhanh mỗi ngày trên điện thoại.
+
+### ✨ Tính năng chính
+
+- 📱 **Trải nghiệm như App thật**: Cài trực tiếp lên màn hình (PWA).
+- 📶 **Hoạt động ngoại tuyến**: Dùng được cả khi offline.
+- 🌐 **Đa ngôn ngữ**: Hỗ trợ Việt/Eng.
+- 🎨 **Giao diện hiện đại**: Dark Mode + 7 màu accent.
+- 📊 **Dashboard trực quan**: Thống kê giảng dạy chi tiết.
 
 ---
 
+<h2 id="-cách-dùng">🎯 Cách dùng</h2>
+
+1. **Truy cập**: [tdytime.vercel.app](https://tdytime.vercel.app)
+2. **Nạp lịch**: Tải file lịch giảng (HTML) hoặc dán dữ liệu từ hệ thống UMS. 
+   *(Nguồn: [https://cd.huemed-univ.edu.vn/giangvien/Teaching/TimeTable](https://cd.huemed-univ.edu.vn/giangvien/Teaching/TimeTable))*
+3. **Theo dõi**: Xem lịch bằng thẻ trực quan và tùy chỉnh theme ở góc phải.
+
+---
+
+<h2 id="-cài-app-pwa">📱 Cài app (PWA)</h2>
+
+Cài trực tiếp lên thiết bị, mở nhanh và dùng offline.
+
+- **PC / Laptop (Chrome, Safari)**
+  
+  Mở tdytime.vercel.app → Nhấn biểu tượng Install App trên thanh địa chỉ.
+
+- **Android (Chrome)**
+  
+  Menu ⋮ → Add to Home Screen (Thêm vào màn hình chính).
+
+- **iPhone / iPad (Safari)**
+  
+  Share → Add to Home Screen (Thêm vào màn hình chính).
+
+---
+
+<h2 id="-lộ-trình--công-nghệ">📍 Lộ trình & Công nghệ</h2>
+
+### Roadmap
+
+**✅ Đã hoàn thành**
+- Theo dõi lịch giảng theo Ngày/Tuần/Học kỳ
+- Thống kê tiến độ giảng dạy
+
+**🚀 Sắp tới**
+- Ghi chú (Notes)
+- Xuất báo cáo lịch giảng
+- Đồng bộ dữ liệu (backend)
+
+### Tech Stack
+
+- **Vibe Coding**: Google AI Studio & Antigravity.
+- **Core**: React 19, TypeScript 5, Zustand.
+- **UI**: Tailwind CSS v4, Lucide Icons.
+- **PWA**: Vite PWA Plugin.
+
+---
+
+<h2 id="-liên-hệ--hỗ-trợ">💌 Liên hệ & Hỗ trợ</h2>
+
+Nếu bạn gặp vấn đề hoặc có đề xuất gì, hãy mở một Issue hoặc nhắn tin cho mình qua:
+- **Github**: [@TdyPhan](https://github.com/TdyPhan)
+- **Email**: tdyphan@gmail.com
+
+---
 <div align="center">
   <p>Made with ❤️ by TdyPhan</p>
 </div>

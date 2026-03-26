@@ -78,7 +78,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
 
     return (
         <div className={variant === 'today' ? "px-2" : ""}>
-            <div className={`bg-gradient-to-br dark:bg-none dark:bg-slate-800/40 ${config.gradient} rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center min-h-[220px] transition-all`}>
+            <div className={`bg-gradient-to-br dark:bg-none dark:bg-slate-800/40 ${config.gradient} rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center min-h-[160px] transition-all`}>
                 {config.icon && (
                     type === 'NO_SESSIONS' ? (
                         <div className="mb-4 animate-bounce duration-[3000ms]">{config.icon}</div>

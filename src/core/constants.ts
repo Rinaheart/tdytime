@@ -1,9 +1,6 @@
-/**
- * Constants — TdyTime v2
- * App version, day names, session colors, period times.
- */
+declare const __APP_VERSION__: string;
 
-export const APP_VERSION = '1.1.0';
+export const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '0.0.0';
 
 export const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 export const VI_DAYS_OF_WEEK = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];

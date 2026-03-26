@@ -167,9 +167,9 @@
         "rooms": "Rooms",
         "today": {
             "greeting": {
-                "morning": "Good morning, {{name}}.",
-                "afternoon": "Good afternoon, {{name}}.",
-                "evening": "Good evening, {{name}}."
+                "morning": "Good morning, {{name}}!",
+                "afternoon": "Good afternoon, {{name}}!",
+                "evening": "Good evening, {{name}}!"
             },
             "summary": "Today: {{sessions}} sessions ({{periods}} periods).",
             "summaryCompleted": "Completed {{sessions}} sessions, {{periods}} periods",
@@ -548,7 +548,7 @@
         "offlineReadyDesc": "App cached for offline access.",
         "updateReady": "New Version Available",
         "updateReadyDesc": "Please reload to update immediately.",
-        "reloadButton": "Update Now (v1.1.0)",
+        "reloadButton": "Update Now (v{{version}})",
         "update_check": "Check for Updates",
         "checking": "Checking...",
         "up_to_date": "App is up to date",

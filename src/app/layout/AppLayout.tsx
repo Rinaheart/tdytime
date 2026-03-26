@@ -8,7 +8,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Zap, LayoutGrid, BarChart3, Settings,
-    CalendarDays, Menu, X, Upload, Globe,
+    CalendarDays, Menu, Upload, Globe,
 } from 'lucide-react';
 import { useUIStore, useScheduleStore } from '@/core/stores';
 import { Toast } from '@/ui/primitives';
@@ -72,10 +72,11 @@ const AppLayout: React.FC = () => {
                     <div className="flex items-center gap-2">
                         <button
                             onClick={toggleSidebar}
-                            className="hidden lg:flex p-1.5 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
+                            className="hidden lg:flex p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
                             aria-label="Toggle sidebar"
+                            title={sidebarCollapsed ? t('nav.expandSidebar', { defaultValue: 'Mở rộng' }) : t('nav.collapseSidebar', { defaultValue: 'Thu gọn' })}
                         >
-                            {sidebarCollapsed ? <Menu size={18} /> : <X size={18} />}
+                            <Menu size={20} />
                         </button>
                         <div className="text-sm font-semibold text-slate-700 dark:text-slate-200 truncate max-w-[200px] md:max-w-none">
                             {metadata?.teacher || 'TdyTime'}
@@ -102,8 +103,9 @@ const AppLayout: React.FC = () => {
                             onClick={handleReset}
                             className="p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
                             aria-label={t('nav.loadData')}
+                            title={t('nav.loadData')}
                         >
-                            <Upload size={16} />
+                            <Upload size={18} />
                         </button>
                     </div>
                 </div>
@@ -123,13 +125,16 @@ const AppLayout: React.FC = () => {
                                 <button
                                     key={path}
                                     onClick={() => navigate(path)}
-                                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${isActive
+                                    title={sidebarCollapsed ? t(labelKey) : undefined}
+                                    className={`w-full flex items-center gap-0 px-2.5 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${isActive
                                         ? 'bg-accent-50 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'
                                         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                                         }`}
                                 >
-                                    <Icon size={18} />
-                                    {!sidebarCollapsed && <span>{t(labelKey)}</span>}
+                                    <div className="w-10 flex items-center justify-center shrink-0">
+                                        <Icon size={20} />
+                                    </div>
+                                    {!sidebarCollapsed && <span className="ml-1 truncate">{t(labelKey)}</span>}
                                 </button>
                             );
                         })}

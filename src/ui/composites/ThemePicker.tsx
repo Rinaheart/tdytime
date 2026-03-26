@@ -27,7 +27,7 @@ const ThemePicker: React.FC = () => {
         <div className="relative" ref={containerRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all duration-300 border ${
+                className={`flex items-center justify-center p-2 rounded-xl transition-all duration-300 border ${
                     isOpen 
                     ? 'bg-accent-50 border-accent-200 text-accent-700 dark:bg-accent-900/30 dark:border-accent-800 dark:text-accent-400' 
                     : 'bg-transparent border-transparent text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -35,7 +35,6 @@ const ThemePicker: React.FC = () => {
                 title={t('settings.themes.title')}
             >
                 <Palette size={18} />
-                <span className="hidden sm:inline text-sm font-semibold tracking-tight">Giao diện</span>
             </button>
 
             {/* Popover */}

@@ -168,9 +168,9 @@
         "rooms": "Phòng",
         "today": {
             "greeting": {
-                "morning": "Chào buổi sáng, {{name}}.",
-                "afternoon": "Chào buổi chiều, {{name}}.",
-                "evening": "Chào buổi tối, {{name}}."
+                "morning": "Chào buổi sáng, {{name}}!",
+                "afternoon": "Chào buổi chiều, {{name}}!",
+                "evening": "Chào buổi tối, {{name}}!"
             },
             "summary": "Hôm nay có {{sessions}} buổi giảng ({{periods}} tiết).",
             "summaryCompleted": "Đã hoàn thành {{sessions}} buổi, {{periods}} tiết",
@@ -362,6 +362,15 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "{{version}}",
+                "date": "25/03/2026",
+                "changes": [
+                    "Theme Picker UI: Thay thế cơ chế xoay vòng bằng Menu chọn màu chuyên nghiệp, giúp cá nhân hóa không gian làm việc tức thì.",
+                    "Accent Palettes+: Bổ sung 7 bảng màu cao cấp (Xanh/Lục/Hồng/Tím/Đỏ/Vàng/Xám) được chuẩn hóa đồng bộ.",
+                    "StatsHeader Evolution: Tinh chỉnh thanh tiêu đề thống kê, tích hợp khả năng thu gọn/mở rộng và căn lề lưới hoàn hảo."
+                ]
+            },
+            {
                 "version": "v1.1.0",
                 "date": "23/03/2026",
                 "changes": [
@@ -546,7 +555,7 @@
         "offlineReadyDesc": "Ứng dụng đã được lưu cache để dùng khi không có mạng.",
         "updateReady": "Đã có phiên bản mới",
         "updateReadyDesc": "Vui lòng tải lại trang để cập nhật ngay.",
-        "reloadButton": "Cập nhật ngay v1.1.0",
+        "reloadButton": "Cập nhật ngay v{{version}}",
         "update_check": "Kiểm tra cập nhật",
         "checking": "Đang kiểm tra...",
         "up_to_date": "Đã là bản mới nhất",
