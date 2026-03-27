@@ -80,7 +80,7 @@ const AbbreviationsCard: React.FC<AbbreviationsCardProps> = ({ onSuccess }) => {
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                         {uniqueSubjects.map((name, idx) => (
-                            <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <tr key={name} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                 <td className="px-4 py-3 text-center text-slate-400 font-medium">{idx + 1}</td>
                                 <td className="px-4 py-3 font-bold text-slate-700 dark:text-slate-300">{name}</td>
                                 <td className="px-4 py-3">

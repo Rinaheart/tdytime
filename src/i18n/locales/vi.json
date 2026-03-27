@@ -371,6 +371,15 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.4.0",
+                "date": "2026-03-27",
+                "changes": [
+                    "Shared UI Architecture: Tái cấu trúc giao diện Lịch tuần & Học kỳ sử dụng hệ thống Component dùng chung (WeekTableLayout, WeekCardLayout), đảm bảo sự đồng nhất 100% giữa các góc nhìn.",
+                    "Performance Optimization: Tối ưu hóa quá trình Render tại tab Học kỳ bằng cách tiền tính toán dữ liệu lọc (Pre-calculated filters) và áp dụng React.memo, cho phép mở hàng chục tuần mượt mà.",
+                    "Bug Fixes & Stability: Xử lý triệt để lỗi Unique Key và tối ưu hóa logic nhận diện giảng viên chính, giảm độ trễ khi chuyển sang tab Thống kê/Cài đặt xuống mức gần như tức thì."
+                ]
+            },
+            {
                 "version": "v1.3.0",
                 "date": "2026-03-26",
                 "changes": [
@@ -465,7 +474,7 @@
                 ]
             },
             {
-                "version": "v0.5.0",
+                "version": "v0.5.1",
                 "date": "2026-02-02",
                 "changes": [
                     "Data-Centric Today: Thiết kế lại hoàn toàn thẻ Hôm nay với triết lý dữ liệu là trung tâm, phù hợp giảng viên và người dùng lớn tuổi.",

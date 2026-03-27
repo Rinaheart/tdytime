@@ -4,7 +4,8 @@
  * Used across multiple views (weekly, semester, today).
  */
 
-import { CourseSession } from './schedule.types';
+import { CourseSession, WeekSchedule, DaySchedule } from './schedule.types';
+import { DAYS_OF_WEEK } from '../constants';
 
 /** Regex pattern for DD/MM/YYYY format */
 export const DATE_REGEX_SINGLE = /(\d{2})\/(\d{2})\/(\d{4})/;
@@ -150,4 +151,40 @@ export const createSessionFilter = (filters: FilterState) => {
         if (filters.teacher && session.teacher !== filters.teacher) return false;
         return true;
     };
+};
+
+/**
+ * Filter a week's sessions and return a new cloned week object if changes occurred.
+ * Returns null if the week has completely 0 matching sessions.
+ */
+export const getFilteredWeek = (week: WeekSchedule, filterFn: (s: CourseSession) => boolean): { filteredWeek: WeekSchedule, hasSessions: boolean, isChanged: boolean } => {
+    let hasSessions = false;
+    let isChanged = false;
+    const newDays: Record<string, DaySchedule> = {};
+
+    for (const day of DAYS_OF_WEEK) {
+        if (!week.days[day]) {
+            newDays[day] = week.days[day];
+            continue;
+        }
+        
+        const orgM = week.days[day].morning;
+        const orgA = week.days[day].afternoon;
+        const orgE = week.days[day].evening;
+        
+        const m = orgM.filter(filterFn);
+        const a = orgA.filter(filterFn);
+        const e = orgE.filter(filterFn);
+
+        if (m.length !== orgM.length || a.length !== orgA.length || e.length !== orgE.length) {
+            isChanged = true;
+        }
+        if (m.length || a.length || e.length) hasSessions = true;
+        
+        newDays[day] = { morning: m, afternoon: a, evening: e };
+    }
+    
+    // Only clone if the filter actually removed some sessions
+    const filteredWeek = isChanged ? { ...week, days: newDays as typeof week.days } : week;
+    return { filteredWeek, hasSessions, isChanged };
 };

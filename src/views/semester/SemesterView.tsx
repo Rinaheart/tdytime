@@ -4,21 +4,23 @@
  * Reads from Zustand store. Zero props.
  */
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Zap, LayoutTemplate, Columns, Search, ChevronDown, ChevronUp } from 'lucide-react';
 import { useScheduleStore } from '@/core/stores';
 import { FilterBar } from '@/ui';
 // DAYS_OF_WEEK used in WeekAccordion
-import type { DaySchedule, WeekSchedule } from '@/core/schedule/schedule.types';
-import { isCurrentWeek as checkIsCurrentWeek, getCurrentWeekRange } from '@/core/schedule/schedule.utils';
+
+import { isCurrentWeek as checkIsCurrentWeek, getCurrentWeekRange, getFilteredWeek } from '@/core/schedule/schedule.utils';
 import { useScheduleFilter } from '@/core/hooks/useScheduleFilter';
 import WeekAccordion from './WeekAccordion';
 
 const SemesterView: React.FC = () => {
     const { t } = useTranslation();
     const data = useScheduleStore((s) => s.data);
+    const overrides = useScheduleStore((s) => s.overrides);
+    const abbreviations = useScheduleStore((s) => s.abbreviations);
 
     const weeks = data?.weeks || [];
     const teacherName = data?.metadata?.teacher || '';
@@ -51,16 +53,10 @@ const SemesterView: React.FC = () => {
 
 
 
-    const weekHasSessions = useCallback((week: WeekSchedule) => {
-        return Object.values(week.days).some((d) => {
-            const day = d as DaySchedule;
-            return [...day.morning, ...day.afternoon, ...day.evening].some(filterFn);
-        });
-    }, [filterFn]);
-
-
-
-    const scrollToCurrentWeek = () => {
+    // Centralize filtering for all weeks to leverage React.memo properly
+    const filteredWeeksData = useMemo(() => {
+        return weeks.map(week => getFilteredWeek(week, filterFn));
+    }, [weeks, filterFn]);    const scrollToCurrentWeek = () => {
         if (isBeforeSemester) {
             setExpandedWeeks((prev) => ({ ...prev, [0]: true }));
             setTimeout(() => document.getElementById(`week-card-0`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
@@ -76,7 +72,7 @@ const SemesterView: React.FC = () => {
         const currentWIdx = weeks.findIndex((w) => checkIsCurrentWeek(w.dateRange, now));
 
         if (currentWIdx !== -1) {
-            if (weekHasSessions(weeks[currentWIdx])) {
+            if (filteredWeeksData[currentWIdx].hasSessions) {
                 setExpandedWeeks((prev) => ({ ...prev, [currentWIdx]: true }));
                 setTimeout(() => document.getElementById(`week-card-${currentWIdx}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
             } else {
@@ -95,8 +91,8 @@ const SemesterView: React.FC = () => {
 
     const isAllExpanded = useMemo(() => {
         if (weeks.length === 0) return false;
-        return weeks.every((_, i) => expandedWeeks[i] ?? (checkIsCurrentWeek(weeks[i].dateRange, now) && weekHasSessions(weeks[i])));
-    }, [weeks, expandedWeeks, now, weekHasSessions]);
+        return weeks.every((_, i) => expandedWeeks[i] ?? (checkIsCurrentWeek(weeks[i].dateRange, now) && filteredWeeksData[i].hasSessions));
+    }, [weeks, expandedWeeks, now, filteredWeeksData]);
 
     const toggleAllWeeks = () => {
         const shouldExpand = !isAllExpanded;
@@ -149,27 +145,25 @@ const SemesterView: React.FC = () => {
             {/* Weeks */}
             <div className={viewMode === 'vertical' ? 'relative space-y-8 before:absolute before:left-[19px] md:before:left-[23px] before:top-4 before:bottom-4 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800 before:z-0' : 'space-y-8'}>
                 {weeks.map((week, wIdx) => {
-                    const hasData = Object.values(week.days).some((d) => {
-                        const day = d as DaySchedule;
-                        return [...day.morning, ...day.afternoon, ...day.evening].some(filterFn);
-                    });
-                    if (!hasData && (filters.search || filters.className || filters.room || filters.teacher)) return null;
+                    const filteredData = filteredWeeksData[wIdx];
+                    if (!filteredData.hasSessions && hasActiveFilters) return null;
 
                     const isCurrent = checkIsCurrentWeek(week.dateRange, now);
-                    const hasSessions = weekHasSessions(week);
-                    const isDefaultExpanded = isAfterSemester ? false : (isCurrent ? hasSessions : (isBeforeSemester && wIdx === 0));
+                    const isDefaultExpanded = isAfterSemester ? false : (isCurrent ? filteredData.hasSessions : (isBeforeSemester && wIdx === 0));
                     const isExpanded = expandedWeeks[wIdx] ?? isDefaultExpanded;
 
                     return (
                         <WeekAccordion
                             key={wIdx}
-                            week={week}
+                            week={filteredData.filteredWeek}
                             weekIdx={wIdx}
                             isExpanded={isExpanded}
                             onToggle={() => toggleWeek(wIdx)}
-                            filterFn={filterFn}
                             showTeacher={!filters.teacher}
                             viewMode={viewMode}
+                            now={now}
+                            overrides={overrides!}
+                            abbreviations={abbreviations!}
                         />
                     );
                 })}

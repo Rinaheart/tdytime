@@ -3,7 +3,7 @@
  * Orchestrates all cards and charts. Reads from Zustand store.
  */
 
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Calendar, Clock, Activity, AlertOctagon, Users, MapPin } from 'lucide-react';
 import { useScheduleStore } from '@/core/stores';
@@ -58,13 +58,28 @@ const StatisticsView: React.FC = () => {
 
     if (!data || !metrics) return null;
 
-    const isMainTeacher = (tName: string) => {
+    // Pre-normalize main teacher name for efficient comparison
+    const normalizedMainTeacher = useMemo(() => {
+        if (!data?.metadata.teacher) return '';
+        return data.metadata.teacher.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '')
+            .trim();
+    }, [data?.metadata.teacher]);
+
+    const isMainTeacher = useCallback((tName: string) => {
         if (!tName || tName === 'Chưa rõ' || tName === 'Unknown') return true;
-        const normalize = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '').trim();
-        const main = normalize(data.metadata.teacher);
-        const target = normalize(tName);
-        return target.includes(main) || main.includes(target);
-    };
+        if (!normalizedMainTeacher) return false;
+        
+        const target = tName.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '')
+            .trim();
+            
+        return target.includes(normalizedMainTeacher) || normalizedMainTeacher.includes(target);
+    }, [normalizedMainTeacher]);
 
     const weeklyData = useMemo(() => Object.entries(metrics.hoursByWeek).map(([w, h]) => ({ name: `T${w}`, value: h })), [metrics.hoursByWeek]);
     const dailyData = useMemo(() => Object.entries(metrics.hoursByDay).map(([_d, h], i) => ({ name: t(`days.${i}`), value: h })), [metrics.hoursByDay, t]);
@@ -181,7 +196,7 @@ const StatisticsView: React.FC = () => {
                             </h3>
                             <div className="relative z-10 grid grid-cols-2 gap-4">
                                 {metrics.classDistribution.slice(0, 6).map((c, i) => (
-                                    <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
+                                    <div key={`${c.className}-${i}`} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
                                         <div className="flex justify-between items-center mb-1.5">
                                             <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{c.className}</span>
                                             <span className="text-[9px] font-black text-accent-600 dark:text-accent-400">{c.periods}</span>
@@ -199,7 +214,7 @@ const StatisticsView: React.FC = () => {
                             </h3>
                             <div className="relative z-10 grid grid-cols-2 gap-4">
                                 {metrics.topRooms.slice(0, 6).map((r, i) => (
-                                    <div key={i} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
+                                    <div key={`${r.room}-${i}`} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/40 rounded-sm border border-slate-100/60 dark:border-slate-800/60 flex flex-col justify-center">
                                         <div className="flex justify-between items-center mb-1.5">
                                             <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate pr-2">{r.room}</span>
                                             <span className="text-[9px] font-black text-accent-500 dark:text-accent-400">{r.periods}</span>

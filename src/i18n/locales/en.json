@@ -370,6 +370,15 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.4.0",
+                "date": "2026-03-27",
+                "changes": [
+                    "Shared UI Architecture: Refactored Weekly & Semester views to use shared components (WeekTableLayout, WeekCardLayout), ensuring 100% visual consistency.",
+                    "Performance Optimization: Optimized Semester view rendering with pre-calculated filters and React.memo, enabling smooth interaction even with dozens of weeks expanded.",
+                    "Bug Fixes & Stability: Resolved unique key collisions and optimized teacher recognition logic, reducing navigation delay to Statistics/Settings tabs to near-zero."
+                ]
+            },
+            {
                 "version": "v1.3.0",
                 "date": "2026-03-26",
                 "changes": [
