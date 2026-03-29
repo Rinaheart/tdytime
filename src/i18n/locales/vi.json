@@ -375,6 +375,17 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.5.0",
+                "date": "2026-03-30",
+                "changes": [
+                    "Theme Picker Pro: Menu chọn màu theo danh sách thay cho xoay vòng, kèm 7 bảng màu mới.",
+                    "Semester Alignment: Đồng bộ hóa lưới (grid) 48px ở màn hình Học kỳ theo chuẩn màn hình Tuần, tạo ra tổng thể SaaS chuyên nghiệp.",
+                    "Sticky Navigation: Thêm tính năng neo cố định tiêu đề bảng (sticky headers) giúp xem lịch trình dễ dàng hơn.",
+                    "Tech Stack Upgrade: Nâng cấp TypeScript 6.0 và các thư viện core (Zustand, React Router, Vite) lên bản ổn định mới nhất.",
+                    "Architecture Focus: Tách biệt hoàn toàn Domain Logic (Thẻ tiết học & Quy chuẩn thời gian) ra khỏi Generic UI, giúp dễ bảo trì hơn 100%."
+                ]
+            },
+            {
                 "version": "v1.4.0",
                 "date": "2026-03-27",
                 "changes": [

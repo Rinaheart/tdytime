@@ -7,7 +7,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Play } from 'lucide-react';
-import { SessionCard } from '@/ui';
+import SessionCard from '@/views/shared/SessionCard';
 import { useScheduleStore } from '@/core/stores';
 import type { SessionWithStatus } from './useTodayData';
 

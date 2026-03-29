@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SessionCard } from '@/ui';
+import SessionCard from '@/views/shared/SessionCard';
 import { DAYS_OF_WEEK } from '@/core/constants';
 import type { WeekSchedule, DaySchedule, CourseType } from '@/core/schedule/schedule.types';
 import { getDayDateString, isDayToday as checkIsDayToday } from '@/core/schedule/schedule.utils';

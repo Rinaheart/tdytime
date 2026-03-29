@@ -374,6 +374,17 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.5.0",
+                "date": "2026-03-30",
+                "changes": [
+                    "Theme Picker Pro: Replaced the sequence-based theme toggle with a professional color picker menu featuring 7 new palettes.",
+                    "Semester Alignment: Standardized the 48px grid on Semester view to match Weekly view, creating a cohesive professional SaaS look.",
+                    "Sticky Navigation: Added sticky headers to long schedules for better readability.",
+                    "Tech Stack Upgrade: Upgraded TypeScript 6.0 and core libraries (Zustand, React Router, Vite) to the latest stable versions.",
+                    "Architecture Focus: Fully decoupled Domain Logic (Session cards & Period Standards) from Generic UI, making the codebase 100% easier to maintain."
+                ]
+            },
+            {
                 "version": "v1.4.0",
                 "date": "2026-03-27",
                 "changes": [

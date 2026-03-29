@@ -10,6 +10,7 @@ import CourseTypeCard from './CourseTypeCard';
 import AbbreviationsCard from './AbbreviationsCard';
 import ThresholdsCard from './ThresholdsCard';
 import DangerZoneCard from './DangerZoneCard';
+import PeriodStandardsCard from './PeriodStandardsCard';
 import AboutCard from './AboutCard';
 import { APP_VERSION } from '@/core/constants';
 
@@ -117,7 +118,8 @@ const SettingsView: React.FC = () => {
                 )}
             </div>
 
-            {/* Period Standards + Changelog */}
+            {/* Period Standards & Changelog */}
+            <PeriodStandardsCard />
             <AboutCard />
 
             <div className="text-center text-slate-400 text-[10px] mt-8">

@@ -1,6 +1,6 @@
 import React from 'react';
 
-type BadgeVariant = 'live' | 'pending' | 'completed' | 'morning' | 'afternoon' | 'evening' | 'theory' | 'practice' | 'warning' | 'info' | 'default';
+type BadgeVariant = 'live' | 'pending' | 'completed' | 'morning' | 'afternoon' | 'evening' | 'theory' | 'practice' | 'warning' | 'danger' | 'info' | 'default';
 
 interface BadgeProps {
     variant?: BadgeVariant;
@@ -20,6 +20,7 @@ const VARIANT_CLASSES: Record<BadgeVariant, string> = {
     theory: 'bg-accent-50 text-accent-700 border-accent-200 dark:bg-accent-900/20 dark:text-accent-400 dark:border-accent-800',
     practice: 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800',
     warning: 'bg-red-50 text-red-600 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800',
+    danger: 'bg-red-100 text-red-700 border-red-300 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700',
     info: 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/20 dark:text-sky-400 dark:border-sky-800',
     default: 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
 };
