@@ -19,7 +19,6 @@ import WeekAccordion from './WeekAccordion';
 const SemesterView: React.FC = () => {
     const { t } = useTranslation();
     const data = useScheduleStore((s) => s.data);
-    const overrides = useScheduleStore((s) => s.overrides);
     const abbreviations = useScheduleStore((s) => s.abbreviations);
 
     const weeks = data?.weeks || [];

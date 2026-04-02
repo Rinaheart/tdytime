@@ -7,7 +7,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
-import type { WeekSchedule, CourseType } from '@/core/schedule/schedule.types';
+import type { WeekSchedule } from '@/core/schedule/schedule.types';
 import { isCurrentWeek as checkIsCurrentWeek, isPastWeek as checkIsPastWeek } from '@/core/schedule/schedule.utils';
 import WeekTableLayout from '../shared/WeekTableLayout';
 import WeekCardLayout from '../shared/WeekCardLayout';

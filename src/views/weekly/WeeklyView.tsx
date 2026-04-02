@@ -26,7 +26,6 @@ const WeeklyView: React.FC = () => {
     const { t } = useTranslation();
     const data = useScheduleStore((s) => s.data);
     const currentWeekIndex = useScheduleStore((s) => s.currentWeekIndex);
-    const overrides = useScheduleStore((s) => s.overrides);
     const abbreviations = useScheduleStore((s) => s.abbreviations);
 
     const weeks = data?.weeks || [];
@@ -115,7 +114,6 @@ const WeeklyView: React.FC = () => {
                             <WeekTableLayout 
                                 week={filteredWeek!} 
                                 now={now} 
-                                overrides={overrides!} 
                                 abbreviations={abbreviations!} 
                                 showTeacher={!filters.teacher} 
                                 isCurrent={isCurrent}
@@ -127,7 +125,6 @@ const WeeklyView: React.FC = () => {
                                 <WeekCardLayout 
                                     week={filteredWeek!} 
                                     now={now} 
-                                    overrides={overrides!} 
                                     abbreviations={abbreviations!} 
                                     showTeacher={!filters.teacher} 
                                     isCurrent={isCurrent}

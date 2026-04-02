@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import SessionCard from '@/views/shared/SessionCard';
 import { DAYS_OF_WEEK } from '@/core/constants';
-import type { WeekSchedule, DaySchedule, CourseType, CourseSession } from '@/core/schedule/schedule.types';
+import type { WeekSchedule, DaySchedule, CourseSession } from '@/core/schedule/schedule.types';
 import { getDayDateString, isDayToday as checkIsDayToday } from '@/core/schedule/schedule.utils';
 
 export interface WeekTableLayoutProps {
