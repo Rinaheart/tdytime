@@ -12,10 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Vite 8 & Rolldown Migration**: Nâng cấp toàn diện hạ tầng build lên Vite 8.0.5, tích hợp **Rolldown** (Rust-based bundler) và **Oxc** để tối ưu hóa tốc độ và độ tin cậy.
 - **Immortal Infrastructure**: Triển khai `vercel.json` với chính sách `Cache-Control: public, max-age=31536000, immutable` cho toàn bộ hashed assets, đạt mốc **0.0 KB JS transfer** (Warm Load).
 
-### Changed
-
 - **Build Performance Boost**: Giảm thời gian build từ 7.0s xuống còn **1.6s** (nhanh hơn ~77%) nhờ sức mạnh của Rolldown.
-- **Granular Splitting Protocol**: Tái cấu trúc chiến lược chunking (`manualChunks`) để phân tách thông minh thành ~11 chunks, tối ưu hóa song song hóa trên HTTP/2.
+- **Granular Splitting Protocol**: Tái cấu trúc chiến lược chunking (`manualChunks`) và modulePreload để tối ưu hóa song song hóa trên HTTP/2.
+- **Prompt-based Update UX**: Chuyển đổi từ `autoUpdate` sang `prompt-based` cho PWA, mang lại quyền kiểm soát phiên bản cho người dùng và tránh ngắt quãng trải nghiệm đột ngột.
+
+### Fixed
+
+- **PWA Lifecycle Breakthrough**: Giải quyết triệt để lỗi "Kẹt phiên bản" bằng cách loại bỏ `index.html` khỏi danh sách Precache và áp dụng chiến lược `NetworkFirst` (với networkTimeout 3s) cho Navigation requests.
+- **Update Handler Refactor**: Tái cấu trúc logic Service Worker để xử lý dứt điểm các lỗi Stale closures (via Refs), Memory leaks (Cleanup timeouts), và xung đột giao diện (Toast overlap).
+- **Silent Update Hygiene**: Bổ sung cơ chế bảo vệ Navigator và làm sạch mảng Timeout, đảm bảo ứng dụng vận hành ổn định 100% trong môi trường Production.
 
 ## [1.6.0] - 2026-04-03
 

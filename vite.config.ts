@@ -16,7 +16,7 @@ export default defineConfig({
     plugins: [
         react(),
         VitePWA({
-            registerType: 'autoUpdate',
+            registerType: 'prompt',
             includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
             manifest: {
                 name: 'TdyTime - Phân tích Lịch giảng',
@@ -42,11 +42,19 @@ export default defineConfig({
                 ],
             },
             workbox: {
-                globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff2}'],
+                globPatterns: ['**/*.{js,css,ico,png,svg,json,woff2}'], // ❌ Bỏ html
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,
                 skipWaiting: true,
                 runtimeCaching: [
+                    {
+                        urlPattern: ({ request }: any) => request.mode === 'navigate',
+                        handler: 'NetworkFirst',
+                        options: {
+                            cacheName: 'html-cache',
+                            networkTimeoutSeconds: 3,
+                        },
+                    },
                     {
                         urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
                         handler: 'CacheFirst',

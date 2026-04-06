@@ -3,7 +3,7 @@
  * Handles "Check for updates" and Install Prompt.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { useTranslation } from 'react-i18next';
 import { RefreshCw, Download, Check, X } from 'lucide-react';
@@ -11,35 +11,54 @@ import { RefreshCw, Download, Check, X } from 'lucide-react';
 const INSTALL_PROMPT_DISMISS_KEY = 'tdytime_install_prompt_dismissed';
 const DISMISS_DURATION = 24 * 60 * 60 * 1000; // 24 hours in ms
 
+interface BeforeInstallPromptEvent extends Event {
+    prompt: () => Promise<void>;
+    userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
+type CheckStatus = 'idle' | 'checking' | 'up-to-date' | 'error';
+
 export const PWAUpdateHandler: React.FC = () => {
     const { t } = useTranslation();
-    const [installPrompt, setInstallPrompt] = useState<any>(null);
-    const [isChecking, setIsChecking] = useState(false);
-    const [checkStatus, setCheckStatus] = useState<'none' | 'up-to-date'>('none');
+    const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+    const [checkStatus, setCheckStatus] = useState<CheckStatus>('idle');
     const [isDismissed, setIsDismissed] = useState(true);
+
+    const isStandalone = typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
+    const timeoutIds = useRef<number[]>([]);
+
+    const addTimeout = (fn: () => void, delay: number) => {
+        const id = window.setTimeout(() => {
+            fn();
+            timeoutIds.current = timeoutIds.current.filter(t => t !== id);
+        }, delay);
+        timeoutIds.current.push(id);
+    };
 
     // Check dismiss status on mount
     useEffect(() => {
         const lastDismissed = localStorage.getItem(INSTALL_PROMPT_DISMISS_KEY);
         if (lastDismissed) {
-            const timePassed = Date.now() - parseInt(lastDismissed, 10);
-            if (timePassed < DISMISS_DURATION) {
-                setIsDismissed(true);
+            const ts = Number(lastDismissed);
+            if (!Number.isNaN(ts)) {
+                const timePassed = Date.now() - ts;
+                setIsDismissed(timePassed < DISMISS_DURATION);
             } else {
                 setIsDismissed(false);
             }
         } else {
             setIsDismissed(false);
         }
+
+        return () => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            timeoutIds.current.forEach(id => window.clearTimeout(id));
+        };
     }, []);
 
     const sw = useRegisterSW({
         onRegistered(r: ServiceWorkerRegistration | undefined) {
             console.log('SW Registered:', r);
-            // Periodic check for updates (every hour)
-            r && setInterval(() => {
-                r.update();
-            }, 60 * 60 * 1000);
         },
         onRegisterError(error: any) {
             console.log('SW registration error', error);
@@ -54,10 +73,21 @@ export const PWAUpdateHandler: React.FC = () => {
         : [sw.needRefresh, () => { }];
     const { updateServiceWorker } = sw;
 
+    const needUpdateRef = useRef(needUpdate);
+    const checkStatusRef = useRef(checkStatus);
+
+    useEffect(() => {
+        needUpdateRef.current = needUpdate;
+    }, [needUpdate]);
+
+    useEffect(() => {
+        checkStatusRef.current = checkStatus;
+    }, [checkStatus]);
+
     useEffect(() => {
         const handleInstallPrompt = (e: Event) => {
             e.preventDefault();
-            setInstallPrompt(e);
+            setInstallPrompt(e as BeforeInstallPromptEvent);
         };
         window.addEventListener('beforeinstallprompt', handleInstallPrompt);
         return () => window.removeEventListener('beforeinstallprompt', handleInstallPrompt);
@@ -78,47 +108,62 @@ export const PWAUpdateHandler: React.FC = () => {
         const { outcome } = await installPrompt.userChoice;
         if (outcome === 'accepted') {
             setInstallPrompt(null);
+        } else {
+            handleDismissInstall();
         }
     };
 
     const handleDismissInstall = () => {
         localStorage.setItem(INSTALL_PROMPT_DISMISS_KEY, Date.now().toString());
         setIsDismissed(true);
+        setInstallPrompt(null);
     };
 
     // Expose check function to window for SettingsView to trigger
     useEffect(() => {
-        (window as any).checkPWAUpdate = async () => {
-            setIsChecking(true);
-            setCheckStatus('none');
+        const checkFn = async () => {
+            if (checkStatusRef.current === 'checking') return;
+            
+            setCheckStatus('checking');
 
-            // Register SW instance might be available via navigator
-            if ('serviceWorker' in navigator) {
-                const registration = await navigator.serviceWorker.getRegistration();
-                if (registration) {
-                    await registration.update();
-                    // If no update found after a delay, show "up to date"
-                    setTimeout(() => {
-                        setIsChecking(false);
-                        if (!needUpdate) {
-                            setCheckStatus('up-to-date');
-                            setTimeout(() => setCheckStatus('none'), 3000);
-                        }
-                    }, 1500);
+            try {
+                if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+                    const registration = await navigator.serviceWorker.getRegistration();
+                    if (registration) {
+                        await registration.update();
+                        
+                        addTimeout(() => {
+                            if (needUpdateRef.current) {
+                                setCheckStatus('idle');
+                            } else {
+                                setCheckStatus('up-to-date');
+                                addTimeout(() => setCheckStatus('idle'), 3000);
+                            }
+                        }, 1500);
+                    } else {
+                        throw new Error('No registration found');
+                    }
                 } else {
-                    setIsChecking(false);
+                    throw new Error('Service Workers not supported');
                 }
-            } else {
-                setIsChecking(false);
+            } catch (error) {
+                setCheckStatus('error');
+                addTimeout(() => setCheckStatus('idle'), 3000);
             }
         };
-    }, [needUpdate]);
+
+        (window as any).checkPWAUpdate = checkFn;
+
+        return () => {
+            delete (window as any).checkPWAUpdate;
+        };
+    }, []);
 
     return (
         <>
             {/* Install Prompt Banner (Bottom Left/Center) */}
-            {installPrompt && !isDismissed && (
-                <div className="fixed bottom-24 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-full md:max-w-sm z-[100] animate-in slide-in-from-bottom-10 fade-in duration-500">
+            {installPrompt && !isDismissed && !isStandalone && (
+                <div className="fixed bottom-24 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-full md:max-w-sm z-[100] animate-in slide-in-from-bottom-10 fade-in duration-300">
                     <div className="bg-white dark:bg-slate-900 border-[1.5px] border-accent-500 rounded-2xl shadow-2xl p-4 flex flex-col gap-3 relative mx-auto max-w-[calc(100vw-2rem)] md:max-w-none">
                         <button
                             onClick={handleDismissInstall}
@@ -180,14 +225,14 @@ export const PWAUpdateHandler: React.FC = () => {
             )}
 
             {/* Global Check for Update Toast */}
-            {(isChecking || checkStatus === 'up-to-date') && (
-                <div className="fixed top-20 right-4 z-[110] animate-in slide-in-from-right-10 fade-in duration-300">
+            {checkStatus !== 'idle' && (
+                <div className="fixed top-36 right-4 z-[110] animate-in slide-in-from-right-10 fade-in duration-300">
                     <div className="bg-slate-800 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-                        <div className={`${isChecking ? 'animate-spin' : 'bg-green-500 rounded-full p-0.5 text-white'}`}>
-                            {isChecking ? <RefreshCw size={14} /> : <Check size={12} strokeWidth={4} />}
+                        <div className={`${checkStatus === 'checking' ? 'animate-spin' : checkStatus === 'error' ? 'bg-red-500 rounded-full p-0.5 text-white' : 'bg-green-500 rounded-full p-0.5 text-white'}`}>
+                            {checkStatus === 'checking' ? <RefreshCw size={14} /> : checkStatus === 'error' ? <X size={12} strokeWidth={4} /> : <Check size={12} strokeWidth={4} />}
                         </div>
                         <span className="text-xs font-bold">
-                            {isChecking ? t('pwa.checking') : t('pwa.up_to_date')}
+                            {checkStatus === 'checking' ? t('pwa.checking') : checkStatus === 'error' ? t('pwa.check_error', 'Lỗi kiểm tra') : t('pwa.up_to_date')}
                         </span>
                     </div>
                 </div>

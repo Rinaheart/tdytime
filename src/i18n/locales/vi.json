@@ -377,6 +377,17 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.7.0",
+                "date": "2026-04-06",
+                "changes": [
+                    "Vite 8 & Rolldown: Nâng cấp toàn diện hạ tầng build lên Vite 8.0.5 với Rolldown và Oxc, tăng tốc độ build ~77%.",
+                    "PWA Lifecycle Fix: Giải quyết triệt để lỗi kẹt phiên bản bằng chiến lược NetworkFirst cho HTML và loại bỏ Precache index.html.",
+                    "Immortal Cache: Triển khai Cache-Control immutable cho assets, giúp tải lại trang tức thì với 0.0 KB transfer.",
+                    "Prompt-based Update: Chuyển sang cơ chế thông báo cập nhật chủ động, giúp người dùng kiểm soát việc nâng cấp an toàn.",
+                    "Architecture Hygiene: Tái cấu trúc Update Handler để loại bỏ Race conditions, Memory leaks và xung đột giao diện."
+                ]
+            },
+            {
                 "version": "v1.6.0",
                 "date": "2026-04-02",
                 "changes": [
