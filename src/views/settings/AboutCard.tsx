@@ -17,6 +17,7 @@ const AboutCard: React.FC = () => {
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 md:p-6">
                 <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-2">
                     <ClipboardList size={16} className="text-accent-500" /> {t('about.changelog')}
+                    <span className="ml-2 px-2 py-0.5 bg-green-500/10 text-green-500 text-[9px] rounded-full border border-green-500/20 active-hmr-test">Vite 8.0.5 Mode</span>
                 </h3>
                 <div className="space-y-6 max-h-[400px] overflow-y-auto custom-scrollbar pr-4">
                     {Array.isArray(changeLog) && changeLog.map((log) => (
