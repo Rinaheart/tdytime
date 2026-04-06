@@ -384,7 +384,8 @@
                     "PWA Lifecycle Fix: Giải quyết triệt để lỗi kẹt phiên bản bằng chiến lược NetworkFirst cho HTML và loại bỏ Precache index.html.",
                     "Immortal Cache: Triển khai Cache-Control immutable cho assets, giúp tải lại trang tức thì với 0.0 KB transfer.",
                     "Prompt-based Update: Chuyển sang cơ chế thông báo cập nhật chủ động, giúp người dùng kiểm soát việc nâng cấp an toàn.",
-                    "Architecture Hygiene: Tái cấu trúc Update Handler để loại bỏ Race conditions, Memory leaks và xung đột giao diện."
+                    "Architecture Hygiene: Tái cấu trúc Update Handler để loại bỏ Race conditions, Memory leaks và xung đột giao diện.",
+                    "Dependency Upgrade: lucide-react v1.7.0 (ESM-only, gỡ brand icons), @vercel/speed-insights v2.0.0 (MIT, Resilient Intake), react-i18next v17.0.2."
                 ]
             },
             {

@@ -383,7 +383,8 @@
                     "PWA Lifecycle Fix: Resolved 'stale version' issues by implementing NetworkFirst navigation and removing HTML from precache.",
                     "Immortal Cache: Implemented immutable Cache-Control for assets, achieving near-zero transfer on warm loads.",
                     "Prompt-based Update: Transitioned to a user-driven update notification for safer version transitions.",
-                    "Architecture Hygiene: Refactored Update Handler to eliminate Race conditions, Memory leaks, and UI conflicts."
+                    "Architecture Hygiene: Refactored Update Handler to eliminate Race conditions, Memory leaks, and UI conflicts.",
+                    "Dependency Upgrade: lucide-react v1.7.0 (ESM-only, brand icons removed), @vercel/speed-insights v2.0.0 (MIT, Resilient Intake), react-i18next v17.0.2."
                 ]
             },
             {

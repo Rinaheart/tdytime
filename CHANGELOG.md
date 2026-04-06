@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Update Handler Refactor**: Tái cấu trúc logic Service Worker để xử lý dứt điểm các lỗi Stale closures (via Refs), Memory leaks (Cleanup timeouts), và xung đột giao diện (Toast overlap).
 - **Silent Update Hygiene**: Bổ sung cơ chế bảo vệ Navigator và làm sạch mảng Timeout, đảm bảo ứng dụng vận hành ổn định 100% trong môi trường Production.
 
+### Changed
+
+- **lucide-react v1.7.0**: Nâng cấp từ v0.x lên v1.x — brand icons (Github, Facebook...) đã bị loại bỏ theo chính sách bản quyền, thay thế bằng inline SVG.
+- **@vercel/speed-insights v2.0.0**: Chuyển sang MIT license, tích hợp Resilient Intake giúp thu thập dữ liệu hiệu năng ổn định hơn.
+- **react-i18next v17.0.2**: Patch update — cải thiện độ ổn định.
+
 ## [1.6.0] - 2026-04-03
 
 ### Added
