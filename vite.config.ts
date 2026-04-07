@@ -8,16 +8,25 @@ export default defineConfig({
         __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
         __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
     },
+
     server: {
         port: 3000,
         host: '0.0.0.0',
         forwardConsole: true,
     },
+
     plugins: [
         react(),
+
         VitePWA({
-            registerType: 'prompt',
-            includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
+            registerType: 'prompt', // ✔ giữ control update bằng UI của bạn
+
+            includeAssets: [
+                'favicon.svg',
+                'pwa-192x192.png',
+                'pwa-512x512.png',
+            ],
+
             manifest: {
                 name: 'TdyTime - Phân tích Lịch giảng',
                 short_name: 'TdyTime',
@@ -41,46 +50,84 @@ export default defineConfig({
                     },
                 ],
             },
+
             workbox: {
-                globPatterns: ['**/*.{js,css,ico,png,svg,json,woff2}'], // ❌ Bỏ html
+                // ✔ FIX 1: thêm html để offline reload không chết
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff2}'],
+
+                // ✔ FIX 2: fallback cho SPA routes (/today, /week...)
+                navigateFallback: '/index.html',
+
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,
                 skipWaiting: true,
+
                 runtimeCaching: [
+                    // HTML / Navigation
                     {
-                        urlPattern: ({ request }: any) => request.mode === 'navigate',
+                        urlPattern: ({ request }) => request.mode === 'navigate',
                         handler: 'NetworkFirst',
                         options: {
                             cacheName: 'html-cache',
                             networkTimeoutSeconds: 3,
+                            expiration: {
+                                maxEntries: 10,
+                            },
                         },
                     },
+
+                    // Static assets (JS/CSS)
+                    {
+                        urlPattern: ({ request }) =>
+                            request.destination === 'script' ||
+                            request.destination === 'style',
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'static-assets',
+                        },
+                    },
+
+                    // Google Fonts CSS
                     {
                         urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
                         handler: 'CacheFirst',
                         options: {
                             cacheName: 'google-fonts-cache',
-                            expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-                            cacheableResponse: { statuses: [0, 200] },
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 60 * 60 * 24 * 365,
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
                         },
                     },
+
+                    // Google Fonts files
                     {
                         urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
                         handler: 'CacheFirst',
                         options: {
                             cacheName: 'gstatic-fonts-cache',
-                            expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-                            cacheableResponse: { statuses: [0, 200] },
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 60 * 60 * 24 * 365,
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
                         },
                     },
                 ],
             },
+
             devOptions: {
                 enabled: true,
                 type: 'module',
             },
         }),
     ],
+
     build: {
         rollupOptions: {
             output: {
@@ -99,13 +146,15 @@ export default defineConfig({
                 },
             },
         },
+
         chunkSizeWarningLimit: 1000,
+
         modulePreload: {
             polyfill: true,
         },
     },
+
     resolve: {
-        tsconfigPaths: true,
         alias: {
             '@': path.resolve(__dirname, './src'),
         },
