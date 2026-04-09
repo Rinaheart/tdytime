@@ -27,6 +27,7 @@
     <li><a href="#-cách-dùng">Cách dùng</a></li>
     <li><a href="#-cài-app-pwa">Cài app (PWA)</a></li>
     <li><a href="#-lộ-trình--công-nghệ">Lộ trình & Công nghệ</a></li>
+    <li><a href="./ARCHITECTURE.md">Kiến trúc (Architecture)</a></li>
     <li><a href="#-changelog">Changelog</a></li>
     <li><a href="#-liên-hệ--hỗ-trợ">Liên hệ & Hỗ trợ</a></li>
   </ol>
@@ -44,7 +45,7 @@ TdyTime bắt đầu từ một câu hỏi quen thuộc: “Hôm nay dạy gì, 
 ### ✨ Tính năng chính
 
 - 📱 **Trải nghiệm như App thật**: Cài trực tiếp lên màn hình (PWA).
-- 📶 **Hoạt động ngoại tuyến**: Dùng được cả khi offline.
+- 📶 **Instant Offline-First**: Hoạt động ngoại tuyến mạnh mẽ, khởi động tức thì (~100ms) nhờ chiến lược CacheFirst.
 - 🌐 **Đa ngôn ngữ**: Hỗ trợ Việt/Eng.
 - 🎨 **Giao diện hiện đại**: Dark Mode + 7 màu accent.
 - 📊 **Dashboard trực quan**: Thống kê giảng dạy chi tiết.
@@ -99,7 +100,8 @@ Cài trực tiếp lên thiết bị, mở nhanh và dùng offline.
 - **Core**: React 19, TypeScript 6, Zustand.
 - **Build**: Vite 8, Rolldown, Oxc.
 - **UI**: Tailwind CSS v4, Lucide Icons.
-- **PWA**: Vite PWA Plugin.
+- **PWA**: Vite PWA Plugin (CacheFirst Architecture).
+- **Architecture**: Xem chi tiết tại [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ---
 

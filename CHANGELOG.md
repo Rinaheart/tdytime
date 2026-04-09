@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] - 2026-04-09
+
+### Added
+
+- **Instant Offline-First Architecture**: Chuyển đổi Service Worker sang chiến lược `CacheFirst` cho tài nguyên điều hướng (HTML shell). Ứng dụng giờ đây khởi động gần như tức thì (~100ms) từ lần mở thứ hai, ngay cả khi không có kết nối mạng.
+- **Critical CSS Inlining**: Trích xuất và nhúng trực tiếp CSS khung xương (app shell) vào `index.html`, loại bỏ hiện tượng giật cục giao diện khi bắt đầu tải và cải thiện điểm FCP.
+- **SEO & Search Hygiene**: Bổ sung file `robots.txt` chuẩn hóa để ngăn chặn các máy chủ (như Vercel) phục vụ nhầm file HTML cho các trình thu thập dữ liệu, cải thiện khả năng chỉ mục.
+
+### Changed
+
+- **Granular Bundle Splitting v2**: Tái cấu trúc mạnh mẽ quy trình phân mảnh bundle (`manualChunks`). 
+    - Cô lập React Core vào `vendor-react` (giảm file chính từ 341KB xuống **187KB**, ~45% size).
+    - Tách biệt `i18n`, `router` và `utils` thành các chunk độc lập để tối ưu song song hóa.
+- **Non-Blocking Resource Loading**: 
+    - Chuyển Google Fonts sang chế độ tải bất đồng bộ (Async preload) để không chặn tiến trình render.
+    - Trì hoãn việc tải và khởi tạo Vercel Analytics/Speed Insights thông qua `requestIdleCallback` (defer 2-3 giây), giải phóng luồng chính cho trải nghiệm người dùng mượt mà nhất.
+- **WCAG Accessibility Polish**:
+    - Nâng cấp độ tương phản màu chữ từ `slate-400` lên `slate-500` tại các vị trí quan trọng để đạt chuẩn WCAG AA.
+    - Bổ sung `aria-label` cho các nút đóng và tương tác trong PWA Update Handler.
+
+### Fixed
+
+- **CSP Inline Script Security**: Khắc phục lỗi bảo mật CSP bằng cách cung cấp SHA-256 hash cho script Dark Mode nội bộ, thay thế cho chính sách `unsafe-inline` kém an toàn.
+- **PWA Precache Manifest**: Đồng bộ hóa `index.html` vào danh sách precache một cách chính xác để hỗ trợ chiến lược `CacheFirst` hoạt động ổn định 100%.
+
 ## [1.7.0] - 2026-04-06
 
 ### Added

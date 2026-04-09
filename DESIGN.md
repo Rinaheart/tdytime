@@ -76,4 +76,17 @@ TdyTime v2 sử dụng hệ màu **Ngữ nghĩa thích ứng**, tự động đi
 
 ---
 
-*Cập nhật lần cuối: 29/03/2026*
+## ⚡ Triết lý Hiệu năng (Performance Philosophy)
+
+Thiết kế của TdyTime không chỉ là về thẩm mỹ mà còn là về tốc độ.
+
+1.  **Critical Path First**: Ưu tiên hiển thị nội dung quan trọng nhất ngay lập tức bằng cách nhúng trực tiếp Critical CSS vào HTML.
+2.  **Zero-Jank Loading**: Sử dụng Skeleton Shimmer và App Shell để loại bỏ hiện tượng giật cục bố cục (Layout Shift) trong quá trình tải dữ liệu.
+3.  **Adaptive Resource Loading**:
+    - Các thành phần nặng (như Biểu đồ, Analytics) chỉ được tải khi trình duyệt rảnh rỗi.
+    - Phân mảnh Bundle thông minh để tận dụng bộ nhớ đệm trình duyệt tối đa.
+4.  **Instant Feedback**: Mọi tương tác của người dùng phải có phản hồi thị giác trong vòng dưới 100ms.
+
+---
+
+*Cập nhật lần cuối: 09/04/2026*
