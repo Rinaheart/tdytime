@@ -1,21 +1,46 @@
-import React from 'react';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
+
+const Analytics = lazy(() =>
+    import('@vercel/analytics/react').then((m) => ({ default: m.Analytics }))
+);
+const SpeedInsights = lazy(() =>
+    import('@vercel/speed-insights/react').then((m) => ({
+        default: m.SpeedInsights,
+    }))
+);
 
 /**
- * Monitoring Wrapper — Practical Pro Edition
- * Consolidates Vercel Analytics and Speed Insights into a single, stateless component.
+ * Monitoring Wrapper — Deferred Loading
+ * Delays Analytics/SpeedInsights until browser is idle to reduce TBT.
  */
 interface MonitoringProps {
     children: React.ReactNode;
 }
 
 export default function Monitoring({ children }: MonitoringProps) {
+    const [ready, setReady] = useState(false);
+
+    useEffect(() => {
+        if ('requestIdleCallback' in window) {
+            const id = requestIdleCallback(() => setReady(true), {
+                timeout: 3000,
+            });
+            return () => cancelIdleCallback(id);
+        } else {
+            const id = setTimeout(() => setReady(true), 2000);
+            return () => clearTimeout(id);
+        }
+    }, []);
+
     return (
         <>
             {children}
-            <Analytics />
-            <SpeedInsights />
+            {ready && (
+                <Suspense fallback={null}>
+                    <Analytics />
+                    <SpeedInsights />
+                </Suspense>
+            )}
         </>
     );
 }

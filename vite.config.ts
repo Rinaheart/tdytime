@@ -56,19 +56,28 @@ export default defineConfig({
                 navigateFallback: '/index.html',
                 navigateFallbackDenylist: [/^\/api/],
                 maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-                navigationPreload: true,
+                navigationPreload: false, // Disabled — not needed with CacheFirst
 
                 cleanupOutdatedCaches: true,
                 clientsClaim: false,
                 skipWaiting: false,
 
                 runtimeCaching: [
-                    // HTML / Navigation via StaleWhileRevalidate for instant boot + background freshness
+                    // HTML — CacheFirst: instant open, offline-first
+                    // Update flow: new deploy → SW detects precache diff → installs in background
+                    // → PWAUpdateHandler shows toast → user clicks update → reload
                     {
                         urlPattern: ({ request }) => request.mode === 'navigate',
-                        handler: 'StaleWhileRevalidate',
+                        handler: 'CacheFirst',
                         options: {
-                            cacheName: 'html-cache-v1',
+                            cacheName: 'html-shell-cache',
+                            plugins: [
+                                {
+                                    cacheWillUpdate: async ({ response }) => {
+                                        return response && response.status === 200 ? response : null;
+                                    },
+                                },
+                            ],
                         },
                     },
 
@@ -133,14 +142,30 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
-                        if (id.includes('react') || id.includes('i18next')) {
+                        // React core only (~140KB instead of 341KB)
+                        if (
+                            id.includes('/react/') ||
+                            id.includes('/react-dom/') ||
+                            id.includes('/scheduler/')
+                        ) {
                             return 'vendor-react';
+                        }
+                        // i18n — separate chunk
+                        if (id.includes('i18next') || id.includes('react-i18next')) {
+                            return 'vendor-i18n';
                         }
                         if (id.includes('react-router')) {
                             return 'vendor-router';
                         }
                         if (id.includes('lucide-react') || id.includes('zustand')) {
                             return 'vendor-utils';
+                        }
+                        // Vercel monitoring — separate to defer loading
+                        if (
+                            id.includes('@vercel/analytics') ||
+                            id.includes('@vercel/speed-insights')
+                        ) {
+                            return 'vendor-monitoring';
                         }
                     }
                 },

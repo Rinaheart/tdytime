@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="TdyTime - Your Today, Your Time" />
     <meta name="theme-color" content="#ffffff" />
+    <!-- Critical CSS — app shell only (avoid render-blocking wait for full CSS) -->
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; }
+      html { -webkit-text-size-adjust: 100%; font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif; }
+      body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
+      .dark { color-scheme: dark; }
+    </style>
 
-    <!-- Performance: Preconnect to Font Servers -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700&family=Montserrat:wght@600;800&display=swap" />
+    <!-- Async font loading — non-render-blocking -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700&family=Montserrat:wght@600;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700&family=Montserrat:wght@600;800&display=swap"></noscript>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/pwa-192x192.png" />
     <title>TdyTime - Your Today, Your Time</title>

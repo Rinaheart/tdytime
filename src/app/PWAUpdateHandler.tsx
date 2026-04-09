@@ -204,7 +204,7 @@ export const PWAUpdateHandler: React.FC = () => {
                             <h4 className="text-xs font-bold uppercase tracking-wider opacity-70">
                                 {needUpdate ? t('pwa.updateReady') : t('pwa.offlineReady')}
                             </h4>
-                            <button onClick={close} className="p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-xl">
+                            <button onClick={close} className="p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-xl" aria-label={t('common.close', 'Đóng')}>
                                 <X size={14} />
                             </button>
                         </div>

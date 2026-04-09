@@ -313,7 +313,7 @@ const AppLayout: React.FC = () => {
                             {metadata?.teacher || 'TdyTime'}
                         </div>
                         {metadata && (
-                            <span className="hidden md:inline text-xs text-slate-400 dark:text-slate-500">
+                            <span className="hidden md:inline text-xs text-slate-500 dark:text-slate-500">
                                 {formatSemester(metadata.semester)} • {metadata.academicYear}
                             </span>
                         )}
@@ -374,7 +374,7 @@ const AppLayout: React.FC = () => {
                     {/* Version */}
                     <div className="mt-auto pl-5 pb-6 transition-all duration-300">
                         <div className="w-10 flex items-center justify-center shrink-0">
-                            <span className="text-[9px] text-slate-400 dark:text-slate-600 uppercase font-black tracking-widest select-none">
+                            <span className="text-[9px] text-slate-500 dark:text-slate-600 uppercase font-black tracking-widest select-none">
                                 v{APP_VERSION}
                             </span>
                         </div>
