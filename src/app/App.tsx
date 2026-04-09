@@ -10,8 +10,6 @@ import { useScheduleStore } from '@/core/stores';
 
 import { PWAUpdateHandler } from './PWAUpdateHandler';
 
-import { SpeedInsights } from '@vercel/speed-insights/react';
-
 const App: React.FC = () => {
     const initFromStorage = useScheduleStore((s) => s.initFromStorage);
 
@@ -40,7 +38,6 @@ const App: React.FC = () => {
         <>
             <PWAUpdateHandler />
             <RouterProvider router={router} />
-            <SpeedInsights />
         </>
     );
 };
