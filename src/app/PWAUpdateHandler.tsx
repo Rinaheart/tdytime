@@ -200,17 +200,19 @@ export const PWAUpdateHandler: React.FC = () => {
             {(offlineReady || needUpdate) && (
                 <div className="fixed top-20 right-4 z-[110] animate-in slide-in-from-right-10 fade-in duration-300">
                     <div className="bg-slate-800 dark:bg-white text-white dark:text-slate-900 p-4 rounded-2xl shadow-2xl min-w-[280px]">
-                        <div className="flex justify-between items-start mb-2">
-                            <h4 className="text-xs font-bold uppercase tracking-wider opacity-70">
-                                {needUpdate ? t('pwa.updateReady') : t('pwa.offlineReady')}
-                            </h4>
-                            <button onClick={close} className="p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-xl" aria-label={t('common.close', 'Đóng')}>
-                                <X size={14} />
-                            </button>
+                        <div className="flex flex-col items-center text-center">
+                            <div className="flex justify-center items-center w-full mb-2 relative">
+                                <h4 className="text-xs font-bold text-accent-500 dark:text-accent-600">
+                                    {needUpdate ? t('pwa.updateReady', { version: typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '1.8.1' }) : t('pwa.offlineReady')}
+                                </h4>
+                                <button onClick={close} className="absolute -top-1 -right-1 p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-xl" aria-label={t('common.close', 'Đóng')}>
+                                    <X size={14} />
+                                </button>
+                            </div>
+                            <p className="text-xs mb-3 font-medium whitespace-pre-line">
+                                {needUpdate ? t('pwa.updateReadyDesc') : t('pwa.offlineReadyDesc')}
+                            </p>
                         </div>
-                        <p className="text-xs mb-3 font-medium">
-                            {needUpdate ? t('pwa.updateReadyDesc') : t('pwa.offlineReadyDesc')}
-                        </p>
                         {needUpdate && (
                             <button
                                 onClick={handleUpdate}

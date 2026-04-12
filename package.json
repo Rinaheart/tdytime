@@ -1,14 +1,16 @@
 {
   "name": "tdytime-v2-plan",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:perf": "lhci autorun"
   },
   "dependencies": {
+    "@tanstack/react-virtual": "^3.13.23",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "i18next": "^26.0.4",
@@ -30,7 +32,8 @@
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2",
     "vite": "^8.0.8",
-    "vite-plugin-pwa": "^1.2.0"
+    "vite-plugin-pwa": "^1.2.0",
+    "vitest": "^3.2.4"
   },
   "overrides": {
     "vite-plugin-pwa": {

@@ -1,13 +1,8 @@
-/**
- * SessionCard — Core UI Composite
- * Renders a single teaching session.
- * Two variants: 'today' (detailed) and 'weekly' (compact 3-line).
- */
-
 import React from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import { Badge, TypeBadge } from '@/ui';
 import type { CourseSession } from '@/core/schedule/schedule.types';
+import type { FlatSession } from '@/core/schedule/schedule.index';
 import { getPeriodTimes } from '@/core/constants';
 import { formatRoom, formatClassDisplay } from '@/core/schedule/schedule.utils';
 
@@ -15,17 +10,18 @@ type SessionStatus = 'PENDING' | 'LIVE' | 'COMPLETED';
 type SessionVariant = 'today' | 'weekly';
 
 interface SessionCardProps {
-    session: CourseSession;
+    session: FlatSession | CourseSession;
     status?: SessionStatus;
     variant?: SessionVariant;
     abbreviations?: Record<string, string>;
     showTeacher?: boolean;
     className?: string;
-    startTimeStr?: string; // Precomputed
-    endTimeStr?: string;   // Precomputed
+    // Precomputed strings can now be passed or read from session if it's FlatSession
+    startTimeStr?: string; 
+    endTimeStr?: string;
 }
 
-/** Compute human-readable start/end time from period range */
+/** Legacy logic: Compute human-readable start/end time from period range if strings missing */
 const getTimeStrings = (session: CourseSession) => {
     const startP = parseInt(session.timeSlot.split('-')[0]);
     const endP = parseInt(session.timeSlot.split('-')[1] || String(startP));
@@ -40,13 +36,29 @@ const getTimeStrings = (session: CourseSession) => {
     };
 };
 
+/** Shared helper to extract time strings from hybrid session types */
+const resolveTimes = (session: FlatSession | CourseSession, props: { startTimeStr?: string, endTimeStr?: string }) => {
+    // Priority 1: Direct Props
+    if (props.startTimeStr && props.endTimeStr) {
+        return { start: props.startTimeStr, end: props.endTimeStr };
+    }
+    
+    // Priority 2: FlatSession Precomputed
+    if ('startTimeStr' in session && 'endTimeStr' in session) {
+        return { start: session.startTimeStr, end: session.endTimeStr };
+    }
+    
+    // Priority 3: Legacy Calculation
+    const legacyTimes = getTimeStrings(session as CourseSession);
+    return { start: legacyTimes.startTime, end: legacyTimes.endTime };
+};
+
 // ─── WEEKLY VARIANT (Compact 3-Line) ─────────────────────────
-const WeeklyCard: React.FC<{ session: CourseSession; displayName: string; showTeacher: boolean; className?: string; startTimeStr?: string; endTimeStr?: string }> = ({
+const WeeklyCard: React.FC<{ session: FlatSession | CourseSession; displayName: string; showTeacher: boolean; className?: string; startTimeStr?: string; endTimeStr?: string }> = ({
     session, displayName, showTeacher, className = '', startTimeStr, endTimeStr,
 }) => {
-    const times = getTimeStrings(session);
-    const startTime = startTimeStr || times.startTime;
-    const endTime = endTimeStr || times.endTime;
+    const { start: startTime, end: endTime } = resolveTimes(session, { startTimeStr, endTimeStr });
+    
     return (
         <div className={`p-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-[1px] hover:border-slate-300 dark:hover:border-slate-600 group flex flex-col min-w-0 w-full overflow-hidden ${className}`}>
             {/* Row 1: Time + Room */}
@@ -85,10 +97,9 @@ const WeeklyCard: React.FC<{ session: CourseSession; displayName: string; showTe
 };
 
 // ─── TODAY COMPLETED (Collapsed row) ─────────────────────────
-const CompletedCard: React.FC<{ session: CourseSession; displayName: string; className?: string; startTimeStr?: string; endTimeStr?: string }> = ({ session, displayName, className = '', startTimeStr, endTimeStr }) => {
-    const times = getTimeStrings(session);
-    const startTime = startTimeStr || times.startTime;
-    const endTime = endTimeStr || times.endTime;
+const CompletedCard: React.FC<{ session: FlatSession | CourseSession; displayName: string; className?: string; startTimeStr?: string; endTimeStr?: string }> = ({ session, displayName, className = '', startTimeStr, endTimeStr }) => {
+    const { start: startTime, end: endTime } = resolveTimes(session, { startTimeStr, endTimeStr });
+
     return (
         <div className={`bg-slate-100 dark:bg-slate-800/80 rounded-md p-3 border border-slate-200 dark:border-slate-700 opacity-70 transition-all ${className}`}>
             <div className="flex flex-col gap-0.5">
@@ -107,12 +118,11 @@ const CompletedCard: React.FC<{ session: CourseSession; displayName: string; cla
 };
 
 // ─── TODAY FULL CARD (LIVE / PENDING) ────────────────────────
-const TodayCard: React.FC<{ session: CourseSession; displayName: string; isLive: boolean; showTeacher: boolean; className?: string; startTimeStr?: string; endTimeStr?: string }> = ({
+const TodayCard: React.FC<{ session: FlatSession | CourseSession; displayName: string; isLive: boolean; showTeacher: boolean; className?: string; startTimeStr?: string; endTimeStr?: string }> = ({
     session, displayName, isLive, showTeacher, className = '', startTimeStr, endTimeStr,
 }) => {
-    const times = getTimeStrings(session);
-    const startTime = startTimeStr || times.startTime;
-    const endTime = endTimeStr || times.endTime;
+    const { start: startTime, end: endTime } = resolveTimes(session, { startTimeStr, endTimeStr });
+
     return (
         <div className={`relative rounded-2xl p-5 transition-all duration-200 ${isLive
             ? 'bg-white dark:bg-slate-900 border border-accent-500 dark:border-accent-500 ring-2 ring-accent-500/20 shadow-sm hover:shadow-lg'
@@ -165,7 +175,11 @@ const TodayCard: React.FC<{ session: CourseSession; displayName: string; isLive:
     );
 };
 
-// ─── MAIN COMPONENT ──────────────────────────────────────────
+/**
+ * SessionCard — Core UI Composite
+ * Refactored to support FlatSession index precomputed strings.
+ * Fallbacks available for CourseSession (deprecated in Phase 3).
+ */
 const SessionCard: React.FC<SessionCardProps> = ({
     session,
     status = 'PENDING',

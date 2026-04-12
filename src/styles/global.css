@@ -160,3 +160,24 @@ h4,
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Virtualization performance optimizations — Scope paint/layout for virtual items */
+.virtual-item {
+    will-change: transform;
+    contain: layout style paint; /* 🔥 Isolate rendering cycles */
+    content-visibility: auto; /* Skip render offscreen items (Chrome 85+) */
+    contain-intrinsic-size: 280px; /* Hint: approximate height for scroll estimation */
+    backface-visibility: hidden; /* Avoid flicker on Safari/Chrome */
+}
+
+/* Progressive enhancement: fallback gracefully if content-visibility unsupported */
+@supports not (content-visibility: auto) {
+    .virtual-item {
+        contain: layout style; /* Fallback to basic containment */
+    }
+}
+
+/* Debug helper (dev mode only) */
+[data-debug-virtual="true"] .virtual-item {
+    outline: 1px dashed rgba(59, 130, 246, 0.3);
+}

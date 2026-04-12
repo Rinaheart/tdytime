@@ -15,6 +15,11 @@ export default defineConfig({
         forwardConsole: true,
     },
 
+    preview: {
+        port: 3000,
+        host: '0.0.0.0',
+    },
+
     plugins: [
         react(),
 
@@ -52,7 +57,9 @@ export default defineConfig({
             },
 
             workbox: {
-                globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff2}'],
+                globPatterns: process.env.NODE_ENV === 'production' 
+                    ? ['**/*.{js,css,html,ico,png,svg,json,woff2}']
+                    : [],
                 navigateFallback: '/index.html',
                 navigateFallbackDenylist: [/^\/api/],
                 maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,

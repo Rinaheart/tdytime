@@ -2,11 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import SessionCard from '@/views/shared/SessionCard';
 import { DAYS_OF_WEEK } from '@/core/constants';
-import type { WeekSchedule, DaySchedule, CourseSession } from '@/core/schedule/schedule.types';
 import { getDayDateString, isDayToday as checkIsDayToday } from '@/core/schedule/schedule.utils';
+import type { FlatSession } from '@/core/schedule/schedule.index';
+import type { ShiftType } from '@/views/weekly/useWeeklyData';
 
 export interface WeekTableLayoutProps {
-    week: WeekSchedule;
+    grouped: Record<number, Record<ShiftType, FlatSession[]>>;
+    weekRange: string;
     now: Date;
     abbreviations?: Record<string, string>;
     showTeacher?: boolean;
@@ -15,14 +17,18 @@ export interface WeekTableLayoutProps {
 }
 
 const WeekTableLayout: React.FC<WeekTableLayoutProps> = ({ 
-    week, now, abbreviations, showTeacher, isCurrent = true, fullBleed = false 
+    grouped, weekRange, now, abbreviations, showTeacher, isCurrent = true, fullBleed = false 
 }) => {
     const { t } = useTranslation();
 
-    const isDayToday = (dayIdx: number) => checkIsDayToday(week.dateRange, dayIdx, now);
+    const isDayToday = (dayIdx: number) => {
+        if (!weekRange) return false;
+        return checkIsDayToday(weekRange, dayIdx, now);
+    };
 
-    // Filter Sunday sessions to check if empty
-    const hasSundaySessions = (Object.values(week.days['Sunday'] || {}) as any[][]).some(
+    // Filter Sunday sessions to check if empty (dayIdx 6 = Sunday)
+    const sundayGroup = grouped[6] || { morning: [], afternoon: [], evening: [], night: [] };
+    const hasSundaySessions = Object.values(sundayGroup).some(
         (sessions) => sessions.length > 0
     );
 
@@ -56,14 +62,14 @@ const WeekTableLayout: React.FC<WeekTableLayoutProps> = ({
 
                                     return (
                                         <th 
-                                            key={`${week.dateRange}-${day}`} 
+                                            key={`${weekRange}-${day}`} 
                                             style={colStyle}
                                             className={`p-3 border border-slate-100 dark:border-slate-800 text-center transition-all ${isToday ? 'bg-accent-600 dark:bg-accent-600 z-10 relative ring-2 ring-accent-400 dark:ring-accent-500 shadow-[0_0_15px_rgba(37,99,235,0.3)]' : ''}`}
                                         >
                                             <div className="flex flex-col items-center gap-0.5">
                                                 {isToday && <span className="text-[8px] font-black text-white/80 uppercase tracking-widest mb-0.5">{t('weekly.today')}</span>}
                                                 <p className={`text-[11px] font-black uppercase tracking-widest ${isToday ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`}>{t(`days.${idx}`)}</p>
-                                                <p className={`text-xs font-num font-bold ${isToday ? 'text-white' : 'text-slate-600 dark:text-slate-400'}`}>{getDayDateString(week.dateRange, idx)}</p>
+                                                <p className={`text-xs font-num font-bold ${isToday ? 'text-white' : 'text-slate-600 dark:text-slate-400'}`}>{weekRange ? getDayDateString(weekRange, idx) : '—'}</p>
                                             </div>
                                         </th>
                                     );
@@ -87,18 +93,18 @@ const WeekTableLayout: React.FC<WeekTableLayoutProps> = ({
                                     </td>
                                     {DAYS_OF_WEEK.map((day, dayIdx) => {
                                         const isToday = isDayToday(dayIdx);
-                                        const shiftSessions = week.days[day as keyof typeof week.days]?.[shift.key as keyof DaySchedule] || [];
+                                        const shiftSessions = grouped[dayIdx]?.[shift.key] || [];
                                         const colStyle = getColStyle(dayIdx);
                                         
                                         return (
                                             <td 
-                                                key={`${week.dateRange}-${day}-${shift.key}`} 
+                                                key={`${weekRange}-${day}-${shift.key}`} 
                                                 style={colStyle}
                                                 className={`p-2 border border-slate-100 dark:border-slate-800 align-top min-h-[160px] min-w-0 w-0 relative overflow-hidden transition-colors ${isToday ? 'bg-accent-50/40 dark:bg-accent-900/10 border-x-accent-200/50 dark:border-x-accent-800/50 relative z-10' : ''}`}
                                             >
                                                 <div className="h-full flex flex-col gap-1.5 w-full min-w-0">
-                                                    {shiftSessions.map((session: CourseSession, sidx: number) => (
-                                                        <div key={`${session.courseCode}-${session.timeSlot}-${sidx}`} className="flex-1 flex min-w-0">
+                                                    {shiftSessions.map((session: FlatSession) => (
+                                                        <div key={session.id} className="flex-1 flex min-w-0">
                                                             <SessionCard session={session} variant="weekly" abbreviations={abbreviations} showTeacher={showTeacher} className="flex-1" />
                                                         </div>
                                                     ))}

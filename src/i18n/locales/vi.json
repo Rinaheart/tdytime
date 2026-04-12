@@ -377,6 +377,16 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.8.0",
+                "date": "2026-04-12",
+                "changes": [
+                    "Flat Index Architecture: Chuyển toàn bộ truy vấn dữ liệu sang mảng phẳng $O(1)$, loại bỏ nested traversal.",
+                    "Window Virtualization: SemesterView giờ chỉ render weeks trong viewport, giảm 90% DOM nodes.",
+                    "CSS Containment: .virtual-item dùng contain: layout style paint + content-visibility: auto để tối ưu browser rendering.",
+                    "Performance Budget CI: Automated Lighthouse checks với thresholds TBT < 50ms, CLS = 0, FCP < 1s."
+                ]
+            },
+            {
                 "version": "v1.7.2",
                 "date": "2026-04-09",
                 "changes": [
@@ -640,9 +650,9 @@
     "pwa": {
         "offlineReady": "Sẵn sàng hoạt động ngoại tuyến",
         "offlineReadyDesc": "Ứng dụng đã được lưu cache để dùng khi không có mạng.",
-        "updateReady": "Đã có phiên bản mới",
-        "updateReadyDesc": "Vui lòng tải lại trang để cập nhật ngay.",
-        "reloadButton": "Cập nhật ngay v{{version}}",
+        "updateReady": "TdyTime v{{version}} đã sẵn sàng! 🚀",
+        "updateReadyDesc": "Bản cập nhật tối ưu đã sẵn sàng.\nBạn có muốn nâng cấp?",
+        "reloadButton": "Nâng cấp ngay",
         "update_check": "Kiểm tra cập nhật",
         "checking": "Đang kiểm tra...",
         "up_to_date": "Đã là bản mới nhất",

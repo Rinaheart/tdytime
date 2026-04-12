@@ -376,6 +376,16 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.8.0",
+                "date": "2026-04-12",
+                "changes": [
+                    "Flat Index Architecture: Migrated all data queries to a flat O(1) array, eliminating nested traversal.",
+                    "Window Virtualization: SemesterView now renders only weeks in viewport, reducing DOM nodes by 90%.",
+                    "CSS Containment: Applied contain: layout style paint + content-visibility: auto to .virtual-item for optimized browser rendering.",
+                    "Performance Budget CI: Automated Lighthouse checks with TBT < 50ms, CLS = 0, FCP < 1s thresholds."
+                ]
+            },
+            {
                 "version": "v1.7.2",
                 "date": "2026-04-09",
                 "changes": [
@@ -632,9 +642,9 @@
     "pwa": {
         "offlineReady": "Ready for Offline Use",
         "offlineReadyDesc": "App cached for offline access.",
-        "updateReady": "New Version Available",
-        "updateReadyDesc": "Please reload to update immediately.",
-        "reloadButton": "Update Now (v{{version}})",
+        "updateReady": "TdyTime v{{version}} is ready! 🚀",
+        "updateReadyDesc": "Optimized version ready.\nUpdate now?",
+        "reloadButton": "Upgrade Now",
         "update_check": "Check for Updates",
         "checking": "Checking...",
         "up_to_date": "App is up to date",

@@ -30,6 +30,9 @@ interface ScheduleState {
     overrides: Record<string, CourseType>;
     abbreviations: Record<string, string>;
     sessionsIndex: FlatSession[];
+    semesterBounds: { start: number; end: number } | null;
+    maxWeekIdx: number; // 1-based index của tuần cuối cùng có lịch giảng
+    userTimezone: string;
 
     // UI state
     error: string | null;
@@ -58,6 +61,7 @@ interface ScheduleState {
     goToUpload: () => void;
     resetAll: () => void;
     initFromStorage: () => void;
+    setTimezone: (tz: string) => void;
 }
 
 export const useScheduleStore = create<ScheduleState>((set, get) => ({
@@ -68,6 +72,9 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
     overrides: {},
     abbreviations: {},
     sessionsIndex: [],
+    semesterBounds: null,
+    maxWeekIdx: -1,
+    userTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     error: null,
     isProcessing: false,
     isInitialized: false,
@@ -91,13 +98,16 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
                 // Merge loaded abbreviations with global ones (global takes precedence)
                 const mergedAbbr = { ...(sanitized.abbreviations || {}), ...globalAbbr };
                 
+                const sessions = buildScheduleIndex(sanitized, { timezone: get().userTimezone });
                 set({
                     data: sanitized,
                     metrics: calculateMetrics(sanitized),
                     currentWeekIndex: findCurrentWeekIndex(sanitized),
                     overrides: sanitized.overrides || {},
                     abbreviations: mergedAbbr,
-                    sessionsIndex: buildScheduleIndex(sanitized),
+                    sessionsIndex: sessions,
+                    semesterBounds: calculateSemesterBounds(sessions),
+                    maxWeekIdx: calculateMaxWeekIdx(sessions),
                     isInitialized: true,
                 });
             } catch (e) {
@@ -149,12 +159,16 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
         localStorage.setItem('last_schedule_data', JSON.stringify(sanitizedData));
         historyService.save(sanitizedData);
 
+        const sessions = buildScheduleIndex(sanitizedData, { timezone: get().userTimezone });
+
         set({
             data: sanitizedData,
             metrics,
             overrides: sanitizedData.overrides || {},
             abbreviations: mergedAbbr,
-            sessionsIndex: buildScheduleIndex(sanitizedData),
+            sessionsIndex: sessions,
+            semesterBounds: calculateSemesterBounds(sessions),
+            maxWeekIdx: calculateMaxWeekIdx(sessions),
             error: null,
             currentWeekIndex: targetWeekIdx,
             toastMessage: { text: message, id: Date.now() },
@@ -236,10 +250,13 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
         if (data) {
             const updatedData = { ...data, overrides, abbreviations };
             localStorage.setItem('last_schedule_data', JSON.stringify(updatedData));
+            const sessions = buildScheduleIndex(updatedData, { timezone: get().userTimezone });
             set({ 
                 data: updatedData, 
                 metrics: calculateMetrics(updatedData),
-                sessionsIndex: buildScheduleIndex(updatedData)
+                sessionsIndex: sessions,
+                semesterBounds: calculateSemesterBounds(sessions),
+                maxWeekIdx: calculateMaxWeekIdx(sessions),
             });
         }
     },
@@ -251,10 +268,13 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
         if (data) {
             const updatedData = { ...data, overrides, abbreviations };
             localStorage.setItem('last_schedule_data', JSON.stringify(updatedData));
+            const sessions = buildScheduleIndex(updatedData, { timezone: get().userTimezone });
             set({ 
                 data: updatedData, 
                 metrics: calculateMetrics(updatedData),
-                sessionsIndex: buildScheduleIndex(updatedData)
+                sessionsIndex: sessions,
+                semesterBounds: calculateSemesterBounds(sessions),
+                maxWeekIdx: calculateMaxWeekIdx(sessions),
             });
         }
     },
@@ -274,13 +294,17 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
 
         localStorage.setItem('last_schedule_data', JSON.stringify(sanitizedData));
 
+        const sessions = buildScheduleIndex(sanitizedData, { timezone: get().userTimezone });
+
         set({
             data: sanitizedData,
             metrics,
             currentWeekIndex: weekIdx,
             overrides: sanitizedData.overrides || {},
             abbreviations: mergedAbbr,
-            sessionsIndex: buildScheduleIndex(sanitizedData),
+            sessionsIndex: sessions,
+            semesterBounds: calculateSemesterBounds(sessions),
+            maxWeekIdx: calculateMaxWeekIdx(sessions),
             error: null,
             toastMessage: { text: t('success.loadedHistory'), id: Date.now() },
         });
@@ -305,7 +329,21 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
             mockState: null,
             isMockEnabled: false,
             sessionsIndex: [],
+            userTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         });
+    },
+
+    setTimezone: (tz) => {
+        const { data } = get();
+        set({ userTimezone: tz });
+        if (data) {
+            const sessions = buildScheduleIndex(data, { timezone: tz });
+            set({ 
+                sessionsIndex: sessions,
+                semesterBounds: calculateSemesterBounds(sessions),
+                maxWeekIdx: calculateMaxWeekIdx(sessions),
+            });
+        }    
     },
 
     resetAll: () => {
@@ -328,9 +366,27 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
             mockState: null,
             isMockEnabled: false,
             sessionsIndex: [],
+            semesterBounds: null,
+            maxWeekIdx: -1,
+            userTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         });
     },
 }));
+
+/** Helper to calculate semester bounds (UTC timestamps) */
+function calculateSemesterBounds(sessions: FlatSession[]) {
+    if (sessions.length === 0) return null;
+    return {
+        start: Math.min(...sessions.map(s => s.startTs)),
+        end: Math.max(...sessions.map(s => s.endTs)),
+    };
+}
+
+/** Helper to calculate the max week index (1-based) */
+function calculateMaxWeekIdx(sessions: FlatSession[]) {
+    if (sessions.length === 0) return -1;
+    return Math.max(...sessions.map(s => s.weekIdx));
+}
 
 /** Find the index of the current week in the schedule */
 function findCurrentWeekIndex(data: ScheduleData): number {

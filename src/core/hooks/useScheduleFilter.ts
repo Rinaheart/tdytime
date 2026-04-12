@@ -1,9 +1,21 @@
 import { useState, useMemo } from 'react';
-import type { DaySchedule, WeekSchedule } from '@/core/schedule/schedule.types';
-import { createSessionFilter, parseDateFromRange } from '@/core/schedule/schedule.utils';
+import { useScheduleStore } from '@/core/stores/schedule.store';
+import { createSessionFilter } from '@/core/schedule/schedule.utils';
 import type { FilterState } from '@/core/schedule/schedule.utils';
+import type { WeekSchedule } from '@/core/schedule/schedule.types';
 
-export function useScheduleFilter(weeks: WeekSchedule[], initialTeacher: string = '') {
+/**
+ * useScheduleFilter — Core hook for managing schedule search and filtering.
+ * 
+ * @deprecated v2.0: Hook now consumes sessionsIndex internally.
+ * Remove `weeks` param from callsites in Phase 3.
+ * 
+ * @param _deprecatedWeeks - (Deprecated) Previously used to derive unique data.
+ * @param initialTeacher - Optional default teacher filter.
+ */
+export function useScheduleFilter(_deprecatedWeeks?: WeekSchedule[], initialTeacher: string = '') {
+    const { sessionsIndex } = useScheduleStore();
+    
     const [filters, setFilters] = useState<FilterState>({
         search: '',
         className: '',
@@ -28,15 +40,10 @@ export function useScheduleFilter(weeks: WeekSchedule[], initialTeacher: string 
         const teachers = new Set<string>();
         const classes = new Set<string>();
         
-        weeks.forEach((w) => {
-            Object.values(w.days).forEach((d) => {
-                const day = d as DaySchedule;
-                [...day.morning, ...day.afternoon, ...day.evening].forEach((s) => {
-                    rooms.add(s.room);
-                    teachers.add(s.teacher);
-                    if (s.className) classes.add(s.className);
-                });
-            });
+        sessionsIndex.forEach((s) => {
+            if (s.room) rooms.add(s.room);
+            if (s.teacher) teachers.add(s.teacher);
+            if (s.className) classes.add(s.className);
         });
         
         return {
@@ -44,25 +51,26 @@ export function useScheduleFilter(weeks: WeekSchedule[], initialTeacher: string 
             teachers: Array.from(teachers).sort(),
             classes: Array.from(classes).sort()
         };
-    }, [weeks]);
+    }, [sessionsIndex]);
 
+    const semesterBounds = useScheduleStore((s) => s.semesterBounds);
+    
     const isAfterSemester = useMemo(() => {
-        if (weeks.length === 0) return false;
-        const endDate = parseDateFromRange(weeks[weeks.length - 1].dateRange, 'end');
-        if (!endDate) return false;
-        const today = new Date(now);
-        today.setHours(0, 0, 0, 0);
-        return today > endDate;
-    }, [weeks, now]);
+        if (!semesterBounds) return false;
+        return now.getTime() >= semesterBounds.end;
+    }, [semesterBounds, now]);
 
     const isBeforeSemester = useMemo(() => {
-        if (weeks.length === 0) return false;
-        const startDate = parseDateFromRange(weeks[0].dateRange, 'start');
-        if (!startDate) return false;
+        if (!semesterBounds) return false;
         const today = new Date(now);
         today.setHours(0, 0, 0, 0);
-        return today < startDate;
-    }, [weeks, now]);
+        
+        // Before first day of semester (day-based)
+        const semesterStartDay = new Date(semesterBounds.start);
+        semesterStartDay.setHours(0, 0, 0, 0);
+        
+        return today.getTime() < semesterStartDay.getTime();
+    }, [semesterBounds, now]);
 
     return {
         filters,

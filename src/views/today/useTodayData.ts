@@ -1,17 +1,8 @@
-/**
- * useTodayData — Feature Hook (Refined Performance v1.7.2)
- * Optimized for minimal TBT and zero unnecessary re-renders.
- * Uses event-based timers instead of polling.
- */
-
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useScheduleStore } from '@/core/stores';
-import { parseDateFromRange, isCurrentWeek, getCurrentWeekRange } from '@/core/schedule/schedule.utils';
+import { useScheduleStore } from '@/core/stores/schedule.store';
+import { isCurrentWeek } from '@/core/schedule';
 import type { SessionWithStatus, NextTeachingInfo, DisplayState } from './today.types';
-
-// Re-export type since it was moved from the original file to a shared definition or kept here
-// For consistency with existing components, we'll keep the types here or ensure they match.
 
 const formatDateVN = (date: Date) => {
     const day = String(date.getDate()).padStart(2, '0');
@@ -20,11 +11,17 @@ const formatDateVN = (date: Date) => {
     return { day, month, year, full: `${day}/${month}/${year}` };
 };
 
+/**
+ * useTodayData — Feature Hook (Adapter Refactor v2.0)
+ * Refactored to leverage FlatSession index for O(1) queries.
+ * Maintains event-based timers for zero-jank updates.
+ */
 export const useTodayData = () => {
     const { t } = useTranslation();
     
     // Select specific slices to avoid unnecessary re-renders
     const sessionsIndex = useScheduleStore(s => s.sessionsIndex);
+    const semesterBounds = useScheduleStore(s => s.semesterBounds);
     const mockState = useScheduleStore(s => s.mockState);
     const teacherName = useScheduleStore(s => s.data?.metadata?.teacher || '');
     const weekData = useScheduleStore(s => s.data?.weeks || []);
@@ -55,13 +52,11 @@ export const useTodayData = () => {
             const currentTimeMs = currentNow.getTime();
             
             // 1. Find the next relevant event today (start or end of a session)
-            const todayStart = new Date(currentNow);
-            todayStart.setHours(0, 0, 0, 0);
             const todayEnd = new Date(currentNow);
             todayEnd.setHours(23, 59, 59, 999);
 
             const upcomingEvents = sessionsIndex
-                .flatMap(s => [s.absoluteStart, s.absoluteEnd])
+                .flatMap(s => [s.startTs, s.endTs]) 
                 .filter(time => time > currentTimeMs && time <= todayEnd.getTime())
                 .sort((a, b) => a - b);
 
@@ -88,7 +83,6 @@ export const useTodayData = () => {
 
         scheduleUpdate();
 
-        // Sync on visibility change
         const handleSync = () => {
             if (document.visibilityState === 'visible') {
                 clearTimeout(timerId);
@@ -108,87 +102,99 @@ export const useTodayData = () => {
 
     // Calendar Day Level derived state (Memoized)
     const currentJsDay = now.getDay();
-    const dayOfWeekIdx = currentJsDay === 0 ? 6 : currentJsDay - 1;
+    const todayDayIdx = currentJsDay === 0 ? 6 : currentJsDay - 1; // 0=Mon, 6=Sun
     const dateInfo = useMemo(() => formatDateVN(now), [now.getDate(), now.getMonth(), now.getFullYear()]);
 
-    const semesterBounds = useMemo(() => {
-        if (weekData.length === 0) return null;
-        return {
-            start: parseDateFromRange(weekData[0].dateRange, 'start'),
-            end: parseDateFromRange(weekData[weekData.length - 1].dateRange, 'end'),
-        };
-    }, [weekData]);
+    // Derive current week index (1-based) from weekData if available, matching buildScheduleIndex logic
+    const currentWeekIdx = useMemo(() => {
+        if (!weekData.length) return -1;
+        const index = weekData.findIndex(w => isCurrentWeek(w.dateRange, now));
+        return index !== -1 ? index + 1 : -1;
+    }, [weekData, now.getDate(), now.getMonth(), now.getFullYear()]);
 
-    const currentWeek = useMemo(() => {
-        const idx = weekData.findIndex((w) => isCurrentWeek(w.dateRange, now));
-        return idx !== -1 ? weekData[idx] : null;
-    }, [weekData, now.getDate(), now.getMonth()]); // Use specific date parts
 
     // Performance P0: Precompute today's sessions from index
     const todaySessions: SessionWithStatus[] = useMemo(() => {
-        const todayStr = dateInfo.full;
         const result = sessionsIndex
-            .filter(s => s.dateStr === todayStr)
+            .filter(s => s.weekIdx === currentWeekIdx && s.dayIdx === todayDayIdx)
             .map(s => {
                 let status: 'PENDING' | 'LIVE' | 'COMPLETED' = 'PENDING';
                 const t = now.getTime();
-                if (t >= s.absoluteEnd) status = 'COMPLETED';
-                else if (t >= s.absoluteStart) status = 'LIVE';
+                if (t >= s.endTs) status = 'COMPLETED';
+                else if (t >= s.startTs) status = 'LIVE';
                 
-                return { ...s, status };
+                return { ...s, status } as SessionWithStatus;
             });
 
         // Grouping/Sorting logic
         return result.sort((a, b) => {
             const priority = { LIVE: 0, PENDING: 1, COMPLETED: 2 };
             if (priority[a.status] !== priority[b.status]) return priority[a.status] - priority[b.status];
-            return a.absoluteStart - b.absoluteStart;
+            return a.startTs - b.startTs;
         });
-    }, [sessionsIndex, now.getTime(), dateInfo.full]);
+    }, [sessionsIndex, currentWeekIdx, todayDayIdx, now.getTime()]);
 
     const isWeekEmpty = useMemo(() => {
-        if (!currentWeek) return true;
-        // Optimization: Use precomputed index to check week empty? 
-        // For now, keep it simple but stable.
-        return !Object.values(currentWeek.days).some(dayData => {
-            const all = [...dayData.morning, ...dayData.afternoon, ...dayData.evening];
-            // Note: teacherName is stable here
-            return all.some(s => s.teacher.toLowerCase().includes(teacherName.toLowerCase()));
-        });
-    }, [currentWeek, teacherName]);
+        if (currentWeekIdx === -1) return true;
+        const weekSessions = sessionsIndex.filter(s => s.weekIdx === currentWeekIdx);
+        return !weekSessions.some(s => s.teacher.toLowerCase().includes(teacherName.toLowerCase()));
+    }, [sessionsIndex, currentWeekIdx, teacherName]);
 
     const nextTeaching: NextTeachingInfo | null = useMemo(() => {
         const t = now.getTime();
-        const next = sessionsIndex.find(s => s.absoluteStart > t);
+        const next = sessionsIndex.find(s => s.startTs > t);
         if (!next) return null;
 
-        const nextDate = new Date(next.absoluteStart);
-        const wIdx = weekData.findIndex(w => isCurrentWeek(w.dateRange, nextDate));
-        const dJsIdx = nextDate.getDay();
-
-        // Get all sessions for that day for the preview
-        const daySessions = sessionsIndex.filter(s => s.dateStr === next.dateStr);
+        const nextSessions = sessionsIndex.filter(s => s.weekIdx === next.weekIdx && s.dayIdx === next.dayIdx);
 
         return {
-            date: nextDate,
-            sessions: daySessions,
-            weekIdx: wIdx,
-            dayIdx: dJsIdx === 0 ? 6 : dJsIdx - 1
+            date: new Date(next.startTs),
+            sessions: nextSessions as any,
+            weekIdx: next.weekIdx - 1, // Store expects 0-based for some reason or we keep it 1-based?
+                                       // Actually the original code said "wIdx" which was 0-based index.
+            dayIdx: next.dayIdx
         };
-    }, [sessionsIndex, now.getTime(), weekData]);
+    }, [sessionsIndex, now.getTime()]);
 
     const displayState: DisplayState = useMemo(() => {
-        if (weekData.length === 0) return 'NO_DATA';
-        const today = new Date(now); today.setHours(0, 0, 0, 0);
-        if (semesterBounds?.start && today < semesterBounds.start) return 'BEFORE_SEMESTER';
-        if (semesterBounds?.end && today > semesterBounds.end) return 'AFTER_SEMESTER';
+        if (sessionsIndex.length === 0) return 'NO_DATA';
+        
+        const nowTs = now.getTime();
+        const startOfDay = new Date(now); startOfDay.setHours(0, 0, 0, 0);
+        
+        // 1. Semester End is now the HIGHEST priority (Immediate Feedback)
+        // If current time is past the end of the last session ever, semester is OVER.
+        if (semesterBounds?.end && nowTs >= semesterBounds.end) {
+            return 'AFTER_SEMESTER';
+        }
+
+        // 2. Before Semester (Day-based comparison for "Not started yet")
+        if (semesterBounds?.start && startOfDay.getTime() < new Date(semesterBounds.start).setHours(0, 0, 0, 0)) {
+            return 'BEFORE_SEMESTER';
+        }
+
+        // 3. Daily Content
         if (todaySessions.length === 0) return 'NO_SESSIONS';
+        
         return 'HAS_SESSIONS';
-    }, [weekData.length, semesterBounds, todaySessions.length, now.getDate()]);
+    }, [sessionsIndex.length, semesterBounds, todaySessions.length, now.getTime()]);
+
+    const currentWeek = useMemo(() => {
+        if (currentWeekIdx === -1) return null;
+        return weekData[currentWeekIdx - 1] || null;
+    }, [weekData, currentWeekIdx]);
 
     const currentWeekRange = useMemo(() => {
         if (currentWeek) return currentWeek.dateRange;
-        return getCurrentWeekRange(now);
+        // Fallback calculation
+        const d = new Date(now);
+        d.setHours(0, 0, 0, 0);
+        const day = d.getDay();
+        const diff = d.getDate() - (day === 0 ? 6 : day - 1);
+        const mon = new Date(d.setDate(diff));
+        const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+        const fmt = (dt: Date) => `${String(dt.getDate()).padStart(2, '0')}/${String(dt.getMonth() + 1).padStart(2, '0')}/${dt.getFullYear()}`;
+        return `${fmt(mon)} - ${fmt(sun)}`;
     }, [currentWeek, now.getDate()]);
 
     const greeting = useMemo(() => {
@@ -197,7 +203,7 @@ export const useTodayData = () => {
         if (hour < 12) return t('stats.today.greeting.morning', { name });
         if (hour < 18) return t('stats.today.greeting.afternoon', { name });
         return t('stats.today.greeting.evening', { name });
-    }, [now.getHours(), teacherName, t]); // Hour level stability
+    }, [now.getHours(), teacherName, t]);
 
     const totalPeriods = useMemo(() => 
         todaySessions.reduce((acc, s) => acc + s.periodCount, 0), 
@@ -205,8 +211,8 @@ export const useTodayData = () => {
 
     const daysUntilSemester = useMemo(() => {
         if (!semesterBounds?.start) return null;
-        return Math.ceil((semesterBounds.start.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    }, [semesterBounds, now.getDate()]);
+        return Math.ceil((semesterBounds.start - now.getTime()) / (1000 * 60 * 60 * 24));
+    }, [semesterBounds, now.getTime()]);
 
     const isAfterSemester = displayState === 'AFTER_SEMESTER';
     const isBeforeSemester = displayState === 'BEFORE_SEMESTER';
@@ -214,7 +220,7 @@ export const useTodayData = () => {
     return { 
         now, 
         dateInfo, 
-        dayOfWeekIdx, 
+        dayOfWeekIdx: todayDayIdx, 
         displayState, 
         todaySessions, 
         nextTeaching, 

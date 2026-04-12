@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Zap, Coffee, CheckCircle2 } from 'lucide-react';
+import { Zap, Coffee, CheckCircle2, PartyPopper } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 type EmptyStateType = 'NO_DATA' | 'BEFORE_SEMESTER' | 'AFTER_SEMESTER' | 'NO_SESSIONS';
@@ -51,7 +51,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
             gradient: 'from-accent-50 to-slate-50',
         },
         AFTER_SEMESTER: {
-            icon: <CheckCircle2 size={36} className="text-accent-500" />,
+            icon: <PartyPopper size={48} className="text-accent-600 dark:text-accent-400" />,
             title: t('stats.today.emptyStates.afterSemester'),
             desc: t('stats.today.emptyStates.afterSemesterHint'),
             action: { label: t('stats.today.afterSemester.action', { defaultValue: 'Xem thống kê' }), path: '/stats' },
@@ -80,7 +80,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type, daysUntilStart, isWeekEmp
         <div className={variant === 'today' ? "px-2" : ""}>
             <div className={`bg-gradient-to-br dark:bg-none dark:bg-slate-800/40 ${config.gradient} rounded-2xl p-8 text-center border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center min-h-[160px] transition-all`}>
                 {config.icon && (
-                    type === 'NO_SESSIONS' ? (
+                    type === 'NO_SESSIONS' || type === 'AFTER_SEMESTER' ? (
                         <div className="mb-4 animate-bounce duration-[3000ms]">{config.icon}</div>
                     ) : (
                         <div className="w-10 h-10 mb-3 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center shadow-sm [&>svg]:w-5 [&>svg]:h-5">
