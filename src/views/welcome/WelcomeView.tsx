@@ -15,6 +15,7 @@ import ThemePicker from '@/ui/composites/ThemePicker';
 import { changeLanguage } from '@/i18n/config';
 import { useExamStore } from '@/core/stores/exam.store';
 import { parseExamText } from '@/core/exam/exam.parser';
+import { useUIStore } from '@/core/stores/ui.store';
 
 // ============================================
 // Sub-components
@@ -202,9 +203,10 @@ const WelcomeView: React.FC = () => {
             const exams = parseExamText(content);
             if (exams && exams.length > 0) {
                 setExamData('', exams);
-                // We show an alert for simplicity because Toast component in TdyTime is tied to ScheduleStore
-                // in the current generic WelcomeView.
-                alert(t('exam.toastSuccess', { count: exams.length, defaultValue: `Đã nhận diện ${exams.length} buổi coi thi.` }));
+                useUIStore.getState().setToast(
+                    t('exam.toastSuccess', { count: exams.length, defaultValue: `Đã nhận diện ${exams.length} buổi coi thi.` }),
+                    'success'
+                );
                 navigate('/exam', { replace: true });
                 return;
             }

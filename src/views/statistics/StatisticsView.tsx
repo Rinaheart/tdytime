@@ -15,6 +15,7 @@ import { LayoutGrid, CalendarCheck, ChevronRight } from 'lucide-react';
 import { useExamStore } from '@/core/stores/exam.store';
 import { useNavigate } from 'react-router-dom';
 import { getExamDateRange } from '@/core/exam/exam.utils';
+import { useCalculatedTime } from '@/core/hooks/useCalculatedTime';
 
 const COLORS = { primary: 'var(--color-accent-600)', secondary: 'var(--color-accent-400)' };
 
@@ -28,41 +29,7 @@ const StatisticsView: React.FC = () => {
     const examCount = examSessions.length;
     const examDateRange = useMemo(() => getExamDateRange(examSessions), [examSessions]);
 
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const mockState = useScheduleStore((s) => s.mockState);
-
-    useEffect(() => {
-        const updateTime = () => {
-            if (mockState) {
-                const elapsedReal = Date.now() - mockState.startTimeLocal;
-                setCurrentTime(new Date(mockState.startTimeMock + elapsedReal * mockState.multiplier));
-            } else {
-                setCurrentTime(new Date());
-            }
-        };
-
-        updateTime();
-
-        const delay = (mockState && mockState.multiplier > 1) ? 1000 : 60000;
-        const timer = setInterval(updateTime, delay);
-
-        const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible') {
-                updateTime();
-            }
-        };
-        const handleFocus = () => updateTime();
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('focus', handleFocus);
-
-        return () => {
-            clearInterval(timer);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-            window.removeEventListener('focus', handleFocus);
-        };
-    }, [mockState]);
-    const now = currentTime;
+    const now = useCalculatedTime(30000); // 30s tick for stats view
 
     if (!data || !metrics) return null;
 

@@ -380,6 +380,18 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.9.1",
+                "date": "2026-04-14",
+                "changes": [
+                    "ExamView UX Polish: Kết hợp dot + ring + STT cho buổi thi tiếp theo; Phân nhóm buổi đã hoàn thành theo ngày giúp quét timeline nhanh hơn.",
+                    "Collapsible Completed List: Tự động thu gọn danh sách đã hoàn thành khi ≥5 items.",
+                    "Kiến trúc 2 hàng: Chuyển ExamRow sang 2 hàng đảm bảo thẳng hàng tuyệt đối Time/Room.",
+                    "Xử lý tên môn dài: Hỗ trợ 2 dòng (line-clamp-2) trong chế độ chi tiết.",
+                    "Đồng bộ Mock Time: Tích hợp useCalculatedTime hook giúp view phản hồi tức thì với Mock Time.",
+                    "Fix lỗi: Khắc phục triệt để lỗi mất nội dung hàng khi tên môn dài (min-h-[52px])."
+                ]
+            },
+            {
                 "version": "v1.9.0",
                 "date": "2026-04-13",
                 "changes": [

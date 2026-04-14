@@ -58,9 +58,14 @@ tdytime/
     │   │   ├── schedule.utils.ts        # Date parsing, session filtering, formatting helpers
     │   │   ├── history.service.ts       # LocalStorage history CRUD (10 items, dedup)
     │   │   └── schedule.index.test.ts   # Unit tests for flat index builder
+    │   ├── exam/
+    │   │   ├── exam.types.ts            # Exam-specific types (ExamSession, ExamData)
+    │   │   ├── exam.parser.ts           # TSV/Text parser for exam schedules
+    │   │   └── exam.utils.ts            # Exam status and time helpers
     │   ├── stores/
     │   │   ├── index.ts                 # Store barrel export
     │   │   ├── schedule.store.ts        # Zustand: schedule data, metrics, overrides, abbreviations
+    │   │   ├── exam.store.ts            # Zustand: exam data management
     │   │   └── ui.store.ts              # Zustand: theme, language, view mode, thresholds
     │   └── themes/
     │       └── theme.registry.ts        # 7 accent themes definition, migration map, validators
@@ -90,7 +95,8 @@ tdytime/
     │       ├── FilterBar.tsx            # Search + filter dropdowns (class/room/teacher)
     │       ├── EmptyState.tsx           # Empty data illustration + message
     │       ├── TypeBadge.tsx            # LT/TH course type badge
-    │       └── ThemePicker.tsx          # Theme selection grid with preview swatches
+    │       ├── ThemePicker.tsx          # Theme selection grid with preview swatches
+    │       └── ConfirmModal.tsx         # Generic confirmation dialog (Delete/Reset)
     │
     ├── utils/                           # ── Shared Utilities ──
     │   ├── mockGenerator.ts             # Generate realistic demo ScheduleData
@@ -106,6 +112,8 @@ tdytime/
         │   ├── SessionList.tsx          # Session list renderer
         │   ├── useTodayData.ts          # Hook: filter today's sessions from flat index
         │   └── today.types.ts           # Today view-specific types
+        ├── exam/
+        │   └── ExamView.tsx             # Exam supervision dashboard and status tracking
         ├── weekly/
         │   ├── WeeklyView.tsx           # Weekly schedule with table/card toggle
         │   ├── WeekNavigation.tsx       # Week prev/next navigator with date range

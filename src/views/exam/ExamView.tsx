@@ -6,11 +6,116 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Play, CalendarCheck, Trash2, LayoutList, TableProperties } from 'lucide-react';
+import { Play, CalendarCheck, Trash2, LayoutList, TableProperties, ChevronDown } from 'lucide-react';
 import { useExamStore, useUIStore, useScheduleStore } from '@/core/stores';
 import { getExamStatus } from '@/core/exam/exam.parser';
+import { useCalculatedTime } from '@/core/hooks/useCalculatedTime';
 import { EmptyState } from '@/ui';
 import ConfirmModal from '@/ui/composites/ConfirmModal';
+
+const STT_COL_CLASS = "w-7 h-7 shrink-0 flex items-center justify-center transition-all duration-500";
+const TIME_COL_CLASS = "w-[60px] text-right shrink-0 font-bold font-mono tabular-nums text-[13px] leading-none";
+const RIGHT_COL_CLASS = "w-[60px] shrink-0 flex flex-col items-end gap-0.5";
+
+// --- Sub-components ---
+
+const ExamRow = React.memo(({ 
+    session, 
+    viewMode, 
+    isNext,
+    globalIndex,
+    t
+}: { 
+    session: any, 
+    viewMode: string, 
+    isNext: boolean, 
+    globalIndex: number,
+    t: any
+}) => {
+    const isOngoing = session.status === 'ongoing';
+    
+    return (
+        <div className={`flex flex-col py-2.5 min-h-[52px] ${session.status === 'past' ? 'opacity-50' : ''}`} role="article">
+            {/* Row 1: STT | Course Name | Time (Top Alignment) */}
+            <div className="flex items-center gap-3">
+                <div className={STT_COL_CLASS}>
+                    {isNext ? (
+                        <span className={`
+                            relative w-7 h-7 rounded-full flex items-center justify-center font-black text-[12px] font-num
+                            ${isOngoing 
+                                ? 'bg-accent-500 text-white animate-pulse ring-2 ring-accent-500 ring-offset-2 dark:ring-offset-slate-900 shadow-lg shadow-accent-500/30' 
+                                : 'bg-accent-100 dark:bg-accent-950/40 text-accent-700 dark:text-accent-400 ring-1 ring-accent-200 dark:ring-accent-800'
+                            }
+                        `}>
+                            {String(globalIndex).padStart(2, '0')}
+                            {isOngoing && <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-accent-500 border-2 border-white dark:border-slate-900 z-10" />}
+                        </span>
+                    ) : (
+                        <span className="text-[12px] font-black text-slate-400 dark:text-slate-600 font-num">
+                            {String(globalIndex).padStart(2, '0')}.
+                        </span>
+                    )}
+                </div>
+                
+                <p className={`
+                    flex-1 min-w-0 text-sm ${viewMode === 'table-detailed' ? 'font-bold' : 'font-medium'} 
+                    text-slate-800 dark:text-slate-100
+                    ${viewMode === 'table-detailed' ? 'line-clamp-2 break-words leading-tight' : 'truncate'}
+                `} title={session.courseName}>
+                    {session.courseName}
+                </p>
+
+                <div className={TIME_COL_CLASS}>
+                    <span className={`font-bold ${isOngoing ? 'text-accent-600 dark:text-accent-500' : 'text-slate-900 dark:text-white'}`}>
+                        {session.timeStr}
+                    </span>
+                </div>
+            </div>
+
+            {/* Row 2: Info | Room (Subtle & Aligned) */}
+            <div className="flex items-center gap-3 ml-10 -mt-0.5"> {/* -mt-0.5 to pull Row 2 closer */}
+                <div className="flex-1 min-w-0 h-4 flex items-center"> {/* Fixed height for alignment consistency */}
+                    {viewMode === 'table-detailed' && (
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
+                            <span className="font-num font-semibold">{session.duration}'</span>
+                            <span className="text-slate-300 dark:text-slate-600">•</span>
+                            <span className="normal-case lowercase">{session.role}</span>
+                            <span className="text-slate-300 dark:text-slate-600">•</span>
+                            <span className="normal-case lowercase truncate" title={session.format}>{session.format}</span>
+                        </p>
+                    )}
+                </div>
+                
+                <div className="w-[60px] text-right shrink-0">
+                    <span className="text-sm font-bold text-accent-600 dark:text-accent-400 leading-none">
+                        {session.room}
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+});
+
+const CompletedExamRow = React.memo(({ session, t }: { session: any, t: any }) => (
+    <div className="flex items-center gap-3 py-2 text-sm opacity-60 hover:opacity-100 transition-opacity">
+        <div className="w-7 text-center shrink-0 text-[11px] font-black text-slate-400 dark:text-slate-500 font-num">
+            {String(session.globalIndex).padStart(2, '0')}
+        </div>
+        <div className="flex-1 min-w-0">
+            <span className="font-semibold text-slate-600 dark:text-slate-400 truncate block">
+                {session.courseName}
+            </span>
+        </div>
+        <div className={RIGHT_COL_CLASS}>
+            <span className={`${TIME_COL_CLASS} text-slate-500 dark:text-slate-400`}>
+                {session.timeStr}
+            </span>
+            <span className="text-[10px] uppercase font-black text-slate-400 dark:text-slate-500 leading-none">
+                {session.room}
+            </span>
+        </div>
+    </div>
+));
 
 const ExamView: React.FC = () => {
     const { t } = useTranslation();
@@ -18,13 +123,8 @@ const ExamView: React.FC = () => {
     const { data: examData, clearExamData } = useExamStore();
     const [viewMode, setViewMode] = useState<'table' | 'table-detailed'>('table');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [, setCurrentTime] = useState(Date.now());
-
-    // Re-render every minute for status refresh
-    useEffect(() => {
-        const interval = setInterval(() => setCurrentTime(Date.now()), 60000);
-        return () => clearInterval(interval);
-    }, []);
+    const now = useCalculatedTime(10000); // 10s tick for exam view
+    const currentTimeTs = now.getTime();
 
     const isEmpty = !examData || examData.sessions.length === 0;
     const { sessions = [] } = examData || {};
@@ -35,18 +135,21 @@ const ExamView: React.FC = () => {
             .sort((a, b) => a.startTime - b.startTime)
             .map((s, idx) => ({
                 ...s,
-                status: getExamStatus(s.startTime, s.endTime),
+                status: getExamStatus(s.startTime, s.endTime, currentTimeTs),
                 globalIndex: idx + 1
             }));
-    }, [sessions]);
+    }, [sessions, currentTimeTs]);
 
     const total = sessions.length;
     const completedCount = sessionsWithStatus.filter(s => s.status === 'past').length;
     const activeSessions = sessionsWithStatus.filter(s => s.status !== 'past');
+    const completedSessions = sessionsWithStatus.filter(s => s.status === 'past');
+    const nextExam = activeSessions[0];
+
     const isAllDone = completedCount === total && total > 0;
     const ongoingCount = sessionsWithStatus.filter(s => s.status === 'ongoing').length;
 
-    // --- Table Grouping Logic ---
+    // --- Table Grouping Logic (Active only) ---
     const getDayName = (dateStr: string) => {
         const [d, m, y] = dateStr.split('/').map(Number);
         const date = new Date(y, m - 1, d);
@@ -61,7 +164,7 @@ const ExamView: React.FC = () => {
         return 'evening'; // Tối
     };
 
-    const tableGroups = sessionsWithStatus.reduce((acc, session) => {
+    const tableGroups = activeSessions.reduce((acc, session) => {
         const group = acc.find(g => g.dateStr === session.dateStr);
         const period = getPeriod(session.timeStr);
         if (group) {
@@ -82,6 +185,24 @@ const ExamView: React.FC = () => {
         morning: typeof sessionsWithStatus; 
         afternoon: typeof sessionsWithStatus; 
         evening: typeof sessionsWithStatus; 
+    }[]);
+
+    const completedGroups = completedSessions.reduce((acc, session) => {
+        const group = acc.find(g => g.dateStr === session.dateStr);
+        if (group) {
+            group.sessions.push(session);
+        } else {
+            acc.push({
+                dateStr: session.dateStr,
+                dayName: getDayName(session.dateStr),
+                sessions: [session]
+            });
+        }
+        return acc;
+    }, [] as {
+        dateStr: string;
+        dayName: string;
+        sessions: typeof sessionsWithStatus;
     }[]);
 
     return (
@@ -125,99 +246,80 @@ const ExamView: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Table Layout */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md overflow-hidden shadow-sm mx-2">
-                            {tableGroups.map((group, gIdx) => (
-                                <div key={group.dateStr} className={gIdx > 0 ? 'border-t-2 border-slate-100 dark:border-slate-800' : ''}>
-                                    {/* Date Header */}
-                                    <div className="px-4 py-3 bg-slate-50 dark:bg-slate-800/50">
-                                        <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
-                                            {group.dayName}, {group.dateStr}
-                                        </h3>
-                                    </div>
+                        {/* Table Layout (Active Groups) */}
+                        {tableGroups.length > 0 && (
+                            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md overflow-hidden shadow-sm mx-2">
+                                {tableGroups.map((group, gIdx) => (
+                                    <div key={group.dateStr} className={gIdx > 0 ? 'border-t-2 border-slate-100 dark:border-slate-800' : ''}>
+                                        {/* Date Header */}
+                                        <div className="px-4 py-3 bg-slate-50 dark:bg-slate-800/50">
+                                            <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
+                                                {group.dayName}, {group.dateStr}
+                                            </h3>
+                                        </div>
 
-                                    {/* Sessions (Sáng/Chiều/Tối) */}
-                                    {(['morning', 'afternoon', 'evening'] as const).map(periodKey => {
-                                        const sessionsInPeriod = group[periodKey];
-                                        if (sessionsInPeriod.length === 0) return null;
-                                        return (
-                                            <div key={periodKey} className="px-4">
-                                                {/* Shift Label */}
-                                                <div className="flex items-center gap-3 pt-3 pb-1">
-                                                    <span className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 whitespace-nowrap">
-                                                        {t(`shifts.${periodKey}`)}
-                                                    </span>
-                                                    <div className="h-px flex-1 bg-slate-100 dark:bg-slate-800" />
+                                        {/* Sessions (Sáng/Chiều/Tối) */}
+                                        {(['morning', 'afternoon', 'evening'] as const).map(periodKey => {
+                                            const sessionsInPeriod = group[periodKey];
+                                            if (sessionsInPeriod.length === 0) return null;
+                                            return (
+                                                <div key={periodKey} className="px-4">
+                                                    {/* Shift Label */}
+                                                    <div className="flex items-center gap-3 pt-3 pb-1">
+                                                        <span className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 whitespace-nowrap">
+                                                            {t(`shifts.${periodKey}`)}
+                                                        </span>
+                                                        <div className="h-px flex-1 bg-slate-100 dark:bg-slate-800" />
+                                                    </div>
+
+                                                    {/* Rows */}
+                                                    <div className="divide-y divide-slate-50 dark:divide-slate-800/50">
+                                                        {sessionsInPeriod.map(s => (
+                                                            <ExamRow 
+                                                                key={s.id}
+                                                                session={s}
+                                                                viewMode={viewMode}
+                                                                isNext={s.id === nextExam?.id}
+                                                                globalIndex={s.globalIndex}
+                                                                t={t}
+                                                            />
+                                                        ))}
+                                                    </div>
                                                 </div>
+                                            );
+                                        })}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
 
-                                                {/* Rows */}
-                                                <div className="divide-y divide-slate-50 dark:divide-slate-800/50">
-                                                    {sessionsInPeriod.map(s => (
-                                                        <div 
-                                                            key={s.id}
-                                                            className={`
-                                                                flex justify-between items-start py-3 min-h-[44px] gap-4
-                                                                ${s.status === 'past' ? 'opacity-50' : ''}
-                                                            `}
-                                                            role="article"
-                                                            aria-label={`Coi thi ${s.courseName}, ${s.timeStr}, phòng ${s.room}`}
-                                                        >
-                                                            {/* Left: Course Name + STT + Meta */}
-                                                            <div className="flex-1 min-w-0">
-                                                                <div className="flex items-start gap-2">
-                                                                    <span className="text-[12px] font-black text-slate-400 dark:text-slate-600 mt-0.5 shrink-0 font-num">
-                                                                        {String(s.globalIndex).padStart(2, '0')}.
-                                                                    </span>
-                                                                    <div className="flex-1 min-w-0">
-                                                                        <p className={`text-sm ${viewMode === 'table-detailed' ? 'font-bold' : 'font-medium'} text-slate-800 dark:text-slate-100 break-words leading-snug`}>
-                                                                            {s.courseName}
-                                                                        </p>
-                                                                        {viewMode === 'table-detailed' && (
-                                                                            <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-tight flex items-center gap-1">
-                                                                                <span className="text-accent-600 dark:text-accent-400">
-                                                                                    <span className="font-num">{s.duration}</span>'
-                                                                                </span>
-                                                                                <span className="mx-2 text-slate-300 dark:text-slate-700">•</span>
-                                                                                <span>
-                                                                                    {s.role.includes(' ') ? (
-                                                                                        <>
-                                                                                            {s.role.split(' ').slice(0, -1).join(' ')} <span className="font-num">{s.role.split(' ').pop()}</span>
-                                                                                        </>
-                                                                                    ) : (
-                                                                                        <span className="font-num">{s.role}</span>
-                                                                                    )}
-                                                                                </span>
-                                                                                <span className="mx-2 text-slate-300 dark:text-slate-700">•</span>
-                                                                                <span>{s.format}</span>
-                                                                            </p>
-                                                                        )}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            {/* Right: Time + Room */}
-                                                            <div className="text-right shrink-0">
-                                                                <div className="flex items-center justify-end gap-1.5 mb-0.5">
-                                                                    {s.status === 'ongoing' && (
-                                                                        <span className="w-2 h-2 rounded-full bg-accent-500 animate-pulse" />
-                                                                    )}
-                                                                    <span className="text-sm font-black font-num text-slate-900 dark:text-white leading-none">
-                                                                        {s.timeStr}
-                                                                    </span>
-                                                                </div>
-                                                                <span className="text-sm font-bold text-accent-600 dark:text-accent-400 leading-none">
-                                                                    {s.room}
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                        {/* Completed Section (Today style) */}
+                        {completedSessions.length > 0 && (
+                            <div className="bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 rounded-2xl p-5 mt-6 mx-2">
+                                <details className="group" open={completedSessions.length < 5}>
+                                    <summary className="list-none flex items-center justify-between cursor-pointer [&::-webkit-details-marker]:hidden">
+                                        <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                                            {t('common.completedItem')} ({completedSessions.length})
+                                        </h3>
+                                        <ChevronDown size={14} className="text-slate-400 group-open:rotate-180 transition-transform duration-300" />
+                                    </summary>
+                                    <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                                        {completedGroups.map((group) => (
+                                            <div key={group.dateStr} className="mt-4 first:mt-0">
+                                                <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2 mt-3 first:mt-0">
+                                                    {group.dayName}, {group.dateStr}
+                                                </h4>
+                                                <div className="space-y-1">
+                                                    {group.sessions.map((s) => (
+                                                        <CompletedExamRow key={s.id} session={s} t={t} />
                                                     ))}
                                                 </div>
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                            ))}
-                        </div>
+                                        ))}
+                                    </div>
+                                </details>
+                            </div>
+                        )}
 
                         {/* Celebration */}
                         {isAllDone && (

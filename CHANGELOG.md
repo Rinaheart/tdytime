@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.1] - 2026-04-14
+
+### Added
+**ExamView UX Polish:**
+- Visual Anchor 2.0: Kết hợp `dot + ring + STT` cho buổi thi tiếp theo, đồng bộ với DESIGN.md Visual Anchors.
+- Completed Section Grouping: Phân nhóm buổi đã hoàn thành theo ngày (`Thứ, DD/MM/YYYY`) giúp quét timeline nhanh hơn.
+- Collapsible Completed List: Tích hợp `<details>` với custom `ChevronDown`, auto-collapse khi ≥5 items để tiết kiệm không gian mobile.
+
+### Changed
+**ExamView Layout Refinement:**
+- Two-Row Architecture: Chuyển `ExamRow` sang layout 2 hàng (Top: Môn + Giờ | Bottom: Chi tiết + Phòng) đảm bảo thẳng hàng tuyệt đối theo trục ngang.
+- Alignment Tokens: Chuẩn hóa `TIME_COL_CLASS` (`w-[60px] font-mono tabular-nums`) + `RIGHT_COL_CLASS` để Time/Room luôn căn phải đồng bộ.
+- Secondary Info Styling: Chuyển thông tin phụ (vai trò, loại thi) sang `text-[11px] text-slate-500 normal-case lowercase` + `whitespace-nowrap` để giảm visual noise.
+- Long Course Name Handling: 
+  - Chế độ `table`: `truncate` + `title` tooltip.
+  - Chế độ `table-detailed`: `line-clamp-2` + `break-words` để cân bằng thông tin/không gian.
+
+**Performance:**
+- React.memo Optimization: Bọc `ExamRow` và `CompletedExamRow` trong `React.memo` để ngăn re-render không cần thiết khi viewMode thay đổi.
+- Fixed Container Height: Dùng `min-h-[52px] + flex-col` để Row 2 luôn neo vị trí cố định, loại bỏ layout jump (đã fix lỗi cutoff nội dung ở 1.9.1-hotfix).
+
+### Fixed
+- Horizontal Misalignment: Khắc phục lỗi Time/Room bị lệch khi tên môn dài/ngắn khác nhau giữa các row.
+- Completed Section Width: Đồng bộ `RIGHT_COL_CLASS` (`w-[60px]`) giữa Active và Completed rows, đảm bảo căn lề phải tuyệt đối.
+- Dark Mode Contrast: Nâng cấp màu text phụ từ `slate-400` → `slate-500` để đạt WCAG AA contrast trong Completed section.
+- Layout Cutoff: Sửa lỗi mất nội dung hàng khi layout có chiều cao cố định quá thấp, chuyển sang `min-h-[52px]`.
+
+### Technical
+- Extracted `RIGHT_COL_CLASS` token vào đầu file `ExamView.tsx` để reuse giữa `ExamRow` và `CompletedExamRow`.
+- Removed nested divs in Time/Room column → giảm 2 level DOM depth per row.
+- Centralized mock-aware time calculation via `useCalculatedTime` hook.
+
 ## [1.9.0] - 2026-04-13
 
 ### Added

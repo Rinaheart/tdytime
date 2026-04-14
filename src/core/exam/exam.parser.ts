@@ -4,8 +4,7 @@ import { ExamSession, ExamStatus } from './exam.types';
  * getExamStatus — Determine status based on current time 
  * No polling, calculated on render.
  */
-export const getExamStatus = (startTime: number, endTime: number): ExamStatus => {
-    const now = Date.now();
+export const getExamStatus = (startTime: number, endTime: number, now: number = Date.now()): ExamStatus => {
     if (now < startTime) return 'upcoming';
     if (now > endTime) return 'past';
     return 'ongoing';

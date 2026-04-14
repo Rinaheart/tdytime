@@ -379,6 +379,18 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.9.1",
+                "date": "2026-04-14",
+                "changes": [
+                    "ExamView UX Polish: Combined dot + ring + STT for next/live exams; Date-grouped completed list for faster scanning.",
+                    "Collapsible Completed List: Integrated auto-collapse header for completed sessions (≥5 items).",
+                    "Two-Row Architecture: Refactored ExamRow to ensure perfect vertical alignment for Time/Room.",
+                    "Long Title Support: Added line-clamp-2 for course names in detailed mode.",
+                    "Mock Time Sync: Integrated shared useCalculatedTime hook for real-time mock reflection.",
+                    "Fixed Layout Bug: Resolved row content cutoff by switching to flexible min-height (min-h-[52px])."
+                ]
+            },
+            {
                 "version": "v1.9.0",
                 "date": "2026-04-13",
                 "changes": [
