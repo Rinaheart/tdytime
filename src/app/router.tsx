@@ -9,12 +9,11 @@ import { useScheduleStore } from '../core/stores/schedule.store';
 import { useExamStore } from '../core/stores/exam.store';
 import { SessionCardSkeleton } from '../ui/primitives';
 
-// Eager load: critical path (WelcomeView + TodayView load ~40% faster)
-import WelcomeView from '../views/welcome/WelcomeView';
-import AppLayout from './layout/AppLayout';
-import TodayView from '../views/today/TodayView';
+/** Global Error Boundary for Router */
 
-// Lazy load: secondary views (loaded on-demand, deduplicated by router)
+const WelcomeView = lazy(() => import('../views/welcome/WelcomeView'));
+const AppLayout = lazy(() => import('./layout/AppLayout'));
+const TodayView = lazy(() => import('../views/today/TodayView'));
 const WeeklyView = lazy(() => import('../views/weekly/WeeklyView'));
 const SemesterView = lazy(() => import('../views/semester/SemesterView'));
 const StatisticsView = lazy(() => import('../views/statistics/StatisticsView'));
@@ -87,7 +86,11 @@ export const router = createHashRouter([
     {
         path: '/',
         errorElement: <RouteError />,
-        element: <WelcomeView />, // Eager load: no Suspense needed
+        element: (
+            <Suspense fallback={<LoadingFallback />}>
+                <WelcomeView />
+            </Suspense>
+        ),
     },
     {
         path: '/demo',
@@ -108,13 +111,19 @@ export const router = createHashRouter([
         errorElement: <RouteError />,
         element: (
             <RequireData>
-                <AppLayout /> {/* Eager load: critical parent layout */}
+                <Suspense fallback={<LoadingFallback />}>
+                    <AppLayout />
+                </Suspense>
             </RequireData>
         ),
         children: [
             {
                 path: '/today',
-                element: <TodayView />, // Eager load: primary feature
+                element: (
+                    <Suspense fallback={<LoadingFallback />}>
+                        <TodayView />
+                    </Suspense>
+                ),
             },
             {
                 path: '/week',

@@ -36,7 +36,19 @@ TdyTime v2 sử dụng hệ màu **Ngữ nghĩa thích ứng**, tự động đi
 Để tối giản hóa giao diện mà vẫn đảm bảo tốc độ quét thông tin cho Giảng viên:
 
 - **Gradient Dots**: Mỗi Badge/Nhãn buổi học đi kèm một chấm tròn mang dải màu Gradient tương ứng. Dù màu sắc nền có trùng lặp, chấm tròn này luôn là điểm neo nhận diện cố định.
+- **Visual Anchors 2.0 (STT + Ring)**: Trong các giao diện danh sách (ExamView), điểm neo được nâng cấp thành bộ ba `Chỉ số (STT) + Chấm tròn (Dot) + Vòng bao quanh (Ring)` cho các mục đang diễn ra hoặc kế tiếp, tăng cường độ tương phản và sự tập trung.
 - **Outline Icons**: Sử dụng hệ icon `Lucide` với `strokeWidth: 1.5` để đạt được vẻ ngoài thanh thoát, chuyên nghiệp và thoáng đãng (Outline style).
+
+---
+
+## 📐 Cấu trúc hàng chuẩn (Standardized Row Architecture)
+
+Để loại bỏ hiện tượng giật cục bố cục (Layout Shift) và đảm bảo sự thẳng hàng tuyệt đối:
+
+1. **Fixed-Height Two-Row**: Các hàng thông tin quan trọng (như `ExamRow`) sử dụng cấu trúc 2 hàng cố định (`min-h-[52px]`):
+   - **Hàng 1**: Tên môn học (Line-clamp 2) + Thời gian (Căn lề phải).
+   - **Hàng 2**: Chi tiết phụ (Phòng, Vai trò, Hình thức) + Vị trí (Căn lề phải).
+2. **Alignment Tokens**: Sử dụng các token căn lề chung (`TIME_COL_CLASS`, `RIGHT_COL_CLASS`) để đảm bảo các cột dữ liệu số luôn đứng thẳng theo trục dọc trên toàn bộ danh sách.
 
 ---
 
@@ -89,4 +101,4 @@ Thiết kế của TdyTime không chỉ là về thẩm mỹ mà còn là về t
 
 ---
 
-*Cập nhật lần cuối: 09/04/2026*
+*Cập nhật lần cuối: 14/04/2026 (v1.9.1)*

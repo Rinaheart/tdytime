@@ -48,7 +48,8 @@ tdytime/
     ├── core/                            # ── Domain Logic Layer ──
     │   ├── constants.ts                 # App version, days, period times (LT/TH), colors, thresholds
     │   ├── hooks/
-    │   │   └── useScheduleFilter.ts     # Reusable filter hook (search, class, room, teacher)
+    │   │   ├── useScheduleFilter.ts     # Reusable filter hook (search, class, room, teacher)
+    │   │   └── useCalculatedTime.ts     # Centralized mock-aware time calculation hook
     │   ├── schedule/
     │   │   ├── index.ts                 # Public API barrel (re-exports all schedule modules)
     │   │   ├── schedule.types.ts        # Domain types: CourseSession, WeekSchedule, Metrics, etc.
