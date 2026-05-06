@@ -714,7 +714,7 @@
     "pwa": {
         "offlineReady": "Ready for Offline Use",
         "offlineReadyDesc": "App cached for offline access.",
-        "updateReady": "TdyTime v{{version}} is ready! 🚀",
+        "updateReady": "TdyTime new update is ready! 🚀",
         "updateReadyDesc": "Optimized version ready.\nUpdate now?",
         "reloadButton": "Upgrade Now",
         "update_check": "Check for Updates",

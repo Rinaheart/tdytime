@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { RefreshCw, Download, Check, X } from 'lucide-react';
 
 const INSTALL_PROMPT_DISMISS_KEY = 'tdytime_install_prompt_dismissed';
+const PWA_DISMISS_KEY = 'tdytime_pwa_dismiss_date';
 const DISMISS_DURATION = 24 * 60 * 60 * 1000; // 24 hours in ms
 
 interface BeforeInstallPromptEvent extends Event {
@@ -23,6 +24,7 @@ export const PWAUpdateHandler: React.FC = () => {
     const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
     const [checkStatus, setCheckStatus] = useState<CheckStatus>('idle');
     const [isDismissed, setIsDismissed] = useState(true);
+    const [updateBypassed, setUpdateBypassed] = useState(false);
 
     const isStandalone = typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
     const timeoutIds = useRef<number[]>([]);
@@ -94,8 +96,14 @@ export const PWAUpdateHandler: React.FC = () => {
     }, []);
 
     const close = () => {
+        if (needUpdate) {
+            // Lưu ngày dismiss vào localStorage (YYYY-MM-DD)
+            const today = new Date().toISOString().split('T')[0];
+            localStorage.setItem(PWA_DISMISS_KEY, today);
+        }
         setOfflineReady(false);
         setNeedUpdate(false);
+        setUpdateBypassed(false);
     };
 
     const handleUpdate = () => {
@@ -134,6 +142,7 @@ export const PWAUpdateHandler: React.FC = () => {
                         
                         addTimeout(() => {
                             if (needUpdateRef.current) {
+                                setUpdateBypassed(true); // Bypass dismiss logic on manual check
                                 setCheckStatus('idle');
                             } else {
                                 setCheckStatus('up-to-date');
@@ -197,13 +206,13 @@ export const PWAUpdateHandler: React.FC = () => {
             )}
 
             {/* Update / Offline Notification (Top Right) */}
-            {(offlineReady || needUpdate) && (
+            {(offlineReady || (needUpdate && (updateBypassed || localStorage.getItem(PWA_DISMISS_KEY) !== new Date().toISOString().split('T')[0]))) && (
                 <div className="fixed top-20 right-4 z-[110] animate-in slide-in-from-right-10 fade-in duration-300">
                     <div className="bg-slate-800 dark:bg-white text-white dark:text-slate-900 p-4 rounded-2xl shadow-2xl min-w-[280px]">
                         <div className="flex flex-col items-center text-center">
                             <div className="flex justify-center items-center w-full mb-2 relative">
                                 <h4 className="text-xs font-bold text-accent-500 dark:text-accent-600">
-                                    {needUpdate ? t('pwa.updateReady', { version: typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '1.8.1' }) : t('pwa.offlineReady')}
+                                    {needUpdate ? t('pwa.updateReady') : t('pwa.offlineReady')}
                                 </h4>
                                 <button onClick={close} className="absolute -top-1 -right-1 p-1 hover:bg-white/10 dark:hover:bg-slate-100 rounded-xl" aria-label={t('common.close', 'Đóng')}>
                                     <X size={14} />

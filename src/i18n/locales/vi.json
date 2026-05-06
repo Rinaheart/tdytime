@@ -711,7 +711,7 @@
     "pwa": {
         "offlineReady": "Sẵn sàng hoạt động ngoại tuyến",
         "offlineReadyDesc": "Ứng dụng đã được lưu cache để dùng khi không có mạng.",
-        "updateReady": "TdyTime v{{version}} đã sẵn sàng! 🚀",
+        "updateReady": "TdyTime đã có bản cập nhật mới! 🚀",
         "updateReadyDesc": "Bản cập nhật tối ưu đã sẵn sàng.\nBạn có muốn nâng cấp?",
         "reloadButton": "Nâng cấp ngay",
         "update_check": "Kiểm tra cập nhật",
