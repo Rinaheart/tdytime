@@ -180,7 +180,7 @@ export default defineConfig({
 
     build: {
         target: 'esnext',
-        minify: 'esbuild',
+        minify: 'terser',
         reportCompressedSize: false,
         rollupOptions: {
             output: {

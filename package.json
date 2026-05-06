@@ -1,6 +1,6 @@
 {
   "name": "tdytime-v2-plan",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -40,6 +40,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "postcss": "^8.5.9",
     "tailwindcss": "^4.2.2",
+    "terser": "^5.46.2",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
     "vite-plugin-pwa": "^1.2.0",

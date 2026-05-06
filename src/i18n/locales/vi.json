@@ -405,6 +405,16 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.9.3",
+                "date": "2026-05-07",
+                "changes": [
+                    "i18n PDF & DevTools: Đa ngôn ngữ cho báo cáo PDF và giao diện DevTools.",
+                    "Build Optimization: Tách chunk cho thư viện PDF, giúp giảm dung lượng và tăng tốc độ tải trang.",
+                    "Stability: Khắc phục lỗi Reset Data, loại bỏ circular dependency.",
+                    "Lint Cleanup: Dọn dẹp >100 lỗi ESLint đảm bảo code sạch và ổn định."
+                ]
+            },
+            {
                 "version": "v1.9.2",
                 "date": "2026-05-06",
                 "changes": [
@@ -779,7 +789,7 @@
         "noNotes": "Chưa có ghi chú nào."
     },
     "report": {
-        "university": "Trường Đại học Y Dược Huế",
+        "university": "Trường Đại học Y - Dược, Đại học Huế",
         "titleWeek": "Lịch giảng dạy tuần",
         "titleSemester": "Lịch giảng dạy học kỳ",
         "teacher": "Giảng viên",

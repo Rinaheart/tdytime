@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.3] - 2026-05-07
+
+### Added
+- **i18n PDF & DevTools:** Đa ngôn ngữ cho báo cáo PDF và DevTools UI (Multilingual support).
+
+### Changed
+- **Build Optimization:** Tách chunk cho thư viện PDF, giúp giảm dung lượng và tăng tốc độ tải.
+
+### Fixed
+- **Stability & Lint:** Sửa lỗi Reset Data, loại bỏ circular dependency và dọn dẹp >100 lỗi ESLint.
+
 ## [1.9.2] - 2026-05-06
 
 ### Added

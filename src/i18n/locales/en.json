@@ -405,6 +405,16 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.9.3",
+                "date": "2026-05-07",
+                "changes": [
+                    "i18n PDF & DevTools: Multilingual support for PDF reports and DevTools UI.",
+                    "Build Optimization: Implemented chunk-splitting for PDF library for faster loads.",
+                    "Stability: Fixed Reset Data bug and resolved circular dependencies.",
+                    "Lint Cleanup: Fixed 100+ ESLint errors to maintain high code quality."
+                ]
+            },
+            {
                 "version": "v1.9.2",
                 "date": "2026-05-06",
                 "changes": [
