@@ -179,6 +179,9 @@ export default defineConfig({
     ],
 
     build: {
+        target: 'esnext',
+        minify: 'esbuild',
+        reportCompressedSize: false,
         rollupOptions: {
             output: {
                 manualChunks(id) {
@@ -208,12 +211,15 @@ export default defineConfig({
                         ) {
                             return 'vendor-monitoring';
                         }
+                        if (id.includes('@react-pdf/renderer')) {
+                            return 'vendor-pdf';
+                        }
                     }
                 },
             },
         },
 
-        chunkSizeWarningLimit: 1000,
+        chunkSizeWarningLimit: 1500,
 
         modulePreload: {
             polyfill: true,

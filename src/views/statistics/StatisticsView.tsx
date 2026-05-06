@@ -3,21 +3,24 @@
  * Orchestrates all cards and charts. Reads from Zustand store.
  */
 
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Calendar, Clock, Activity, Zap, Users, MapPin } from 'lucide-react';
 import { useScheduleStore } from '@/core/stores';
 import { DAYS_OF_WEEK, getPeriodTimes } from '@/core/constants';
+import { isMainTeacher } from '@/core/schedule/schedule.utils';
 import type { CourseSession } from '@/core/schedule/schedule.types';
 import { StatsHeader, ProgressCard, InsightCard, TeachingStructureCard, TopSubjectsCard, CoTeachersTable } from './cards';
 import { HeatmapChart, WeeklyTrendChart, DailyBarChart } from './charts';
 import { LayoutGrid, CalendarCheck, ChevronRight } from 'lucide-react';
+import { EmptyState } from '@/ui';
 import { useExamStore } from '@/core/stores/exam.store';
 import { useNavigate } from 'react-router-dom';
 import { getExamDateRange } from '@/core/exam/exam.utils';
 import { useCalculatedTime } from '@/core/hooks/useCalculatedTime';
 
 const COLORS = { primary: 'var(--color-accent-600)', secondary: 'var(--color-accent-400)' };
+const EMPTY_ARRAY: never[] = [];
 
 const StatisticsView: React.FC = () => {
     const { t } = useTranslation();
@@ -25,41 +28,31 @@ const StatisticsView: React.FC = () => {
     const data = useScheduleStore((s) => s.data);
     const metrics = useScheduleStore((s) => s.metrics);
     const hasExamData = useExamStore((s) => !!s.data);
-    const examSessions = useExamStore((s) => s.data?.sessions ?? []);
+    const examSessions = useExamStore((s) => s.data?.sessions ?? EMPTY_ARRAY);
     const examCount = examSessions.length;
     const examDateRange = useMemo(() => getExamDateRange(examSessions), [examSessions]);
 
     const now = useCalculatedTime(30000); // 30s tick for stats view
 
-    if (!data || !metrics) return null;
+    const teacherName = data?.metadata.teacher || '';
 
-    // Pre-normalize main teacher name for efficient comparison
-    const normalizedMainTeacher = useMemo(() => {
-        if (!data?.metadata.teacher) return '';
-        return data.metadata.teacher.toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '')
-            .trim();
-    }, [data?.metadata.teacher]);
+    const weeklyData = useMemo(() => {
+        if (!metrics) return EMPTY_ARRAY;
+        return Object.entries(metrics.hoursByWeek).map(([w, h]) => ({ name: `T${w}`, value: h }));
+    }, [metrics]);
 
-    const isMainTeacher = useCallback((tName: string) => {
-        if (!tName || tName === 'Chưa rõ' || tName === 'Unknown') return true;
-        if (!normalizedMainTeacher) return false;
-        
-        const target = tName.toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '')
-            .trim();
-            
-        return target.includes(normalizedMainTeacher) || normalizedMainTeacher.includes(target);
-    }, [normalizedMainTeacher]);
-
-    const weeklyData = useMemo(() => Object.entries(metrics.hoursByWeek).map(([w, h]) => ({ name: `T${w}`, value: h })), [metrics.hoursByWeek]);
-    const dailyData = useMemo(() => Object.entries(metrics.hoursByDay).map(([_d, h], i) => ({ name: t(`days.${i}`), value: h })), [metrics.hoursByDay, t]);
+    const dailyData = useMemo(() => {
+        if (!metrics) return EMPTY_ARRAY;
+        return Object.entries(metrics.hoursByDay).map(([, h], i) => ({ name: t(`days.${i}`), value: h }));
+    }, [metrics, t]);
 
     const progress = useMemo(() => {
+        if (!data) return {
+            today: { percent: 0, done: 0, total: 0 },
+            week: { percent: 0, done: 0, total: 0 },
+            month: { percent: 0, done: 0, total: 0 },
+            semester: { percent: 0, done: 0, total: 0 }
+        };
         const currentTotalMin = now.getHours() * 60 + now.getMinutes();
         const todayDate = new Date(now); todayDate.setHours(0, 0, 0, 0);
 
@@ -87,7 +80,7 @@ const StatisticsView: React.FC = () => {
                 const targetDate = new Date(weekStart); targetDate.setDate(weekStart.getDate() + dIdx);
                 const isToday = targetDate.getTime() === todayDate.getTime();
                 const dName = DAYS_OF_WEEK[dIdx];
-                const sessions = [...w.days[dName].morning, ...w.days[dName].afternoon, ...w.days[dName].evening].filter((s) => isMainTeacher(s.teacher));
+                const sessions = [...w.days[dName].morning, ...w.days[dName].afternoon, ...w.days[dName].evening].filter((s) => isMainTeacher(s.teacher, teacherName));
 
                 sessions.forEach((s) => {
                     const finished = isSessionFinished(s, targetDate);
@@ -102,7 +95,13 @@ const StatisticsView: React.FC = () => {
 
         const getP = (d: number, total: number) => ({ percent: total > 0 ? Math.round((d / total) * 100) : 0, done: d, total });
         return { today: getP(todayD, todayT), week: getP(weekD, weekT), month: getP(monthD, monthT), semester: getP(semD, semT) };
-    }, [data, now]);
+    }, [data, now, teacherName]);
+
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
+    if (!data || !metrics) {
+        return <EmptyState type="NO_DATA" variant="today" />;
+    }
 
     const avgLoad = metrics.totalWeeks > 0 ? (metrics.totalHours / metrics.totalWeeks) : 0;
     const intensityStatus = avgLoad > 20 ? t('stats.levels.high') : (avgLoad > 12 ? t('stats.levels.medium') : t('stats.levels.low'));
@@ -120,8 +119,6 @@ const StatisticsView: React.FC = () => {
             <span className="text-[8px] md:text-[9px] opacity-60 ml-0.5 lowercase font-medium">{t('common.periods')}</span>
         </span>
     ) : '—';
-
-    const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
         <div className="space-y-6 pt-1 pb-6 animate-in fade-in duration-300 font-sans">

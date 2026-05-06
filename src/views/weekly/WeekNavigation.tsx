@@ -58,6 +58,38 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
         return getCurrentWeekRange(now);
     }, [week, now]);
 
+    const reportTranslations = useMemo(() => ({
+        university: t('report.university'),
+        titleWeek: t('report.titleWeek'),
+        titleSemester: t('report.titleSemester'),
+        teacher: t('report.teacher'),
+        defaultReport: t('report.defaultReport'),
+        noSchedule: t('report.noSchedule'),
+        class: t('report.class'),
+        room: t('report.room'),
+        personalNote: t('report.personalNote'),
+        semesterTotal: t('report.semesterTotal'),
+        periods: t('report.periods'),
+        createdBy: t('report.createdBy'),
+        page: t('report.page'),
+        week: t('report.week'),
+        shifts: {
+            morning: t('shifts.morning'),
+            afternoon: t('shifts.afternoon'),
+            evening: t('shifts.evening'),
+            night: t('shifts.night'),
+        },
+        days: {
+            '0': t('days.0'),
+            '1': t('days.1'),
+            '2': t('days.2'),
+            '3': t('days.3'),
+            '4': t('days.4'),
+            '5': t('days.5'),
+            '6': t('days.6'),
+        }
+    }), [t]);
+
     const handleExportPdf = async () => {
         setIsExporting(true);
         try {
@@ -69,6 +101,7 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
                     weekRange={weekDateRange} 
                     teacherName={teacherName} 
                     notes={notesStore.notes} 
+                    translations={reportTranslations}
                 />
             ).toBlob();
             

@@ -20,6 +20,7 @@ import { historyService, type HistoryItem } from '../schedule/history.service';
 import { parseScheduleHTML, sanitizeScheduleData } from '../schedule/parser';
 import { DEFAULT_THRESHOLDS } from '../constants';
 import { useUIStore } from './ui.store';
+import { useNotesStore } from './notes.store';
 
 interface ScheduleState {
     // Data
@@ -350,6 +351,7 @@ export const useScheduleStore = create<ScheduleState>((set, get) => ({
         localStorage.removeItem('language');
         historyService.clear();
         useUIStore.getState().resetAll();
+        useNotesStore.getState().clearAllNotes();
 
         set({
             data: null,

@@ -39,7 +39,7 @@ const SemesterView: React.FC = () => {
         filterFn as (s: FlatSession) => boolean
     );
 
-    const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>('horizontal');
+    const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>(window.innerWidth < 768 ? 'vertical' : 'horizontal');
     const [expandedWeeks, setExpandedWeeks] = useState<Record<number, boolean>>({});
     const [toast, setToast] = useState<string | null>(null);
     const [isExporting, setIsExporting] = useState(false);
@@ -60,7 +60,7 @@ const SemesterView: React.FC = () => {
         if (location.state && typeof location.state.autoExpandWeek === 'number') {
             const wIdx = location.state.autoExpandWeek;
             setExpandedWeeks(prev => ({ ...prev, [wIdx]: true }));
-            
+
             // Wait for expansion to render then scroll
             setTimeout(() => {
                 const element = document.getElementById(`week-card-${wIdx}`);
@@ -68,12 +68,10 @@ const SemesterView: React.FC = () => {
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }, 100);
-            
+
             window.history.replaceState({}, document.title);
         }
     }, [location.state]);
-
-    useEffect(() => { if (window.innerWidth < 768) setViewMode('vertical'); }, []);
 
     const toggleWeek = (wIdx: number) => {
         setExpandedWeeks((prev) => ({ ...prev, [wIdx]: !prev[wIdx] }));
@@ -130,7 +128,7 @@ const SemesterView: React.FC = () => {
         setToast(t('semester.toast.noSchedule', { range: weekRange }));
         setTimeout(() => setToast(null), 3500);
     };
-    
+
     const handleExportCSV = () => {
         try {
             const filename = `tdytime-export-${new Date().toISOString().split('T')[0]}.csv`;
@@ -141,20 +139,52 @@ const SemesterView: React.FC = () => {
         }
     };
 
+    const reportTranslations = useMemo(() => ({
+        university: t('report.university'),
+        titleWeek: t('report.titleWeek'),
+        titleSemester: t('report.titleSemester'),
+        teacher: t('report.teacher'),
+        defaultReport: t('report.defaultReport'),
+        noSchedule: t('report.noSchedule'),
+        class: t('report.class'),
+        room: t('report.room'),
+        personalNote: t('report.personalNote'),
+        semesterTotal: t('report.semesterTotal'),
+        periods: t('report.periods'),
+        createdBy: t('report.createdBy'),
+        page: t('report.page'),
+        week: t('report.week'),
+        shifts: {
+            morning: t('shifts.morning'),
+            afternoon: t('shifts.afternoon'),
+            evening: t('shifts.evening'),
+        },
+        days: {
+            '0': t('days.0'),
+            '1': t('days.1'),
+            '2': t('days.2'),
+            '3': t('days.3'),
+            '4': t('days.4'),
+            '5': t('days.5'),
+            '6': t('days.6'),
+        }
+    }), [t]);
+
     const handleExportPDF = async () => {
         setIsExporting(true);
         try {
             const filename = `tdytime-semester-report-${new Date().toISOString().split('T')[0]}.pdf`;
             const blob = await pdf(
-                <ScheduleReport 
-                    mode="semester" 
-                    sessions={rawSessions} 
-                    teacherName={teacherName} 
-                    notes={notesStore.notes} 
+                <ScheduleReport
+                    mode="semester"
+                    sessions={rawSessions}
+                    teacherName={teacherName}
+                    notes={notesStore.notes}
+                    translations={reportTranslations}
                 />
             ).toBlob();
             saveAs(blob, filename);
-            
+
             setToastGlobal(t('common.success'));
         } catch (error) {
             console.error('PDF Export failed', error);
@@ -178,8 +208,8 @@ const SemesterView: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-end w-full md:w-auto md:self-auto print:hidden">
-                        <button 
-                            onClick={handleExportCSV} 
+                        <button
+                            onClick={handleExportCSV}
                             disabled={sessionsIndex.length === 0}
                             className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-accent-50 dark:hover:bg-accent-950/40 active:scale-95 transition-all shadow-sm disabled:opacity-50"
                             title={t('semester.exportCSV')}
@@ -188,8 +218,8 @@ const SemesterView: React.FC = () => {
                             <span className="hidden sm:inline">{t('semester.exportCSV')}</span>
                         </button>
 
-                        <button 
-                            onClick={handleExportPDF} 
+                        <button
+                            onClick={handleExportPDF}
                             disabled={sessionsIndex.length === 0 || isExporting}
                             className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-accent-50 dark:hover:bg-accent-950/40 active:scale-95 transition-all shadow-sm disabled:opacity-50"
                             title={t('semester.exportPDF')}
@@ -197,7 +227,7 @@ const SemesterView: React.FC = () => {
                             <Download size={16} className={isExporting ? "text-red-500 animate-bounce" : "text-red-500"} />
                             <span className="hidden sm:inline">{isExporting ? t('common.loading') : t('semester.exportPDF')}</span>
                         </button>
-                        
+
                         <button onClick={scrollToCurrentWeek} className="flex items-center gap-2 h-11 px-4 bg-accent-600 dark:bg-accent-500 text-white rounded-xl text-xs font-bold transition-all hover:bg-accent-700 dark:hover:bg-accent-600 shadow-sm shadow-accent-500/20 active:scale-95">
                             <Zap size={16} className="fill-current" />
                             <span className="hidden sm:inline">{t('common.current')}</span>
@@ -226,7 +256,7 @@ const SemesterView: React.FC = () => {
             </div>
 
             {/* Native Weeks List */}
-            <div 
+            <div
                 id="semester-weeks-list"
                 className={`relative flex flex-col gap-8 ${viewMode === 'vertical' ? 'before:absolute before:left-[19px] md:before:left-[23px] before:top-4 before:bottom-4 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800 before:z-0' : ''}`}
             >
@@ -234,7 +264,7 @@ const SemesterView: React.FC = () => {
                     const weekMeta = weeksMetadata[wIdx];
                     const weekSessions = byWeek[wIdx + 1] || [];
                     const isCurrent = checkIsCurrentWeek(weekMeta.dateRange, now);
-                    
+
                     // Initial expand logic (only if not explicitly interacted with)
                     const isDefaultExpanded = isAfterSemester ? false : (isCurrent ? weekSessions.length > 0 : (isBeforeSemester && wIdx === 0));
                     const isExpanded = expandedWeeks[wIdx] ?? isDefaultExpanded;

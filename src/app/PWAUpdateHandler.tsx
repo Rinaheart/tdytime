@@ -53,7 +53,7 @@ export const PWAUpdateHandler: React.FC = () => {
         }
 
         return () => {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+             
             timeoutIds.current.forEach(id => window.clearTimeout(id));
         };
     }, []);

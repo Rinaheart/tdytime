@@ -19,6 +19,24 @@ export interface ScheduleReportProps {
   teacherName?: string;
   notes?: Record<string, string>;
   title?: string;
+  translations: {
+    university: string;
+    titleWeek: string;
+    titleSemester: string;
+    teacher: string;
+    defaultReport: string;
+    noSchedule: string;
+    class: string;
+    room: string;
+    personalNote: string;
+    semesterTotal: string;
+    periods: string;
+    createdBy: string;
+    page: string;
+    week: string;
+    shifts: Record<string, string>;
+    days: Record<string, string>;
+  };
 }
 
 // Inline SVG for the logo, representing favicon.svg to avoid CDN/CORS issues
@@ -31,21 +49,6 @@ const LogoSvg = () => (
   </Svg>
 );
 
-const translateDay = (dayIdx: number, dateStr: string) => {
-  const days = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'];
-  return `${days[dayIdx]} - ${dateStr}`;
-};
-
-const translateShift = (shift: string) => {
-  const map: Record<string, string> = {
-    morning: 'Sáng',
-    afternoon: 'Chiều',
-    evening: 'Tối',
-    night: 'Đêm',
-  };
-  return map[shift] || shift;
-};
-
 export const ScheduleReport: React.FC<ScheduleReportProps> = ({
   mode,
   sessions,
@@ -53,8 +56,9 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
   teacherName,
   notes = {},
   title,
+  translations,
 }) => {
-  const defaultTitle = mode === 'week' ? 'Lịch giảng dạy tuần' : 'Lịch giảng dạy học kỳ';
+  const defaultTitle = mode === 'week' ? translations.titleWeek : translations.titleSemester;
   const finalTitle = title || defaultTitle;
   const now = new Date();
   const dateStr = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
@@ -82,18 +86,18 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
             <LogoSvg />
           </View>
           <View style={styles.headerTextContainer}>
-            <Text style={styles.universityName}>Trường Đại học Y Dược Huế</Text>
+            <Text style={styles.universityName}>{translations.university}</Text>
             <Text style={styles.reportTitle}>{finalTitle}</Text>
             <Text style={styles.reportSubtitle}>
-              {teacherName ? `Giảng viên: ${teacherName}` : 'Báo cáo lịch giảng'}
-              {weekRange ? ` | Tuần: ${weekRange}` : ''}
+              {teacherName ? `${translations.teacher}: ${teacherName}` : translations.defaultReport}
+              {weekRange ? ` | ${translations.week}: ${weekRange}` : ''}
             </Text>
           </View>
         </View>
 
         <View style={styles.section}>
           {sortedDays.length === 0 ? (
-            <Text style={styles.infoText}>Không có lịch giảng trong thời gian này.</Text>
+            <Text style={styles.infoText}>{translations.noSchedule}</Text>
           ) : (
             sortedDays.map((dayKey) => {
               const daySessions = groupedByDay[dayKey];
@@ -102,7 +106,7 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
               return (
                 <View key={dayKey} wrap={false}>
                   <Text style={styles.dayHeader}>
-                    {translateDay(firstSession.dayIdx, firstSession.dateStr)}
+                    {translations.days[firstSession.dayIdx.toString()] || firstSession.dayIdx} - {firstSession.dateStr}
                   </Text>
                   {daySessions.map((session) => {
                     const note = notes[session.id];
@@ -110,14 +114,14 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
                       <View key={session.id} style={styles.sessionRow}>
                         <View style={styles.timeCol}>
                           <Text style={styles.timeText}>{session.timeRangeStr}</Text>
-                          <Text style={styles.shiftText}>{translateShift(session.shift)}</Text>
+                          <Text style={styles.shiftText}>{translations.shifts[session.shift] || session.shift}</Text>
                         </View>
                         <View style={styles.detailsCol}>
                           <Text style={styles.courseName}>{session.courseName}</Text>
-                          <Text style={styles.infoText}>Lớp: {session.className} | Phòng: {session.room}</Text>
+                          <Text style={styles.infoText}>{translations.class}: {session.className} | {translations.room}: {session.room}</Text>
                           {note && (
                             <View style={styles.noteContainer}>
-                              <Text style={styles.noteText}>Ghi chú cá nhân: {note}</Text>
+                              <Text style={styles.noteText}>{translations.personalNote}: {note}</Text>
                             </View>
                           )}
                         </View>
@@ -131,17 +135,17 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
 
           {mode === 'semester' && sessions.length > 0 && (
             <View wrap={false} style={styles.grandTotalRow}>
-              <Text style={styles.grandTotalLabel}>HỌC KỲ — TỔNG CỘNG</Text>
+              <Text style={styles.grandTotalLabel}>{translations.semesterTotal}</Text>
               <Text style={styles.grandTotalValue}>
-                {sessions.reduce((sum, s) => sum + (s.periodCount || 0), 0)} tiết
+                {sessions.reduce((sum, s) => sum + (s.periodCount || 0), 0)} {translations.periods}
               </Text>
             </View>
           )}
         </View>
 
         <View style={styles.footer} fixed>
-          <Text style={styles.footerText}>Tạo bởi TdyTime - {dateStr}</Text>
-          <Text style={styles.footerText} render={({ pageNumber, totalPages }) => `Trang ${pageNumber} / ${totalPages}`} />
+          <Text style={styles.footerText}>{translations.createdBy} - {dateStr}</Text>
+          <Text style={styles.footerText} render={({ pageNumber, totalPages }) => `${translations.page} ${pageNumber} / ${totalPages}`} />
         </View>
       </Page>
     </Document>

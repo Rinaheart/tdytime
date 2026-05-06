@@ -14,13 +14,14 @@ export const DATE_REGEX_GLOBAL = /(\d{2})\/(\d{2})\/(\d{4})/g;
 /** Regex for detecting Practical (TH) courses from group code */
 export const COURSE_TYPE_TH_REGEX = /-TH\./i;
 
-/** Normalize teacher name for comparison */
+/** Normalize teacher name for comparison, stripping academic titles */
 export const normalizeTeacherName = (name: string) => {
     if (!name) return '';
     return name
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ths\.|ts\.|pgs\.|gs\.|gv\./g, '') // Remove titles
         .trim();
 };
 
@@ -147,7 +148,7 @@ export const createSessionFilter = (filters: FilterState) => {
         }
         if (filters.className && session.className !== filters.className) return false;
         if (filters.room && session.room !== filters.room) return false;
-        if (filters.teacher && session.teacher !== filters.teacher) return false;
+        if (filters.teacher && !isMainTeacher(session.teacher, filters.teacher)) return false;
         return true;
     };
 };

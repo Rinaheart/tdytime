@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useScheduleStore } from '@/core/stores/schedule.store';
 import { FilterBar, EmptyState } from '@/ui';
@@ -33,9 +33,7 @@ const WeeklyView: React.FC = () => {
         filterFn as (s: FlatSession) => boolean
     );
 
-    const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>('horizontal');
-
-    useEffect(() => { if (window.innerWidth < 768) setViewMode('vertical'); }, []);
+    const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>(window.innerWidth < 768 ? 'vertical' : 'horizontal');
 
     const isCurrent = useMemo(() => {
         if (!weekRange) return false;

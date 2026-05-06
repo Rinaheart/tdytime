@@ -120,6 +120,7 @@ const HistoryCard = React.memo(({ item, isActive, onLoad, onDelete }: {
         </div>
     );
 });
+HistoryCard.displayName = 'HistoryCard';
 
 /** Paste/text input area */
 const PasteInput = React.memo(({ onCancel, onSubmit, isProcessing }: {
@@ -158,6 +159,7 @@ const PasteInput = React.memo(({ onCancel, onSubmit, isProcessing }: {
         </div>
     );
 });
+PasteInput.displayName = 'PasteInput';
 
 // ============================================
 // Main Component
@@ -210,7 +212,7 @@ const WelcomeView: React.FC = () => {
                 navigate('/exam', { replace: true });
                 return;
             }
-        } catch (e) {
+        } catch {
             // Ignore error and fallthrough to HTML schedule parse
         }
 

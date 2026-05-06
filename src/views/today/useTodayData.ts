@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
 import { useScheduleStore } from '@/core/stores/schedule.store';
-import { isCurrentWeek } from '@/core/schedule';
+import { isCurrentWeek, isMainTeacher } from '@/core/schedule/schedule.utils';
 import type { SessionWithStatus, NextTeachingInfo, DisplayState } from './today.types';
 
 const formatDateVN = (date: Date) => {
@@ -117,9 +117,8 @@ export const useTodayData = () => {
 
     // Performance P0: Precompute today's sessions from index
     const todaySessions: SessionWithStatus[] = useMemo(() => {
-        const lowerTeacher = teacherName.toLowerCase();
         const result = sessionsIndex
-            .filter(s => s.weekIdx === currentWeekIdx && s.dayIdx === todayDayIdx && s.teacher.toLowerCase().includes(lowerTeacher))
+            .filter(s => s.weekIdx === currentWeekIdx && s.dayIdx === todayDayIdx && isMainTeacher(s.teacher, teacherName))
             .map(s => {
                 let status: 'PENDING' | 'LIVE' | 'COMPLETED' = 'PENDING';
                 const t = now.getTime();

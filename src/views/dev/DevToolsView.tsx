@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Wrench, Bug, Download, Upload, RotateCcw, LayoutGrid, Zap, Sun, Moon, Clock } from 'lucide-react';
 import { APP_VERSION } from '@/core/constants';
 import { useScheduleStore, useUIStore } from '@/core/stores';
+import ConfirmModal from '@/ui/primitives/ConfirmModal';
 import ScheduleBuilderForm from './sections/ScheduleBuilderForm';
 import StateInspector from './sections/StateInspector';
 import { 
@@ -46,6 +47,9 @@ const DevToolsView: React.FC = () => {
     
     const darkMode = useUIStore(s => s.darkMode);
     const toggleDarkMode = useUIStore(s => s.toggleDarkMode);
+    const setToast = useUIStore(s => s.setToast);
+
+    const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
     // --- URL State Handling ---
     useEffect(() => {
@@ -154,7 +158,7 @@ const DevToolsView: React.FC = () => {
                         throw new Error('Invalid config format');
                     }
                 } catch (err) {
-                    alert('Lỗi import config: File không đúng định dạng!');
+                    setToast(t('dev.importError'), 'error');
                 }
             };
             reader.readAsText(file);
@@ -170,10 +174,20 @@ const DevToolsView: React.FC = () => {
     };
 
     const handleReset = () => {
-        if (window.confirm('Cảnh báo: Hành động này sẽ xóa sạch dữ liệu. Tiếp tục?')) {
+        setIsResetConfirmOpen(true);
+    };
+
+    const confirmReset = () => {
+        try {
+            setIsResetConfirmOpen(false);
             resetAll();
-            localStorage.clear();
-            window.location.href = '/';
+            // App uses createHashRouter — must navigate via hash
+            window.location.hash = '#/';
+            window.location.reload();
+        } catch (err) {
+            console.error('Reset failed:', err);
+            setToast(t('dev.resetFailed'), 'error');
+            setIsResetConfirmOpen(false);
         }
     };
 
@@ -186,7 +200,7 @@ const DevToolsView: React.FC = () => {
                     className="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-none py-2 px-3 rounded-none hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                     <ArrowLeft size={18} />
-                    <span className="text-sm font-medium">Quay lại</span>
+                    <span className="text-sm font-medium">{t('dev.back')}</span>
                 </button>
                 <div className="flex items-center gap-2 px-3 py-1.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                     <Wrench size={16} className="text-sky-500" />
@@ -206,7 +220,7 @@ const DevToolsView: React.FC = () => {
                 {/* 🎯 Preset Bar — PRIMARY entry */}
                 <section>
                     <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-4 flex items-center gap-2">
-                        <Zap size={12} /> Nạp kịch bản (Presets)
+                        <Zap size={12} /> {t('dev.presets')}
                     </h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         <PresetButton 
@@ -254,10 +268,10 @@ const DevToolsView: React.FC = () => {
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
                                 <LayoutGrid size={18} className="text-sky-500" />
-                                Cấu hình chi tiết
+                                {t('dev.configDetail')}
                             </h2>
                             <button onClick={() => setShowForm(false)} className="text-slate-500 hover:text-slate-300 text-xs font-bold underline cursor-pointer">
-                                Thu gọn
+                                {t('dev.collapse')}
                             </button>
                         </div>
                         <ScheduleBuilderForm 
@@ -315,6 +329,16 @@ const DevToolsView: React.FC = () => {
                     </p>
                 </div>
             </div>
+
+            <ConfirmModal
+                isOpen={isResetConfirmOpen}
+                title={t('dev.resetConfirmTitle')}
+                message={t('dev.resetConfirmMsg')}
+                confirmLabel={t('dev.resetConfirmAction')}
+                onConfirm={confirmReset}
+                onCancel={() => setIsResetConfirmOpen(false)}
+                isDanger
+            />
         </main>
     );
 };

@@ -51,7 +51,12 @@
         "collapseAll": "Thu gọn",
         "expandAll": "Mở rộng",
         "oneSession": "1 BUỔI DẠY",
-        "completedItem": "Đã hoàn thành"
+        "completedItem": "Đã hoàn thành",
+        "confirm": "Xác nhận",
+        "cancel": "Quay lại",
+        "discard": "Bỏ qua",
+        "confirmDiscardTitle": "Hủy thay đổi",
+        "confirmDiscard": "Nội dung ghi chú đã thay đổi. Bạn có muốn bỏ qua các thay đổi này không?"
     },
     "shifts": {
         "morning": "Sáng",
@@ -767,7 +772,37 @@
         "placeholder": "Nhập ghi chú tại đây...",
         "save": "Lưu ghi chú",
         "saved": "Đã lưu ghi chú!",
+        "deleted": "Đã xóa ghi chú",
+        "confirmDelete": "Xóa ghi chú này?",
+        "charCount": "{{count}} ký tự",
         "clear": "Xóa ghi chú",
         "noNotes": "Chưa có ghi chú nào."
+    },
+    "report": {
+        "university": "Trường Đại học Y Dược Huế",
+        "titleWeek": "Lịch giảng dạy tuần",
+        "titleSemester": "Lịch giảng dạy học kỳ",
+        "teacher": "Giảng viên",
+        "defaultReport": "Báo cáo lịch giảng",
+        "noSchedule": "Không có lịch giảng trong thời gian này.",
+        "class": "Lớp",
+        "room": "Phòng",
+        "personalNote": "Ghi chú cá nhân",
+        "semesterTotal": "HỌC KỲ — TỔNG CỘNG",
+        "periods": "tiết",
+        "createdBy": "Tạo bởi TdyTime",
+        "page": "Trang",
+        "week": "Tuần"
+    },
+    "dev": {
+        "importError": "Lỗi import config: File không đúng định dạng!",
+        "resetConfirmTitle": "Xác nhận Reset",
+        "resetConfirmMsg": "Cảnh báo: Hành động này sẽ xóa sạch dữ liệu và lịch sử. Bạn có chắc chắn muốn tiếp tục?",
+        "resetConfirmAction": "Reset Ngay",
+        "back": "Quay lại",
+        "presets": "Nạp kịch bản (Presets)",
+        "configDetail": "Cấu hình chi tiết",
+        "collapse": "Thu gọn",
+        "resetFailed": "Reset thất bại. Vui lòng reload thủ công."
     }
 }

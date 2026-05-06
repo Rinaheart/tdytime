@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Clock, MapPin, StickyNote } from 'lucide-react';
-import { Badge, TypeBadge, NoteModal } from '@/ui';
+import Badge from '@/ui/primitives/Badge';
+import TypeBadge from '@/ui/composites/TypeBadge';
+import NoteModal from '@/ui/composites/NoteModal';
 import type { CourseSession } from '@/core/schedule/schedule.types';
 import type { FlatSession } from '@/core/schedule/schedule.index';
 import { getPeriodTimes } from '@/core/constants';
@@ -60,7 +62,8 @@ const WeeklyCard: React.FC<{ session: FlatSession | CourseSession; displayName: 
 }) => {
     const { start: startTime, end: endTime } = resolveTimes(session, { startTimeStr, endTimeStr });
     const [isNoteOpen, setIsNoteOpen] = useState(false);
-    const { getNote } = useNotesStore();
+    const handleCloseNote = useCallback(() => setIsNoteOpen(false), []);
+    const getNote = useNotesStore(s => s.getNote);
     const hasNote = !!getNote(session.id);
     
     return (
@@ -108,7 +111,11 @@ const WeeklyCard: React.FC<{ session: FlatSession | CourseSession; displayName: 
                 isOpen={isNoteOpen}
                 sessionId={session.id}
                 sessionTitle={displayName}
-                onClose={() => setIsNoteOpen(false)}
+                onClose={handleCloseNote}
+                date={'dateStr' in session ? session.dateStr : undefined}
+                room={formatRoom(session.room)}
+                className={formatClassDisplay(session)}
+                time={`${startTime} - ${endTime}`}
             />
 
             {/* Optional Teacher Footer Strip */}
@@ -148,7 +155,8 @@ const TodayCard: React.FC<{ session: FlatSession | CourseSession; displayName: s
 }) => {
     const { start: startTime, end: endTime } = resolveTimes(session, { startTimeStr, endTimeStr });
     const [isNoteOpen, setIsNoteOpen] = useState(false);
-    const { getNote } = useNotesStore();
+    const handleCloseNote = useCallback(() => setIsNoteOpen(false), []);
+    const getNote = useNotesStore(s => s.getNote);
     const hasNote = !!getNote(session.id);
 
     return (
@@ -208,7 +216,11 @@ const TodayCard: React.FC<{ session: FlatSession | CourseSession; displayName: s
                 isOpen={isNoteOpen}
                 sessionId={session.id}
                 sessionTitle={displayName}
-                onClose={() => setIsNoteOpen(false)}
+                onClose={handleCloseNote}
+                date={'dateStr' in session ? session.dateStr : undefined}
+                room={formatRoom(session.room)}
+                className={formatClassDisplay(session)}
+                time={`${startTime} - ${endTime}`}
             />
 
             {/* Optional Teacher Footer Strip */}

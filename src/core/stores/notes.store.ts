@@ -7,6 +7,7 @@ interface NotesState {
   
   // Actions
   setNote: (id: string, content: string) => void;
+  deleteNote: (id: string) => void;
   getNote: (id: string) => string;
   clearAllNotes: () => void;
 }
@@ -23,6 +24,13 @@ export const useNotesStore = create<NotesState>()(
             [id]: content
           }
         }));
+      },
+      
+      deleteNote: (id) => {
+        set((state) => {
+          const { [id]: _, ...rest } = state.notes;
+          return { notes: rest };
+        });
       },
       
       getNote: (id) => {

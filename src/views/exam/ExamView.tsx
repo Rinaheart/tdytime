@@ -11,7 +11,7 @@ import { useExamStore, useUIStore, useScheduleStore } from '@/core/stores';
 import { getExamStatus } from '@/core/exam/exam.parser';
 import { useCalculatedTime } from '@/core/hooks/useCalculatedTime';
 import { EmptyState } from '@/ui';
-import ConfirmModal from '@/ui/composites/ConfirmModal';
+import ConfirmModal from '@/ui/primitives/ConfirmModal';
 
 const STT_COL_CLASS = "w-7 h-7 shrink-0 flex items-center justify-center transition-all duration-500";
 const TIME_COL_CLASS = "w-[60px] text-right shrink-0 font-bold font-mono tabular-nums text-[13px] leading-none";
