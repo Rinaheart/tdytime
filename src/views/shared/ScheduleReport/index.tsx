@@ -3,12 +3,15 @@ import { Document, Page, Text, View, Font, Svg, Path, Rect } from '@react-pdf/re
 import { styles } from './styles';
 import type { FlatSession } from '@/core/schedule/schedule.index';
 
+import RobotoRegular from '@/assets/fonts/Roboto-Regular.ttf';
+import RobotoBold from '@/assets/fonts/Roboto-Bold.ttf';
+
 // Register font for Vietnamese support
 Font.register({
   family: 'Roboto',
   fonts: [
-    { src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf' },
-    { src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf', fontWeight: 'bold' }
+    { src: RobotoRegular, fontWeight: 400 },
+    { src: RobotoBold, fontWeight: 700 }
   ]
 });
 
