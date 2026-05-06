@@ -154,6 +154,8 @@ const SemesterView: React.FC = () => {
         createdBy: t('report.createdBy'),
         page: t('report.page'),
         week: t('report.week'),
+        weekFrom: t('report.weekFrom'),
+        weekTo: t('report.weekTo'),
         shifts: {
             morning: t('shifts.morning'),
             afternoon: t('shifts.afternoon'),

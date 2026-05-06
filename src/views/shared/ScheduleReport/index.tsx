@@ -37,6 +37,8 @@ export interface ScheduleReportProps {
     createdBy: string;
     page: string;
     week: string;
+    weekFrom: string;
+    weekTo: string;
     shifts: Record<string, string>;
     days: Record<string, string>;
   };
@@ -66,6 +68,15 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
   const now = new Date();
   const dateStr = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
   
+  const formattedWeekRange = React.useMemo(() => {
+    if (!weekRange) return '';
+    const dates = weekRange.match(/(\d{2}\/\d{2}\/\d{4})/g);
+    if (dates && dates.length >= 2) {
+      return `${translations.weekFrom} ${dates[0]} ${translations.weekTo} ${dates[1]}`;
+    }
+    return weekRange;
+  }, [weekRange, translations.weekFrom, translations.weekTo]);
+
   // Group sessions by day
   const groupedByDay = sessions.reduce((acc, session) => {
     const key = `${session.dayIdx}-${session.dateStr}`;
@@ -93,7 +104,7 @@ export const ScheduleReport: React.FC<ScheduleReportProps> = ({
             <Text style={styles.reportTitle}>{finalTitle}</Text>
             <Text style={styles.reportSubtitle}>
               {teacherName ? `${translations.teacher}: ${teacherName}` : translations.defaultReport}
-              {weekRange ? ` | ${translations.week}: ${weekRange}` : ''}
+              {weekRange ? ` | ${formattedWeekRange}` : ''}
             </Text>
           </View>
         </View>

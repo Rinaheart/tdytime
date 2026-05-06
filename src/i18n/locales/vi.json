@@ -802,7 +802,9 @@
         "periods": "tiết",
         "createdBy": "Tạo bởi TdyTime",
         "page": "Trang",
-        "week": "Tuần"
+        "week": "Tuần",
+        "weekFrom": "Từ ngày:",
+        "weekTo": "đến ngày:"
     },
     "dev": {
         "importError": "Lỗi import config: File không đúng định dạng!",
