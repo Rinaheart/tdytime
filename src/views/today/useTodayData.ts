@@ -117,8 +117,9 @@ export const useTodayData = () => {
 
     // Performance P0: Precompute today's sessions from index
     const todaySessions: SessionWithStatus[] = useMemo(() => {
+        const lowerTeacher = teacherName.toLowerCase();
         const result = sessionsIndex
-            .filter(s => s.weekIdx === currentWeekIdx && s.dayIdx === todayDayIdx)
+            .filter(s => s.weekIdx === currentWeekIdx && s.dayIdx === todayDayIdx && s.teacher.toLowerCase().includes(lowerTeacher))
             .map(s => {
                 let status: 'PENDING' | 'LIVE' | 'COMPLETED' = 'PENDING';
                 const t = now.getTime();
@@ -134,7 +135,7 @@ export const useTodayData = () => {
             if (priority[a.status] !== priority[b.status]) return priority[a.status] - priority[b.status];
             return a.startTs - b.startTs;
         });
-    }, [sessionsIndex, currentWeekIdx, todayDayIdx, now.getTime()]);
+    }, [sessionsIndex, currentWeekIdx, todayDayIdx, teacherName, now.getTime()]);
 
     const isWeekEmpty = useMemo(() => {
         if (currentWeekIdx === -1) return true;

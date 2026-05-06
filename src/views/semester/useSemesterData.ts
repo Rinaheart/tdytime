@@ -4,6 +4,7 @@ import type { FlatSession } from '@/core/schedule/schedule.index';
 
 export interface SemesterDataResult {
   byWeek: Record<number, FlatSession[]>;
+  rawSessions: FlatSession[];
   total: number;
 }
 
@@ -19,7 +20,7 @@ export const useSemesterData = (
   
   return useMemo(() => {
     if (!sessionsIndex || sessionsIndex.length === 0) {
-      return { byWeek: {}, total: 0 };
+      return { byWeek: {}, rawSessions: [], total: 0 };
     }
 
     const filtered = filterFn ? sessionsIndex.filter(filterFn) : sessionsIndex;
@@ -33,6 +34,6 @@ export const useSemesterData = (
       return acc;
     }, {} as Record<number, FlatSession[]>);
     
-    return { byWeek, total: filtered.length };
+    return { byWeek, rawSessions: filtered, total: filtered.length };
   }, [sessionsIndex, filterFn]);
 };

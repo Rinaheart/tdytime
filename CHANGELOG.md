@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.2] - 2026-05-06
+
+### Added
+**Ghi chú (Notes):**
+- **Persistent Notes:** Cho phép thêm/sửa/xóa ghi chú cho từng tiết học, tự động lưu vào `localStorage`.
+- **UI Integration:** Hiển thị Badge ghi chú trên `SessionCard` và tích hợp `NoteModal` chuyên nghiệp.
+- **Global Control:** Thêm tùy chọn "Xóa toàn bộ ghi chú" trong phần Cài đặt.
+
+**Xuất báo cáo PDF Pro:**
+- **New Engine:** Chuyển sang `@react-pdf/renderer` cho báo cáo dạng vector, text-searchable, chất lượng in ấn chuyên nghiệp.
+- **Shared Report Component:** Component `<ScheduleReport />` dùng chung cho cả lịch Tuần và Học kỳ.
+- **Semester PDF:** Hỗ trợ xuất báo cáo đa trang cho toàn bộ học kỳ, bao gồm dòng tổng kết tổng số tiết.
+- **Brand Identity:** Tích hợp Favicon inline và thông tin trường (DHYD Huế) vào Header/Footer báo cáo.
+
+**Xuất CSV Nâng cao:**
+- **Excel Compatibility:** Thêm UTF-8 BOM giúp mở file trực tiếp bằng Excel không bị lỗi font Tiếng Việt.
+- **Localized Headers:** Tiêu đề cột được dịch tự động theo ngôn ngữ hệ thống.
+
+### Changed
+- **Download Reliability:** Sử dụng `file-saver` thay cho manual anchor hack, đảm bảo tên file ổn định trên Chrome/Safari di động.
+- **Bundle Optimization:** Loại bỏ `html2canvas` và `jspdf`, cấu hình `manualChunks` cho `@react-pdf/renderer`.
+- **Pre-deploy Audit:** Dọn dẹp mã rác, legacy refs và debug logs trên toàn bộ dự án.
+
+### Fixed
+- **Oklch PDF Bug:** Xử lý lỗi crash khi xuất PDF với theme sử dụng hệ màu `oklch()` bằng cơ chế fallback màu Canvas.
+- **TodayView Filter:** Đồng bộ logic lọc giảng viên (`isMainTeacher`) giúp TodayView hiển thị chính xác theo cài đặt.
+
+### Technical
+- Cấu hình `optimizeDeps` và `pako` để tương thích `@react-pdf/renderer` với Vite 8.
+- Triển khai `notes.store.ts` sử dụng Zustand persist middleware.
+
 ## [1.9.1] - 2026-04-14
 
 ### Added

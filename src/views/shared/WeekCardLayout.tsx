@@ -15,7 +15,7 @@ const WeekCardLayout: React.FC<WeekTableLayoutProps> = ({ grouped, weekRange, no
     };
 
     return (
-        <div className="grid grid-cols-1 gap-6">
+        <div id="weekly-schedule-table" className="grid grid-cols-1 gap-6 bg-slate-50/50 dark:bg-slate-900/50">
             {DAYS_OF_WEEK.map((day, idx) => {
                 const dayGroup = grouped[idx];
                 if (!dayGroup) return null;

@@ -4,20 +4,28 @@
 
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, Zap, Columns, LayoutTemplate, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Zap, Columns, LayoutTemplate, Search, Download } from 'lucide-react';
 import { useScheduleStore } from '@/core/stores';
 import { isCurrentWeek, getCurrentWeekRange } from '@/core/schedule/schedule.utils';
-
+import { pdf } from '@react-pdf/renderer';
+import { ScheduleReport } from '../shared/ScheduleReport';
+import { useNotesStore } from '@/core/stores/notes.store';
+import type { FlatSession } from '@/core/schedule/schedule.index';
+import { saveAs } from 'file-saver';
 interface WeekNavigationProps {
     viewMode: 'horizontal' | 'vertical';
     onToggleViewMode: () => void;
     isFilterOpen: boolean;
     onToggleFilter: () => void;
     hasActiveFilters: boolean;
+    sessions: FlatSession[];
+    teacherName: string;
 }
 
-const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewMode, isFilterOpen, onToggleFilter, hasActiveFilters }) => {
+const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewMode, isFilterOpen, onToggleFilter, hasActiveFilters, sessions, teacherName }) => {
     const { t } = useTranslation();
+    const notesStore = useNotesStore();
+    const [isExporting, setIsExporting] = React.useState(false);
     const data = useScheduleStore((s) => s.data);
     const currentWeekIndex = useScheduleStore((s) => s.currentWeekIndex);
     const setCurrentWeekIndex = useScheduleStore((s) => s.setCurrentWeekIndex);
@@ -36,10 +44,41 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
         return t('weekly.week', { number: currentWeekIndex + 1 });
     }, [currentWeekIndex, t]);
 
+    const weekNumber = useMemo(() => {
+        if (currentWeekIndex === -1) {
+            // Find current week index in weeks array if possible
+            const idx = weeks.findIndex(w => isCurrentWeek(w.dateRange, now));
+            return idx !== -1 ? idx + 1 : 'curr';
+        }
+        return currentWeekIndex + 1;
+    }, [currentWeekIndex, weeks, now]);
+
     const weekDateRange = useMemo(() => {
         if (week) return week.dateRange;
         return getCurrentWeekRange(now);
     }, [week, now]);
+
+    const handleExportPdf = async () => {
+        setIsExporting(true);
+        try {
+            const filename = `lich-giang-tuan-${weekNumber}.pdf`;
+            const blob = await pdf(
+                <ScheduleReport 
+                    mode="week" 
+                    sessions={sessions} 
+                    weekRange={weekDateRange} 
+                    teacherName={teacherName} 
+                    notes={notesStore.notes} 
+                />
+            ).toBlob();
+            
+            saveAs(blob, filename);
+        } catch (error) {
+            console.error('Export failed', error);
+        } finally {
+            setIsExporting(false);
+        }
+    };
 
     const formatDateRange = (range: string) => {
         const dates = range.match(/\d{2}\/\d{2}\/\d{4}/g);
@@ -66,6 +105,15 @@ const WeekNavigation: React.FC<WeekNavigationProps> = ({ viewMode, onToggleViewM
             </div>
 
             <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-end w-full md:w-auto md:self-auto">
+                <button
+                    onClick={handleExportPdf}
+                    disabled={isExporting || (currentWeekIndex !== -1 && weeks.length === 0)}
+                    className="flex items-center gap-2 h-11 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-accent-50 dark:hover:bg-accent-950/40 active:scale-95 transition-all shadow-sm disabled:opacity-50"
+                >
+                    <Download size={16} className={isExporting ? "animate-bounce text-accent-500" : "text-accent-500"} />
+                    <span className="hidden sm:inline">{isExporting ? t('common.loading') : t('weekly.exportPDF')}</span>
+                </button>
+
                 <button
                     onClick={() => data && jumpToCurrentWeek(data)}
                     className={`flex items-center gap-2 h-11 px-4 rounded-xl text-xs font-bold transition-all shadow-sm ${isCurrent

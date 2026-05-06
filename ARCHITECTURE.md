@@ -67,6 +67,7 @@ tdytime/
     │   │   ├── index.ts                 # Store barrel export
     │   │   ├── schedule.store.ts        # Zustand: schedule data, metrics, overrides, abbreviations
     │   │   ├── exam.store.ts            # Zustand: exam data management
+    │   │   ├── notes.store.ts           # Zustand: lesson notes persistence
     │   │   └── ui.store.ts              # Zustand: theme, language, view mode, thresholds
     │   └── themes/
     │       └── theme.registry.ts        # 7 accent themes definition, migration map, validators
@@ -97,6 +98,7 @@ tdytime/
     │       ├── EmptyState.tsx           # Empty data illustration + message
     │       ├── TypeBadge.tsx            # LT/TH course type badge
     │       ├── ThemePicker.tsx          # Theme selection grid with preview swatches
+    │       ├── NoteModal.tsx            # Lesson note editor modal
     │       └── ConfirmModal.tsx         # Generic confirmation dialog (Delete/Reset)
     │
     ├── utils/                           # ── Shared Utilities ──
@@ -149,7 +151,8 @@ tdytime/
         ├── shared/
         │   ├── SessionCard.tsx          # Universal session card (used across views)
         │   ├── WeekTableLayout.tsx      # Table-mode week layout (rows = periods)
-        │   └── WeekCardLayout.tsx       # Card-mode week layout (columns = shifts)
+        │   ├── WeekCardLayout.tsx       # Card-mode week layout (columns = shifts)
+        │   └── ScheduleReport/          # PDF Report templates (@react-pdf/renderer)
         └── dev/
             ├── DevToolsView.tsx         # Developer tools page (DEV-only)
             ├── components/

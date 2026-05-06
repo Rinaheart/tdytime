@@ -88,10 +88,10 @@ Cài trực tiếp lên thiết bị, mở nhanh và dùng offline.
 - Theo dõi lịch giảng theo Ngày/Tuần/Học kỳ
 - Thống kê tiến độ giảng dạy
 - Tự động nhận diện loại học phần (LT/TH)
+- Ghi chú (Notes) cho lịch giảng
+- Xuất báo cáo lịch giảng chuyên nghiệp (PDF/CSV)
 
 **🚀 Sắp tới**
-- Ghi chú (Notes)
-- Xuất báo cáo lịch giảng
 - Đồng bộ dữ liệu (backend)
 
 ### Tech Stack
@@ -99,8 +99,8 @@ Cài trực tiếp lên thiết bị, mở nhanh và dùng offline.
 - **Vibe Coding**: Google AI Studio & Antigravity.
 - **Core**: React 19, TypeScript 6, Zustand.
 - **Build**: Vite 8, Rolldown, Oxc.
-- **UI**: Tailwind CSS v4, Lucide Icons.
-- **PWA**: Vite PWA Plugin (CacheFirst Architecture).
+- **UI**: Tailwind CSS v4, Lucide Icons, @react-pdf/renderer.
+- **PWA**: Vite PWA Plugin (CacheFirst Architecture), file-saver.
 - **Architecture**: Xem chi tiết tại [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ---

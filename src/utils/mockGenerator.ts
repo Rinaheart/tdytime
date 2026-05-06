@@ -1,5 +1,4 @@
 import { ScheduleData, CourseType, CourseSession, WeekSchedule, Metadata } from '../core/schedule/schedule.types';
-// import { getPeriodTimes } from '../core/constants';
 
 // --- Types & Constants & Enums ---
 
@@ -70,9 +69,6 @@ const FULL_DAY_NAMES: Record<DayKey, string> = {
     fri: 'Friday', sat: 'Saturday', sun: 'Sunday'
 };
 
-// const DAY_INDICES: Record<DayKey, number> = {
-//     mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6, sun: 0
-// };
 
 // --- Utilities & RNG ---
 

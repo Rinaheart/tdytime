@@ -28,7 +28,7 @@ const WeeklyView: React.FC = () => {
     // Optimized Data Logic for Weekly View
     // targetWeekIdx is currentWeekIndex + 1 (1-based)
     // We cast filterFn to accept FlatSession since createSessionFilter is compatible with CourseSession base
-    const { grouped, hasSessions, weekRange } = useWeeklyData(
+    const { grouped, rawSessions, hasSessions, weekRange } = useWeeklyData(
         currentWeekIndex + 1, 
         filterFn as (s: FlatSession) => boolean
     );
@@ -59,6 +59,8 @@ const WeeklyView: React.FC = () => {
                 isFilterOpen={isFilterOpen}
                 onToggleFilter={toggleFilter}
                 hasActiveFilters={hasActiveFilters}
+                sessions={rawSessions}
+                teacherName={teacherName}
             />
 
             {isFilterOpen && (

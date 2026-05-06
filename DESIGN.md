@@ -37,6 +37,7 @@ TdyTime v2 sử dụng hệ màu **Ngữ nghĩa thích ứng**, tự động đi
 
 - **Gradient Dots**: Mỗi Badge/Nhãn buổi học đi kèm một chấm tròn mang dải màu Gradient tương ứng. Dù màu sắc nền có trùng lặp, chấm tròn này luôn là điểm neo nhận diện cố định.
 - **Visual Anchors 2.0 (STT + Ring)**: Trong các giao diện danh sách (ExamView), điểm neo được nâng cấp thành bộ ba `Chỉ số (STT) + Chấm tròn (Dot) + Vòng bao quanh (Ring)` cho các mục đang diễn ra hoặc kế tiếp, tăng cường độ tương phản và sự tập trung.
+- **Notes Indicator (Badge + Dot)**: Để nhận diện các buổi học có ghi chú mà không làm rối bố cục, một Badge nhỏ (`text-[10px]`) hoặc Chấm chỉ báo sẽ xuất hiện trên `SessionCard`. Điều này giúp Giảng viên biết nhanh buổi nào cần lưu ý trước khi mở Modal chi tiết.
 - **Outline Icons**: Sử dụng hệ icon `Lucide` với `strokeWidth: 1.5` để đạt được vẻ ngoài thanh thoát, chuyên nghiệp và thoáng đãng (Outline style).
 
 ---
@@ -101,4 +102,4 @@ Thiết kế của TdyTime không chỉ là về thẩm mỹ mà còn là về t
 
 ---
 
-*Cập nhật lần cuối: 14/04/2026 (v1.9.1)*
+*Cập nhật lần cuối: 06/05/2026 (v1.9.2)*

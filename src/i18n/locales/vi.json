@@ -138,6 +138,7 @@
         "noClasses": "Trống",
         "today": "Hôm nay",
         "noData": "Chưa có dữ liệu tuần",
+        "exportPDF": "Xuất PDF",
         "exportICS": {
             "title": "Xuất Lịch Google",
             "description": "Chọn GV để xuất lịch cho <strong>Tuần {{week}}</strong>.",
@@ -158,6 +159,8 @@
             "ended": "Học kỳ đã kết thúc!",
             "noSchedule": "Tuần hiện tại ({{range}}) không có lịch giảng!"
         },
+        "exportCSV": "Xuất CSV",
+        "exportPDF": "Xuất PDF",
         "table": {
             "code": "Mã",
             "course": "Tên Môn",
@@ -165,6 +168,23 @@
             "classes": "Lớp",
             "sessions": "Buổi",
             "periods": "Tiết"
+        },
+        "export": {
+            "button": "Xuất báo cáo"
+        },
+        "csv": {
+            "headers": {
+                "date": "Ngày",
+                "subjectCode": "Mã môn",
+                "subjectName": "Tên môn",
+                "class": "Lớp",
+                "group": "Nhóm",
+                "periods": "Tiết",
+                "room": "Phòng",
+                "instructor": "Giảng viên",
+                "type": "Loại",
+                "shift": "Buổi"
+            }
         }
     },
     "stats": {
@@ -380,6 +400,17 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.9.2",
+                "date": "2026-05-06",
+                "changes": [
+                    "Ghi chú (Notes): Hỗ trợ thêm/sửa/xóa ghi chú cho từng buổi giảng, tự động lưu trữ và hiển thị trực tiếp trên thẻ bài giảng.",
+                    "Xuất PDF Pro: Báo cáo vector pixel-perfect, hỗ trợ xuất lịch Tuần & Học kỳ (đa trang), có tích hợp Logo và footer chuyên nghiệp.",
+                    "Xuất CSV Excel: Hỗ trợ UTF-8 BOM giúp mở file trực tiếp bằng Excel không lỗi font, tiêu đề cột được bản địa hóa.",
+                    "Fix lỗi PDF Oklch: Khắc phục lỗi xuất PDF khi sử dụng các theme hệ màu Oklch.",
+                    "Đồng bộ lọc GV: Sửa lỗi TodayView không lọc đúng theo giảng viên chính (isMainTeacher)."
+                ]
+            },
+            {
                 "version": "v1.9.1",
                 "date": "2026-04-14",
                 "changes": [
@@ -387,7 +418,7 @@
                     "Collapsible Completed List: Tự động thu gọn danh sách đã hoàn thành khi ≥5 items.",
                     "Kiến trúc 2 hàng: Chuyển ExamRow sang 2 hàng đảm bảo thẳng hàng tuyệt đối Time/Room.",
                     "Xử lý tên môn dài: Hỗ trợ 2 dòng (line-clamp-2) trong chế độ chi tiết.",
-                    "Đồng bộ Mock Time: Tích hợp useCalculatedTime hook giúp view phản hồi tức thì với Mock Time.",
+                    "Đồng bộ Mock Time: Tích hợp useCalculatedTime hook giúp view phản hồi tức thì with Mock Time.",
                     "Fix lỗi: Khắc phục triệt để lỗi mất nội dung hàng khi tên môn dài (min-h-[52px])."
                 ]
             },
@@ -440,7 +471,7 @@
                 "version": "v1.7.0",
                 "date": "2026-04-06",
                 "changes": [
-                    "Vite 8 & Rolldown: Nâng cấp toàn diện hạ tầng build lên Vite 8.0.5 với Rolldown và Oxc, tăng tốc độ build ~77%.",
+                    "Vite 8 & Rolldown: Nâng cấp toàn diện hạ tầng build lên Vite 8.0.5 with Rolldown và Oxc, tăng tốc độ build ~77%.",
                     "PWA Lifecycle Fix: Giải quyết triệt để lỗi kẹt phiên bản bằng chiến lược NetworkFirst cho HTML và loại bỏ Precache index.html.",
                     "Immortal Cache: Triển khai Cache-Control immutable cho assets, giúp tải lại trang tức thì với 0.0 KB transfer.",
                     "Prompt-based Update: Chuyển sang cơ chế thông báo cập nhật chủ động, giúp người dùng kiểm soát việc nâng cấp an toàn.",
@@ -483,7 +514,7 @@
                 "date": "2026-03-26",
                 "changes": [
                     "Performance Boost (Zero-Dep SVG): Loại bỏ hoàn toàn thư viện Recharts giúp giảm 374KB bundle size, cải thiện LCP từ 7.0s xuống 1.8s (tăng tốc ~74%).",
-                    "Stats UI Refinement: Làm mới biểu đồ Heatmap phong cách GitHub (ô vuông, nhãn thứ T2-CN), cập nhật biểu đồ tròn Sáng/Chiều/Tối với dải màu nhạt-đến-đậm.",
+                    "Stats UI Refinement: Làm mới biểu đồ Heatmap phong cách GitHub (ô vuông, nhãn thứ T2-CN), cập nhật biểu đồ tròn Sáng/Chiều/Tối with dải màu nhạt-đến-đậm.",
                     "Data Precision: Chuẩn hóa hiển thị 0.0% và tích hợp thuật toán đảm bảo tổng các thành phần biểu đồ luôn đạt 100.0%.",
                     "UI Optimization: Căn chỉnh lại bố cục các thẻ thống kê, nhãn NGÀY/TUẦN/THÁNG được đồng bộ hóa toàn diện."
                 ]
@@ -521,7 +552,7 @@
                 "version": "v0.9.0",
                 "date": "2026-02-05",
                 "changes": [
-                    "Lightning Fast Performance: Tối ưu hóa toàn diện giúp ứng dụng tải tức thì (Load Time ~176ms) và đạt điểm hiệu năng tuyệt đối.",
+                    "Lightning Fast Performance: Tối ưu hóa toàn diện giúp ứng dụng tải tức thì (Load Time ~176ms) and đạt điểm hiệu năng tuyệt đối.",
                     "Smart Bundle Split: Tách thông minh các thư viện nặng (Biểu đồ) khỏi luồng chính, giúp trải nghiệm mượt mà ngay từ lần chạm đầu tiên.",
                     "Dynamic Layout Loading: Cơ chế tải giao diện theo nhu cầu (Lazy Loading) giúp tiết kiệm dữ liệu và tăng tốc độ hiển thị."
                 ]
@@ -530,7 +561,7 @@
                 "version": "v0.8.2",
                 "date": "2026-02-04",
                 "changes": [
-                    "Header UI Evolution: Đưa nút chuyển Dark Mode lên Header với phong cách tối giản (Minimalist icon), giúp thao tác nhanh và là chỉ báo trực quan cho việc cập nhật bản mới.",
+                    "Header UI Evolution: Đưa nút chuyển Dark Mode lên Header with phong cách tối giản (Minimalist icon), giúp thao tác nhanh và là chỉ báo trực quan cho việc cập nhật bản mới.",
                     "Hard Refresh Signal: Thay đổi cấu trúc Header để ép trình duyệt di động nhận diện sự thay đổi giao diện, giúp thoát khỏi tình trạng kẹt Cache cũ."
                 ]
             },
@@ -546,11 +577,11 @@
                 "version": "v0.8.0",
                 "date": "2026-02-04",
                 "changes": [
-                    "Smart Countdown: Hệ thống đếm ngược học kỳ mới trực quan với số đếm 2 chữ số và tiêu đề đổi màu theo tiến độ thời gian.",
-                    "Today View Optimized: Đồng nhất thiết kế thẻ bài giảng LIVE/Pending và thu gọn danh sách đã hoàn thành một cách tinh tế.",
+                    "Smart Countdown: Hệ thống đếm ngược học kỳ mới trực quan with số đếm 2 chữ số và tiêu đề đổi màu theo tiến độ thời gian.",
+                    "Today View Optimized: Đồng nhất thiết kế thẻ bài giảng LIVE/Pending and thu gọn danh sách đã hoàn thành một cách tinh tế.",
                     "Multi-Teacher Footer: Tự động hiển thị tên GV trên dải màu Footer Strip khi tắt bộ lọc, hỗ trợ theo dõi lịch dạy đa giảng viên.",
-                    "Minimalist UI Refinement: Rút gọn định dạng ngày tuần với ký tự mũi tên (→) và tối ưu hóa không gian hiển thị (pb-7/pb-10).",
-                    "Scroll & Layout Fix: Loại bỏ các thanh chỉ báo cuộn không hoạt động và xử lý triệt để lỗi cuộn dư thừa trên tab Hôm nay."
+                    "Minimalist UI Refinement: Rút gọn định dạng ngày tuần with ký tự mũi tên (→) and tối ưu hóa không gian hiển thị (pb-7/pb-10).",
+                    "Scroll & Layout Fix: Loại bỏ các thanh chỉ báo cuộn không hoạt động and xử lý triệt để lỗi cuộn dư thừa trên tab Hôm nay."
                 ]
             },
             {
@@ -558,37 +589,37 @@
                 "date": "2026-02-03",
                 "changes": [
                     "PageSpeed 90+: Tối ưu hóa hiệu năng đạt chuẩn Core Web Vitals (LCP < 2.5s).",
-                    "Accessibility Verified: Đạt chuẩn tương phản màu sắc (WCAG AA) và hỗ trợ điều hướng ARIA toàn diện.",
+                    "Accessibility Verified: Đạt chuẩn tương phản màu sắc (WCAG AA) and hỗ trợ điều hướng ARIA toàn diện.",
                     "Smart Cache: Cơ chế lưu trữ đệm thông minh giúp ứng dụng tải tức thì.",
-                    "PWA Pro: Nâng cấp biểu tượng maskable và hiệu chuẩn manifest cho trải nghiệm App native."
+                    "PWA Pro: Nâng cấp biểu tượng maskable and hiệu chuẩn manifest cho trải nghiệm App native."
                 ]
             },
             {
                 "version": "v0.6.0",
                 "date": "2026-02-02",
                 "changes": [
-                    "Premium Refinement: Tinh chỉnh toàn bộ tab Cài đặt và Thống kê để đạt độ nén thông tin và thẩm mỹ cao nhất.",
-                    "Auto-Logic: Tích hợp khả năng tự động bóc tách loại hình giảng dạy và rút gọn tên môn học thông minh trên toàn ứng dụng.",
-                    "Stability Pro: Xử lý triệt để các lỗi điều hướng và nâng cao độ ổn định nền tảng (v0.6.0)."
+                    "Premium Refinement: Tinh chỉnh toàn bộ tab Cài đặt and Thống kê để đạt độ nén thông tin and thẩm mỹ cao nhất.",
+                    "Auto-Logic: Tích hợp khả năng tự động bóc tách loại hình giảng dạy and rút gọn tên môn học thông minh trên toàn ứng dụng.",
+                    "Stability Pro: Xử lý triệt để các lỗi điều hướng and nâng cao độ ổn định nền tảng (v0.6.0)."
                 ]
             },
             {
                 "version": "v0.5.1",
                 "date": "2026-02-02",
                 "changes": [
-                    "Data-Centric Today: Thiết kế lại hoàn toàn thẻ Hôm nay với triết lý dữ liệu là trung tâm, phù hợp giảng viên và người dùng lớn tuổi.",
-                    "Session Status System: Hệ thống trạng thái buổi giảng 3 cấp (Chưa đến giờ / Đang giảng dạy / Hoàn thành) với phân biệt thị giác rõ ràng.",
-                    "Semester Intelligence: Logic nhận diện ranh giới học kỳ thông minh với 4 trạng thái empty states chuyên biệt.",
-                    "Mobile-First Cards: Layout 3 cột tối ưu cho mobile (Thời gian | Thông tin | Phòng) với độ ưu tiên hiển thị chuẩn hóa."
+                    "Data-Centric Today: Thiết kế lại hoàn toàn thẻ Hôm nay with triết lý dữ liệu là trung tâm, phù hợp giảng viên and người dùng lớn tuổi.",
+                    "Session Status System: Hệ thống trạng thái buổi giảng 3 cấp (Chưa đến giờ / Đang giảng dạy / Hoàn thành) with phân biệt thị giác rõ ràng.",
+                    "Semester Intelligence: Logic nhận diện ranh giới học kỳ thông minh with 4 trạng thái empty states chuyên biệt.",
+                    "Mobile-First Cards: Layout 3 cột tối ưu cho mobile (Thời gian | Thông tin | Phòng) with độ ưu tiên hiển thị chuẩn hóa."
                 ]
             },
             {
                 "version": "v0.5.0",
                 "date": "2026-02-01",
                 "changes": [
-                    "System Refactor: Kiểm kê (Audit) và tái cấu trúc toàn diện mã nguồn, nâng cao sự ổn định và an toàn logic 100%.",
-                    "Performance Core: Tối ưu hóa hiệu suất render với công nghệ Memoization, loại bỏ hoàn toàn các điểm nghẽn tính toán.",
-                    "Clean Utilities: Chuẩn hóa bộ công cụ xử lý ngày tháng (ScheduleUtils), giảm thiểu 30% mã lặp và tăng độ tin cậy."
+                    "System Refactor: Kiểm kê (Audit) and tái cấu trúc toàn diện mã nguồn, nâng cao sự ổn định and an toàn logic 100%.",
+                    "Performance Core: Tối ưu hóa hiệu suất render with công nghệ Memoization, loại bỏ hoàn toàn các điểm nghẽn tính toán.",
+                    "Clean Utilities: Chuẩn hóa bộ công cụ xử lý ngày tháng (ScheduleUtils), giảm thiểu 30% mã lặp and tăng độ tin cậy."
                 ]
             },
             {
@@ -598,15 +629,15 @@
                     "Smart Filtering: Hệ thống bộ lọc thông minh tự động ẩn để tối ưu không gian, đi kèm chỉ báo hoạt động trực quan.",
                     "Privacy Mode: Tính năng bảo mật linh hoạt tại trang Thống kê giúp che giấu thông tin chi tiết khi cần thiết.",
                     "Mobile Horizontal Scrolling: Chuẩn hóa trải nghiệm cuộn ngang cho bảng lịch trình tuần trên di động.",
-                    "Visual Unification: Đồng bộ hóa toàn diện hệ thống bo góc (2xl) và tối ưu hóa hệ thuật ngữ GV trên toàn ứng dụng."
+                    "Visual Unification: Đồng bộ hóa toàn diện hệ thống bo góc (2xl) and tối ưu hóa hệ thuật ngữ GV trên toàn ứng dụng."
                 ]
             },
             {
                 "version": "v0.3.0",
                 "date": "2026-01-31",
                 "changes": [
-                    "Premium Minimal Language: Triết lý thiết kế tinh giản, sang trọng với hiệu ứng Glassmorphism và layout tập trung tối đa vào dữ liệu.",
-                    "Semester Timeline: Trải nghiệm dòng thời gian học kỳ hoàn toàn mới, tự động điều hướng thông minh và tối ưu không gian hiển thị.",
+                    "Premium Minimal Language: Triết lý thiết kế tinh giản, sang trọng with hiệu ứng Glassmorphism and layout tập trung tối đa vào dữ liệu.",
+                    "Semester Timeline: Trải nghiệm dòng thời gian học kỳ hoàn toàn mới, tự động điều hướng thông minh and tối ưu không gian hiển thị.",
                     "Insights Card: Hệ thống thẻ phân tích thế hệ mới, biến dữ liệu thô thành những nhận định trực quan, sống động.",
                     "Visual Performance: Tối ưu hóa các hiệu ứng chuyển cảnh mượt động, tạo cảm giác như ứng dụng Native cao cấp."
                 ]
@@ -615,9 +646,9 @@
                 "version": "v0.2.0",
                 "date": "2026-01-29",
                 "changes": [
-                    "Welcome Center: Không gian khởi đầu được thiết kế lại theo tiêu chuẩn App chuyên nghiệp với bộ nhận diện TdyTime duy mỹ.",
-                    "Conflict Intelligence: Trí tuệ phân tích tự động phát hiện xung đột thời gian và không gian, đảm bảo lịch trình chuẩn xác 100%.",
-                    "Smart History: Khả năng ghi nhớ và truy cập tức thì các lịch trình gần đây, loại bỏ hoàn toàn thao tác nạp lại dữ liệu.",
+                    "Welcome Center: Không gian khởi đầu được thiết kế lại theo tiêu chuẩn App chuyên nghiệp with bộ nhận diện TdyTime duy mỹ.",
+                    "Conflict Intelligence: Trí tuệ phân tích tự động phát hiện xung đột thời gian and không gian, đảm bảo lịch trình chuẩn xác 100%.",
+                    "Smart History: Khả năng ghi nhớ and truy cập tức thì các lịch trình gần đây, loại bỏ hoàn toàn thao tác nạp lại dữ liệu.",
                     "Interface Polish: Tinh chỉnh các thành phần giao diện nhỏ (Tabs, Toasts, Badges) đạt độ hoàn thiện đồng nhất."
                 ]
             },
@@ -625,9 +656,9 @@
                 "version": "v0.1.0",
                 "date": "2026-01-27",
                 "changes": [
-                    "Mobile Prowess: Tái định nghĩa trải nghiệm di động với hệ thống Tab Bar và cử chỉ Swipe (vuốt) tự nhiên để điều hướng tuần.",
-                    "Identity Refresh: Cập nhật hệ thống Icon và Splash screen theo tiêu chuẩn PWA hiện đại.",
-                    "Dashboard Insights: Nâng cấp biểu đồ phân bổ và thẻ tóm tắt giúp GV nắm bắt lịch dạy trong 3 giây."
+                    "Mobile Prowess: Tái định nghĩa trải nghiệm di động with hệ thống Tab Bar and cử chỉ Swipe (vuốt) tự nhiên để điều hướng tuần.",
+                    "Identity Refresh: Cập nhật hệ thống Icon and Splash screen theo tiêu chuẩn PWA hiện đại.",
+                    "Dashboard Insights: Nâng cấp biểu đồ phân bổ and thẻ tóm tắt giúp GV nắm bắt lịch dạy trong 3 giây."
                 ]
             },
             {
@@ -635,7 +666,7 @@
                 "date": "2026-01-26",
                 "changes": [
                     "Executive Dashboard: Thiết kế lại toàn bộ màn hình Thống kê theo phong cách quản trị tinh gọn.",
-                    "Color-Coded Alerts: Hệ thống cảnh báo trực quan bằng màu sắc giúp nhận diện các điểm nóng và tuần quá tải tức thì."
+                    "Color-Coded Alerts: Hệ thống cảnh báo trực quan bằng màu sắc giúp nhận diện các điểm nóng and tuần quá tải tức thì."
                 ]
             },
             {
@@ -650,7 +681,7 @@
                 "version": "v0.011",
                 "date": "2026-01-15",
                 "changes": [
-                    "Analytics Launch: Ra mắt hệ thống phân tích mật độ giảng dạy đầu tiên với biểu đồ Heatmap trực quan.",
+                    "Analytics Launch: Ra mắt hệ thống phân tích mật độ giảng dạy đầu tiên with biểu đồ Heatmap trực quan.",
                     "Parser Engine: Nâng cấp bộ máy xử lý dữ liệu từ hệ thống UMS đạt độ chính xác cao."
                 ]
             },
@@ -730,5 +761,13 @@
         "toast": {
             "deleted": "Đã xóa lịch coi thi"
         }
+    },
+    "notes": {
+        "title": "Ghi chú buổi giảng",
+        "placeholder": "Nhập ghi chú tại đây...",
+        "save": "Lưu ghi chú",
+        "saved": "Đã lưu ghi chú!",
+        "clear": "Xóa ghi chú",
+        "noNotes": "Chưa có ghi chú nào."
     }
 }

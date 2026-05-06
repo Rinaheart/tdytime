@@ -57,11 +57,11 @@ export const PWAUpdateHandler: React.FC = () => {
     }, []);
 
     const sw = useRegisterSW({
-        onRegistered(r: ServiceWorkerRegistration | undefined) {
-            console.log('SW Registered:', r);
+        onRegistered(_r: ServiceWorkerRegistration | undefined) {
+            // SW registered successfully
         },
-        onRegisterError(error: any) {
-            console.log('SW registration error', error);
+        onRegisterError(_error: any) {
+            // SW registration failed silently
         },
     });
 

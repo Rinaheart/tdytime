@@ -137,6 +137,7 @@
         "noClasses": "Empty",
         "today": "Today",
         "noData": "No data for this week",
+        "exportPDF": "Export PDF",
         "exportICS": {
             "title": "Export to Google Calendar",
             "description": "Select teachers to export schedule for <strong>Week {{week}}</strong>.",
@@ -157,6 +158,9 @@
             "ended": "Semester has ended!",
             "noSchedule": "Current week ({{range}}) has no schedule!"
         },
+        "exportCSV": "Export CSV",
+        "exportPDF": "Export PDF",
+
         "table": {
             "code": "Code",
             "course": "Course",
@@ -164,6 +168,23 @@
             "classes": "Classes",
             "sessions": "Sessions",
             "periods": "Periods"
+        },
+        "export": {
+            "button": "Export Report"
+        },
+        "csv": {
+            "headers": {
+                "date": "Date",
+                "subjectCode": "Code",
+                "subjectName": "Subject",
+                "class": "Class",
+                "group": "Group",
+                "periods": "Periods",
+                "room": "Room",
+                "instructor": "Instructor",
+                "type": "Type",
+                "shift": "Shift"
+            }
         }
     },
     "stats": {
@@ -379,6 +400,17 @@
         "changelog": "Changelog",
         "history": [
             {
+                "version": "v1.9.2",
+                "date": "2026-05-06",
+                "changes": [
+                    "Notes: Added persistent notes for sessions with direct SessionCard integration and NoteModal editor.",
+                    "PDF Report Pro: Professional vector-based, searchable PDF reports using @react-pdf/renderer for both Week and Semester views.",
+                    "CSV Excel Support: Added UTF-8 BOM for seamless Excel integration and localized column headers.",
+                    "PDF Oklch Fix: Fixed PDF generation crashes when using Oklch-based color themes.",
+                    "Teacher Filter Sync: Fixed TodayView instructor filtering logic to be consistent with WeekView."
+                ]
+            },
+            {
                 "version": "v1.9.1",
                 "date": "2026-04-14",
                 "changes": [
@@ -497,6 +529,16 @@
                 ]
             },
             {
+                "version": "v1.1.0",
+                "date": "2026-03-23",
+                "changes": [
+                    "Accent Themes: High-quality color themes (Blue, Pink, Emerald) to personalize your workspace. Toggle via the Palette icon in the Header.",
+                    "Unified Empty State: A professional 'Rest & Recharge' view for empty weeks, automatically suggesting the next teaching session.",
+                    "Lifecycle Reliability: Optimized the auto-sync mechanism to correctly update time-sensitive views when resuming the app from sleep.",
+                    "UI Typography: Standardized font weights and spacing across all statistics and session cards for a cleaner look."
+                ]
+            },
+            {
                 "version": "v1.0.0",
                 "date": "2026-02-26",
                 "changes": [
@@ -562,7 +604,7 @@
                 ]
             },
             {
-                "version": "v0.5.0",
+                "version": "v0.5.1",
                 "date": "2026-02-02",
                 "changes": [
                     "Data-Centric Today: Complete redesign of the Today tab with data-first philosophy, optimized for instructors and senior users.",
@@ -722,5 +764,13 @@
         "toast": {
             "deleted": "Exam schedule deleted"
         }
+    },
+    "notes": {
+        "title": "Session Notes",
+        "placeholder": "Enter notes here...",
+        "save": "Save Note",
+        "saved": "Note saved!",
+        "clear": "Clear Note",
+        "noNotes": "No notes yet."
     }
 }

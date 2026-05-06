@@ -6,6 +6,7 @@ export type ShiftType = 'morning' | 'afternoon' | 'evening' | 'night';
 
 export interface WeeklyDataResult {
   grouped: Record<number, Record<ShiftType, FlatSession[]>>;
+  rawSessions: FlatSession[];
   total: number;
   hasSessions: boolean;
   weekRange: string;
@@ -24,7 +25,7 @@ export const useWeeklyData = (
   
   return useMemo(() => {
     if (!sessionsIndex || sessionsIndex.length === 0) {
-      return { grouped: {}, total: 0, hasSessions: false, weekRange: '' };
+      return { grouped: {}, rawSessions: [], total: 0, hasSessions: false, weekRange: '' };
     }
 
     // Filter sessions for the target week (weekIdx is 1-based)
@@ -56,6 +57,7 @@ export const useWeeklyData = (
     
     return { 
       grouped, 
+      rawSessions: weekSessions,
       total: weekSessions.length, 
       hasSessions: weekSessions.length > 0,
       weekRange

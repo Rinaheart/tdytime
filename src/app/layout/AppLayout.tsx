@@ -202,7 +202,7 @@ const AppLayout: React.FC = () => {
         <div className="min-h-dvh transition-colors duration-200 bg-white dark:bg-slate-950 selection:bg-accent-100 dark:selection:bg-accent-900/30">
             {/* Mock Time Developer Toolbar */}
             {mockState && isMockEnabled && (
-                <div className="flex items-center justify-between px-3 md:px-4 fixed top-0 left-0 right-0 z-[45] bg-amber-400 dark:bg-amber-500 text-amber-950 text-sm font-semibold select-none transition-all duration-150 h-10">
+                <div className="flex items-center justify-between px-3 md:px-4 fixed top-0 left-0 right-0 z-[45] bg-amber-400 dark:bg-amber-500 text-amber-950 text-sm font-semibold select-none transition-all duration-150 h-10 print:hidden">
                     {/* LEFT: Branding & Config */}
                     <div className="flex items-center gap-3 flex-shrink-0 w-1/4">
                         <span className="flex items-center gap-1.5 animate-pulse opacity-80">
@@ -298,7 +298,7 @@ const AppLayout: React.FC = () => {
             )}
 
             {/* Header */}
-            <header className={`fixed ${mockState && isMockEnabled ? 'top-[40px]' : 'top-0'} left-0 right-0 z-40 h-12 md:h-14 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shadow-sm transition-all duration-150`}>
+            <header className={`fixed ${mockState && isMockEnabled ? 'top-[40px]' : 'top-0'} left-0 right-0 z-40 h-12 md:h-14 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shadow-sm transition-all duration-150 print:hidden`}>
                 <div className="flex items-center justify-between h-full px-3 md:px-6">
                     {/* Left: Menu toggle + Teacher name */}
                     <div className="flex items-center gap-2">
@@ -344,11 +344,11 @@ const AppLayout: React.FC = () => {
             </header>
 
             {/* Main Area */}
-            <div className={`flex h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] ${mockState && isMockEnabled ? 'pt-[88px] md:pt-[96px]' : 'pt-12 md:pt-14'} relative transition-all duration-150`}>
+            <div className={`flex h-[calc(100dvh-48px)] md:h-[calc(100dvh-56px)] print:h-auto ${mockState && isMockEnabled ? 'pt-[88px] md:pt-[96px]' : 'pt-12 md:pt-14'} print:pt-0 relative transition-all duration-150`}>
                 {/* Sidebar (desktop only) */}
                 <aside
                     className={`hidden lg:flex flex-col fixed ${mockState && isMockEnabled ? 'top-[88px] md:top-[96px]' : 'top-12 md:top-14'} bottom-0 left-0 z-30 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-150 ${sidebarCollapsed ? 'w-20' : 'w-48'
-                        }`}
+                        } print:hidden`}
                 >
                     <nav className="flex-1 py-4 space-y-1 px-3 overflow-y-auto">
                         {NAV_ITEMS.map(({ path, icon: Icon, labelKey }) => {
@@ -385,9 +385,9 @@ const AppLayout: React.FC = () => {
                 {/* Content */}
                 <main
                     className={`flex-1 min-w-0 transition-all duration-300 ${sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-48'
-                        }`}
+                        } print:pl-0`}
                 >
-                    <div className="h-full overflow-y-auto custom-scrollbar">
+                    <div className="h-full print:h-auto print:overflow-visible overflow-y-auto custom-scrollbar">
                         <div className="max-w-7xl mx-auto p-3 md:p-8">
                             <Outlet />
                         </div>
@@ -396,7 +396,7 @@ const AppLayout: React.FC = () => {
             </div>
 
             {/* Bottom Nav (mobile only) — San bằng 5 Tabs phẳng */}
-            <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 pb-safe shadow-[0_-4px_12px_rgba(0,0,0,0.04)]">
+            <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 pb-safe shadow-[0_-4px_12px_rgba(0,0,0,0.04)] print:hidden">
                 <div className="flex items-center h-16">
                     {NAV_ITEMS.map(({ path, icon: Icon, labelKey }) => {
                         const isActive = location.pathname === path;

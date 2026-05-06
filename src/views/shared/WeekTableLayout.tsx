@@ -45,7 +45,7 @@ const WeekTableLayout: React.FC<WeekTableLayoutProps> = ({
     };
 
     return (
-        <div className={`bg-white dark:bg-slate-900 overflow-hidden transition-all duration-300 ${fullBleed 
+        <div id="weekly-schedule-table" className={`bg-white dark:bg-slate-900 overflow-hidden transition-all duration-300 ${fullBleed 
             ? 'border-0 ring-0 shadow-none rounded-none' 
             : `rounded-2xl border ${isCurrent 
                 ? 'border-accent-500 dark:border-accent-400 ring-2 ring-accent-500/20 shadow-lg shadow-accent-500/5' 
